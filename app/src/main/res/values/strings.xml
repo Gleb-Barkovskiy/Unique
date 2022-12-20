@@ -11,5 +11,8 @@
     <string name="initial_setup_explain">Ваш выбор повлияет на то, как будет выглядеть главный экран по умолчанию</string>
     <string name="student_image_button">Student Image Button</string>
     <string name="params_can_be_changed">Параметры можно будет изменить</string>
+    <string name="options_button">Options Button</string>
+    <string name="time">Время</string>
+    <string name="timetable">Расписание</string>
 
 </resources>

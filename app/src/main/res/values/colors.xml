@@ -5,6 +5,7 @@
     <color name="white_base_front">#FFFFFF</color>
     <color name="white_base_dark">#DFDFDF</color>
     <color name="green_base">#3C7E6F</color>
+    <color name="green_base_transparent">#343C7E6F</color>
     <color name="green_base_dark">#1C483E</color>
     <color name="gray_base">#BCC1CD</color>
 </resources>

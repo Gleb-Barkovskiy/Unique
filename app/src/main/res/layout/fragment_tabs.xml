@@ -64,6 +64,20 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_current_weekday_back"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="Ноябрь 2022" />
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvCurrentDate"-->
+<!--                style="@style/ItemWrapContent"-->
+<!--                android:layout_marginTop="@dimen/margin_xs"-->
+<!--                android:textSize="@dimen/text_size_s"-->
+<!--                app:fontFamily="@font/jost_medium"-->
+<!--                android:textColor="@color/green_base"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                android:layout_marginEnd="@dimen/guidelines_constraint"-->
+<!--                tools:text="2н"-->
+<!--                android:background="@color/green_base_transparent"-->
+<!--                />-->
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -86,16 +100,42 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:itemCount="7"
-                tools:listitem="@layout/calendar_day_item" />
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/calendar_day_item"
+                tools:orientation="horizontal" />
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/btnOptions"-->
+<!--                style="@style/ItemWrapContent"-->
+<!--                android:layout_marginTop="@dimen/margin_s"-->
+<!--                android:contentDescription="@string/options_button"-->
+<!--                android:src="@drawable/options_button"-->
+<!--                android:background="null"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/calendarView" />-->
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1000dp"
-                android:text="Some text"
-                android:textColor="@color/black_base"
+                android:id="@+id/tvTimeHint"
+                style="@style/ItemWrapContent"
+                android:text="@string/time"
+                android:textColor="@color/gray_base"
+                android:textSize="@dimen/text_size_s"
+                app:fontFamily="@font/jost_medium"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/calendarView" />
+                app:layout_constraintTop_toBottomOf="@id/calendarView"
+                tools:viewBindingIgnore="true" />
+
+            <TextView
+                android:id="@+id/tvTimetableHint"
+                style="@style/ItemWrapContent"
+                android:layout_marginStart="@dimen/margin_m"
+                android:text="@string/timetable"
+                android:textColor="@color/gray_base"
+                android:textSize="@dimen/text_size_s"
+                app:fontFamily="@font/jost_medium"
+                app:layout_constraintStart_toEndOf="@id/tvTimeHint"
+                app:layout_constraintTop_toBottomOf="@id/calendarView"
+                tools:viewBindingIgnore="true" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

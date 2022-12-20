@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen().apply {
             setKeepOnScreenCondition { viewModel.isLoading.value }
         }
+        setContentView(R.layout.activity_main)
 
         window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
