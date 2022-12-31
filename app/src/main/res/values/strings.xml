@@ -14,5 +14,6 @@
     <string name="options_button">Options Button</string>
     <string name="time">Время</string>
     <string name="timetable">Расписание</string>
+    <string name="location_icon">Location Icon</string>
 
 </resources>

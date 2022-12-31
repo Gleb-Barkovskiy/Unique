@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvLessonStart"
+        style="@style/ItemWrapContent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:textSize="@dimen/text_size_m"
+        app:fontFamily="@font/jost_semibold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="11:15" />
+
+    <TextView
+        android:id="@+id/tvLessonEnd"
+        style="@style/ItemWrapContent"
+        android:textColor="@color/gray_base"
+        android:textSize="@dimen/text_size_s"
+        app:fontFamily="@font/jost_semibold"
+        app:layout_constraintEnd_toEndOf="@id/tvLessonStart"
+        app:layout_constraintStart_toStartOf="@id/tvLessonStart"
+        app:layout_constraintTop_toBottomOf="@id/tvLessonStart"
+        tools:text="12:35" />
+
+    <View
+        android:id="@+id/delimiterOutside"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="@dimen/margin_xxs"
+        android:layout_marginBottom="@dimen/margin_xxs"
+        android:background="@drawable/delimiter_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_s"
+        android:backgroundTint="@color/green_base"
+        android:elevation="4dp"
+        app:cardCornerRadius="15dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/delimiterOutside"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_s">
+
+            <TextView
+                android:id="@+id/tvLessonName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_s"
+                android:maxLines="1"
+                android:scrollbars="horizontal"
+                android:textColor="@color/white_base_front"
+                android:textSize="@dimen/text_size_s"
+                app:fontFamily="@font/jost_semibold"
+                app:layout_constraintEnd_toStartOf="@id/ibOptions"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="ЧМ" />
+
+            <TextView
+                android:id="@+id/tvTeacher"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_xxs"
+                android:maxLines="1"
+                android:scrollbars="horizontal"
+                android:textColor="@color/white_base_front"
+                android:textSize="@dimen/text_size_xs"
+                app:fontFamily="@font/jost_semibold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvLessonName"
+                tools:text="Якименко Т.С." />
+
+            <ImageButton
+                android:id="@+id/ibOptions"
+                style="@style/ItemWrapContent"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/options_button"
+                android:minWidth="64dp"
+                android:minHeight="64dp"
+                android:src="@drawable/icon_options"
+                app:layout_constraintBottom_toBottomOf="@id/tvLessonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tvLessonName"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/delimiterInside"
+                android:layout_width="200dp"
+                android:layout_height="2dp"
+
+                android:layout_marginTop="@dimen/margin_xxs"
+                android:alpha="0.2"
+                android:background="@drawable/delimiter_shape"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTeacher" />
+
+            <ImageView
+                android:id="@+id/ivLocation"
+                style="@style/ItemWrapContent"
+                android:layout_marginTop="@dimen/margin_xs"
+                android:contentDescription="@string/location_icon"
+                android:src="@drawable/location_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/delimiterInside" />
+
+            <TextView
+                android:id="@+id/tv_audience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_xxs"
+                android:maxLines="1"
+                android:scrollbars="horizontal"
+                android:textColor="@color/white_base_front"
+                android:textSize="@dimen/text_size_xs"
+                app:fontFamily="@font/jost_medium"
+                app:layout_constraintBottom_toBottomOf="@id/ivLocation"
+                app:layout_constraintStart_toEndOf="@id/ivLocation"
+                app:layout_constraintTop_toTopOf="@id/ivLocation"
+                tools:text="322" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="ivLocation, tv_audience" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrierLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="tv_audience, ivLocation" />
+
+            <ImageView
+                android:id="@+id/ivType"
+                style="@style/ItemWrapContent"
+                android:layout_marginStart="@dimen/margin_xs"
+                android:layout_marginTop="@dimen/margin_xs"
+                android:contentDescription="@string/location_icon"
+                android:src="@drawable/type_icon"
+                app:layout_constraintStart_toEndOf="@id/barrierLocation"
+                app:layout_constraintTop_toBottomOf="@id/delimiterInside"
+                app:layout_goneMarginTop="@dimen/margin_xxs" />
+
+            <TextView
+                android:id="@+id/tvType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_xxs"
+                android:maxLines="1"
+                android:scrollbars="horizontal"
+                android:textColor="@color/white_base_front"
+                android:textSize="@dimen/text_size_xs"
+                app:fontFamily="@font/jost_medium"
+                app:layout_constraintBottom_toBottomOf="@id/ivType"
+                app:layout_constraintStart_toEndOf="@id/ivType"
+                app:layout_constraintTop_toTopOf="@id/ivType"
+                tools:text="Практика" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="ivType, tvType" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrierType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="ivType, tvType" />
+
+            <ImageView
+                android:id="@+id/ivSubgroup"
+                style="@style/ItemWrapContent"
+                android:layout_marginStart="@dimen/margin_xs"
+                android:layout_marginTop="@dimen/margin_xs"
+                android:contentDescription="@string/location_icon"
+                android:src="@drawable/subgroup_icon"
+                app:layout_constraintStart_toEndOf="@id/barrierType"
+                app:layout_constraintTop_toBottomOf="@id/delimiterInside"
+                app:layout_goneMarginTop="@dimen/margin_xxs" />
+
+            <TextView
+                android:id="@+id/tvSubgroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_xxs"
+                android:maxLines="1"
+                android:scrollbars="horizontal"
+                android:textColor="@color/white_base_front"
+                android:textSize="@dimen/text_size_xs"
+                app:fontFamily="@font/jost_medium"
+                app:layout_constraintBottom_toBottomOf="@id/ivType"
+                app:layout_constraintStart_toEndOf="@id/ivSubgroup"
+                app:layout_constraintTop_toTopOf="@id/ivSubgroup"
+                tools:text="Подгруппа а" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupSubgroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="ivSubgroup, tvSubgroup" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrierCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="ivSubgroup, ivLocation, ivType, delimiterInside" />
+
+
+            <TextView
+                android:id="@+id/tvRegularity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_xs"
+                android:alpha="0.3"
+                android:textColor="@color/white_base_front"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrierCategories"
+                tools:text="Каждую неделю" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

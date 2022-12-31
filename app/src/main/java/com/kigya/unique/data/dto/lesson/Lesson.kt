@@ -35,6 +35,10 @@ data class Lesson(
     @Expose
     val subgroup: String?,
 
+    @SerializedName("regularity")
+    @Expose
+    val regularity: String?,
+
     @SerializedName("subject")
     @Expose
     val subject: String,

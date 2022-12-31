@@ -2,9 +2,11 @@ package com.kigya.unique.ui.main
 
 import androidx.lifecycle.viewModelScope
 import com.kigya.unique.data.local.settings.AppSettings
+import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.ui.base.BaseViewModel
 import com.kigya.unique.utils.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,9 +18,10 @@ import kotlin.properties.Delegates
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
+    @IoDispatcher dispatcher: CoroutineDispatcher,
     appSettings: AppSettings,
     logger: Logger
-) : BaseViewModel(appSettings, logger) {
+) : BaseViewModel(appSettings, logger, dispatcher) {
 
     private var _isUserSignedIn by Delegates.notNull<Boolean>()
 

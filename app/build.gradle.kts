@@ -105,4 +105,12 @@ dependencies {
     implementation("com.github.amarjain07:StickyScrollView:1.0.3")
 
     implementation("androidx.core:core-splashscreen:1.0.0")
+
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.fragment:fragment-ktx:1.5.5")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+
+    implementation("io.arrow-kt:arrow-core:1.0.1")
 }

@@ -1,5 +1,6 @@
 package com.kigya.unique.data.local.settings
 
+import arrow.core.Tuple4
 import com.kigya.unique.data.dto.account.AccountType
 import kotlinx.coroutines.flow.Flow
 
@@ -13,8 +14,14 @@ interface AppSettingsSource {
 
     fun getCurrentAccountType(): Flow<AccountType>
 
-    suspend fun saveParamsToDataStore(course: Int, group: Int, subgroup: Int = 0)
+    suspend fun setCourseToDataStore(course: Int)
 
-    fun getParamsFromDataStore(): Flow<Triple<Int, Int, Int>>
+    suspend fun setGroupToDataStore(group: Int)
+
+    suspend fun setSubgroupToDataStore(subgroup: String)
+
+    suspend fun setRegularityToDataStore(regularity: String)
+
+    fun getParamsFromDataStore(): Flow<Tuple4<Int, Int, String?, String?>>
 
 }

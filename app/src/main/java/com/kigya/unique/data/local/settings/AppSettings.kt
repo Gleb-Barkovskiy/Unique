@@ -3,6 +3,7 @@ package com.kigya.unique.data.local.settings
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import arrow.core.Tuple4
 import com.kigya.unique.data.dto.account.AccountType
 import com.kigya.unique.utils.constants.PreferencesKeys
 import com.kigya.unique.utils.extensions.mapToAccountType
@@ -39,21 +40,37 @@ class AppSettings @Inject constructor(
             it[PreferencesKeys.ACCOUNT_TYPE]?.mapToAccountType() ?: AccountType.STUDENT
         }
 
-
-    override suspend fun saveParamsToDataStore(course: Int, group: Int, subgroup: Int) {
-        dataStore.edit {
-            it[PreferencesKeys.COURSE] = course
-            it[PreferencesKeys.GROUP] = group
-            it[PreferencesKeys.SUBGROUP] = subgroup
+    override suspend fun setCourseToDataStore(course: Int) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.COURSE] = course
         }
     }
 
-    override fun getParamsFromDataStore(): Flow<Triple<Int, Int, Int>> =
+    override suspend fun setGroupToDataStore(group: Int) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.GROUP] = group
+        }
+    }
+
+    override suspend fun setSubgroupToDataStore(subgroup: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.SUBGROUP] = subgroup
+        }
+    }
+
+    override suspend fun setRegularityToDataStore(regularity: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.REGULARITY] = regularity
+        }
+    }
+
+    override fun getParamsFromDataStore(): Flow<Tuple4<Int, Int, String?, String?>> =
         dataStore.data.map {
-            Triple(
-                it[PreferencesKeys.COURSE] ?: 3,
-                it[PreferencesKeys.GROUP] ?: 9,
-                it[PreferencesKeys.SUBGROUP] ?: 0
+            Tuple4(
+                it[PreferencesKeys.COURSE] ?: 1,
+                it[PreferencesKeys.GROUP] ?: 1,
+                it[PreferencesKeys.SUBGROUP],
+                it[PreferencesKeys.REGULARITY],
             )
         }
 

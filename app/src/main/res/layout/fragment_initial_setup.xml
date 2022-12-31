@@ -42,7 +42,7 @@
         android:id="@+id/tvInitialSetupText"
         style="@style/ItemWrapContent"
         android:layout_width="0dp"
-        android:layout_marginTop="@dimen/margin_xs"
+        android:layout_marginTop="@dimen/margin_xxs"
         android:gravity="center"
         android:text="@string/initial_setup_explain"
         android:textSize="@dimen/text_size_m"

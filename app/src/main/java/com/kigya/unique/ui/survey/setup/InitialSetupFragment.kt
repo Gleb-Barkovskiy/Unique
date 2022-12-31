@@ -42,7 +42,6 @@ class InitialSetupFragment : BaseFragment(R.layout.fragment_initial_setup) {
     }
 
 
-
     private fun FragmentInitialSetupBinding.setTeacherClickListener() {
         ibTeacher.setOnClickListener {
             context?.onTouchResponseVibrate {
@@ -70,6 +69,5 @@ class InitialSetupFragment : BaseFragment(R.layout.fragment_initial_setup) {
         viewModel.signIn(accountType)
         navigateToTabs()
     }
-
 
 }

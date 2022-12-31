@@ -7,7 +7,9 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 object PreferencesKeys {
     val COURSE = intPreferencesKey("course")
     val GROUP = intPreferencesKey("group")
-    val SUBGROUP = intPreferencesKey("subgroup")
+    val SUBGROUP = stringPreferencesKey("subgroup")
+    val DAY = stringPreferencesKey("day")
+    val REGULARITY = stringPreferencesKey("regularity")
     val ACCOUNT_TYPE = stringPreferencesKey("account_type")
     val IS_SIGNED_IN = booleanPreferencesKey("is_signed_in")
 }

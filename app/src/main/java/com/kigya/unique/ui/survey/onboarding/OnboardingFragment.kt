@@ -107,7 +107,8 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
     }
 
     companion object {
-        private const val NEXT_BUTTON_ACTIVE_DRAWABLE = R.drawable.button_next_active
+        @JvmStatic
+        private val NEXT_BUTTON_ACTIVE_DRAWABLE = R.drawable.button_next_active
     }
 
 }

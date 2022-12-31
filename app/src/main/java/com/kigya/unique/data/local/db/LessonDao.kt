@@ -16,7 +16,18 @@ interface LessonDao {
     @Query("DELETE FROM lessons")
     suspend fun deleteAllLessons()
 
-    @Query("SELECT * FROM lessons WHERE `group` = :group AND `course` = :course")
-    fun getLessons(course: Int, group: Int): Flow<List<Lesson>>
+    @Query(
+        "SELECT * FROM lessons WHERE `group` = :group AND `course` = :course" +
+                " AND (:day IS NULL OR `day` = :day)" +
+                " AND (:subgroup IS NULL OR `subgroup` = :subgroup)" +
+                " AND (:regularity IS NULL OR `regularity` = :regularity)"
+    )
+    fun getLessons(
+        course: Int,
+        group: Int,
+        day: String? = null,
+        subgroup: String? = null,
+        regularity: String? = null
+    ): Flow<List<Lesson>>
 
 }

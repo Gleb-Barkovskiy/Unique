@@ -76,7 +76,10 @@ class LessonApi @Inject constructor(
                     group = group,
                     day = list[0],
                     time = list[1],
-                    subgroup = list[2],
+                    subgroup = if (list[2].substringBefore(" ")
+                            .contains("н")
+                    ) "" else list[2].substringBefore(" "),
+                    regularity = list[2].substringAfter(" "),
                     subject = subjectTeacher[index].first,
                     teacher = subjectTeacher[index].second,
                     type = list[4],

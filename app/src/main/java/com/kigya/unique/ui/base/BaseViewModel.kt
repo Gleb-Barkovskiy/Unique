@@ -3,33 +3,27 @@ package com.kigya.unique.ui.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kigya.unique.data.local.settings.AppSettings
-import com.kigya.unique.utils.*
-import com.kigya.unique.utils.extensions.share
+import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.utils.logger.Logger
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-open class BaseViewModel(
+@HiltViewModel
+open class BaseViewModel @Inject constructor(
     val appSettings: AppSettings,
-    val logger: Logger
+    val logger: Logger,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _showErrorMessageResEvent = MutableLiveEvent<Int>()
-    val showErrorMessageResEvent = _showErrorMessageResEvent.share()
-
-    private val _showErrorMessageEvent = MutableLiveEvent<String>()
-    val showErrorMessageEvent = _showErrorMessageEvent.share()
-
     fun CoroutineScope.safeLaunch(block: suspend CoroutineScope.() -> Unit) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             try {
                 block.invoke(this)
-            } catch (e: ConnectionException) {
-                logError(e)
-                // _showErrorMessageResEvent.publishEvent(R.string.connection_error)
             } catch (e: Exception) {
                 logError(e)
-                // _showErrorMessageResEvent.publishEvent(R.string.internal_error)
             }
         }
     }

@@ -36,18 +36,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen().apply {
-            setKeepOnScreenCondition { viewModel.isLoading.value }
-        }
+        setupSplashScreen()
         setContentView(R.layout.activity_main)
-
-        window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        setupWindow()
 
         val navController = getRootNavController()
         prepareRootNavController(isSignedIn(), navController)
         onNavControllerActivated(navController)
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentListener, true)
         onBackPressedActivate(navController)
+    }
+
+    private fun setupWindow() {
+        window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+    }
+
+    private fun setupSplashScreen() {
+        installSplashScreen().apply {
+            setKeepOnScreenCondition { viewModel.isLoading.value }
+        }
     }
 
 
