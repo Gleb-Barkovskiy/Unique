@@ -76,9 +76,9 @@
         app:layout_constraintTop_toBottomOf="@id/tvTimetableHint"
         tools:listitem="@layout/timetable_item" />
 
-    <com.kigya.unique.ui.tabs.ResourceView
+    <com.kigya.unique.ui.views.ResourceView
         android:id="@+id/resourceView"
-        layout="@layout/part_result_view"
+        android:layout="@layout/part_result_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

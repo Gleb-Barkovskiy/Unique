@@ -29,6 +29,8 @@ import com.kigya.unique.ui.survey.onboarding.OnSwipeTouchListener
 import com.kigya.unique.utils.result.*
 import kotlin.math.hypot
 import com.kigya.unique.data.dto.account.AccountType
+import com.kigya.unique.ui.views.ResourceView
+import com.kigya.unique.utils.Resource
 
 fun <T> MutableLiveData<T>.share(): LiveData<T> = this
 
@@ -249,6 +251,28 @@ fun AccountType?.mapToString() = when (this) {
     AccountType.STUDENT -> AccountType.STUDENT.name
     AccountType.TEACHER -> AccountType.TEACHER.name
     else -> AccountType.STUDENT.name
+}
+
+fun <T> BaseFragment.collectFlow(flow: Flow<T>, onCollect: (T) -> Unit) {
+    viewLifecycleOwner.lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.STARTED) {
+            flow.collect {
+                onCollect(it)
+            }
+        }
+    }
+}
+
+fun <T, R> BaseFragment.observeResource(
+    flow: Flow<T>,
+    resourceView: ResourceView,
+    onSuccess: (R) -> Unit
+) = collectFlow(flow) { result ->
+    resourceView.setResource(this, result as Resource<*>)
+    if (result is Resource.Success<*>) {
+        @Suppress("UNCHECKED_CAST")
+        onSuccess(result.data as R)
+    }
 }
 
 

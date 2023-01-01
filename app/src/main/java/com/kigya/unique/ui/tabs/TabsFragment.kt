@@ -25,6 +25,7 @@ import com.kigya.unique.utils.calendar.CalendarHelper.daysOfWeek
 import com.kigya.unique.utils.calendar.CalendarHelper.endDate
 import com.kigya.unique.utils.calendar.CalendarHelper.startDate
 import com.kigya.unique.utils.converters.LocaleConverter.Russian.russianShortValue
+import com.kigya.unique.utils.extensions.observeResource
 import com.kigya.unique.utils.extensions.startCenterCircularReveal
 import com.kizitonwose.calendar.view.DaySize
 import dagger.hilt.android.AndroidEntryPoint

@@ -67,26 +67,3 @@ class ResourceView @JvmOverloads constructor(
 
 }
 
-fun <T> BaseFragment.collectFlow(flow: Flow<T>, onCollect: (T) -> Unit) {
-    viewLifecycleOwner.lifecycleScope.launch {
-        repeatOnLifecycle(Lifecycle.State.STARTED) {
-            flow.collect {
-                onCollect(it)
-            }
-        }
-    }
-}
-
-fun <T, R> BaseFragment.observeResource(
-    flow: Flow<T>,
-    resourceView: ResourceView,
-    onSuccess: (R) -> Unit
-) = collectFlow(flow) { result ->
-    resourceView.setResource(this, result as Resource<*>)
-    if (result is Resource.Success<*>) {
-        @Suppress("UNCHECKED_CAST")
-        onSuccess(result.data as R)
-    }
-}
-
-
