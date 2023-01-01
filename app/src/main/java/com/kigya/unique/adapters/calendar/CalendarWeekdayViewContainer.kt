@@ -1,9 +1,10 @@
-package com.kigya.unique.data.local.calendar
+package com.kigya.unique.adapters.calendar
 
 import android.view.View
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.kigya.unique.databinding.CalendarDayItemBinding
+import com.kigya.unique.utils.calendar.setOnSafeClickListener
 import com.kizitonwose.calendar.core.WeekDay
 import com.kizitonwose.calendar.view.ViewContainer
 import com.kizitonwose.calendar.view.WeekCalendarView
@@ -23,7 +24,7 @@ class CalendarWeekdayViewContainer(
 
     init {
         with(CalendarDayItemBinding.bind(view)) { fillContainer() }
-        view.setOnClickListener { clickListener.dateClicked(calendarView, weekDay.date) }
+        view.setOnSafeClickListener { clickListener.dateClicked(calendarView, weekDay.date) }
     }
 
     private fun CalendarDayItemBinding.fillContainer() {

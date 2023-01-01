@@ -1,4 +1,4 @@
-package com.kigya.unique.data.remote
+package com.kigya.unique.utils
 
 sealed class Resource<T>(
     val data: T? = null,

@@ -1,4 +1,4 @@
-package com.kigya.unique.data.local.calendar
+package com.kigya.unique.adapters.calendar
 
 import android.view.View
 import com.kizitonwose.calendar.core.WeekDay

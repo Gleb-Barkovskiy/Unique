@@ -15,5 +15,6 @@
     <string name="time">Время</string>
     <string name="timetable">Расписание</string>
     <string name="location_icon">Location Icon</string>
+    <string name="no_lessons">Занятий нет</string>
 
 </resources>

@@ -65,13 +65,12 @@ class AppSettings @Inject constructor(
     }
 
     override fun getParamsFromDataStore(): Flow<Tuple4<Int, Int, String?, String?>> =
-        dataStore.data.map {
+        dataStore.data.map { preferences ->
             Tuple4(
-                it[PreferencesKeys.COURSE] ?: 1,
-                it[PreferencesKeys.GROUP] ?: 1,
-                it[PreferencesKeys.SUBGROUP],
-                it[PreferencesKeys.REGULARITY],
+                preferences[PreferencesKeys.COURSE] ?: 1,
+                preferences[PreferencesKeys.GROUP] ?: 1,
+                preferences[PreferencesKeys.SUBGROUP],
+                preferences[PreferencesKeys.REGULARITY]
             )
         }
-
 }

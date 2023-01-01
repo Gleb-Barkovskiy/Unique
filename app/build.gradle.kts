@@ -113,4 +113,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
     implementation("io.arrow-kt:arrow-core:1.0.1")
+
+    implementation("com.fasterxml.jackson.core:jackson-core:2.11.1")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.11.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.11.1")
+
+    implementation("jp.wasabeef:recyclerview-animators:4.0.2")
 }

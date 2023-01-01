@@ -1,4 +1,4 @@
-package com.kigya.unique.utils
+package com.kigya.unique.utils.exceptions
 
 
 open class AppException : RuntimeException {

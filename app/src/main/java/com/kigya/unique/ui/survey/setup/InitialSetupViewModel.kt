@@ -9,6 +9,7 @@ import com.kigya.unique.utils.constants.InitialSetupConst
 import com.kigya.unique.utils.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
@@ -24,7 +25,7 @@ class InitialSetupViewModel @Inject constructor(
     private val timer = Timer()
 
     fun signIn(accountType: AccountType) {
-        viewModelScope.safeLaunch {
+        viewModelScope.launch {
             appSettings.signIn()
             appSettings.setCurrentAccountType(accountType)
         }

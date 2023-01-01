@@ -11,6 +11,8 @@
         <item name="colorOnSecondary">@color/green_base</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:windowLightStatusBar">true</item>
+
         <!-- Customize your theme here. -->
         <item name="actionOverflowButtonStyle">@id/invisible</item>
         <item name="fontFamily">@font/jost_regular</item>

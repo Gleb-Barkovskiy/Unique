@@ -7,15 +7,18 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kigya.unique.R
-import com.kigya.unique.data.local.calendar.CalendarWeekdayBinder
-import com.kigya.unique.data.local.calendar.CalendarWeekdayClickListener
-import com.kigya.unique.data.local.calendar.CalendarDateBinder
-import com.kigya.unique.data.remote.Resource
+import com.kigya.unique.adapters.calendar.CalendarDateBinder
+import com.kigya.unique.adapters.calendar.CalendarWeekdayBinder
+import com.kigya.unique.adapters.calendar.CalendarWeekdayClickListener
+import com.kigya.unique.adapters.lesson.LessonAdapter
+import com.kigya.unique.adapters.lesson.LessonsScrollListener
+import com.kigya.unique.data.dto.lesson.Lesson
+import com.kigya.unique.utils.Resource
 import com.kigya.unique.databinding.FragmentTabsBinding
+import com.kigya.unique.ui.base.BaseFragment
 import com.kigya.unique.utils.calendar.CalendarHelper
 import com.kigya.unique.utils.calendar.CalendarHelper.currentDate
 import com.kigya.unique.utils.calendar.CalendarHelper.daysOfWeek
@@ -23,48 +26,65 @@ import com.kigya.unique.utils.calendar.CalendarHelper.endDate
 import com.kigya.unique.utils.calendar.CalendarHelper.startDate
 import com.kigya.unique.utils.converters.LocaleConverter.Russian.russianShortValue
 import com.kigya.unique.utils.extensions.startCenterCircularReveal
-import com.kigya.unique.utils.logger.LogCatLogger
 import com.kizitonwose.calendar.view.DaySize
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import java.time.LocalDate
 
+typealias LessonList = List<Lesson>
+
+typealias LessonListResource = Resource<LessonList>
+
 @AndroidEntryPoint
-class TabsFragment : Fragment(R.layout.fragment_tabs), CalendarDateBinder {
+class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
 
     private val viewBinding by viewBinding(FragmentTabsBinding::bind)
-    private val viewModel by viewModels<TabsViewModel>()
+    override val viewModel by viewModels<TabsViewModel>()
     private val adapter by lazy { LessonAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.startCenterCircularReveal()
-        setWindowLimits()
+        setupWindow()
 
         with(viewBinding) {
             setupCalendarView(viewModel, this@TabsFragment)
             setupAdapter()
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.lessons.collect {
-                    when (it) {
-                        is Resource.Success -> {
-                            adapter.lessons = it.data ?: emptyList()
-                            adapter.notifyDataSetChanged()
-                        }
-
-                        else -> {
-                            LogCatLogger.log("TabsFragment", "onViewCreated: $it")
-                        }
+            observeResource<LessonListResource, LessonList>(viewModel.lessons, resourceView) {
+                resourceView.setTryAgainAction { viewModel.refreshData() }
+                if (it.isEmpty()) {
+                    context?.let { context ->
+                        resourceView.setMessageText(context.getString(R.string.no_lessons))
                     }
+                    adapter.updateList(emptyList())
+                } else {
+                    adapter.updateList(it)
                 }
             }
         }
     }
 
+    private fun FragmentTabsBinding.observeLessons() {
+        observeResource<LessonListResource, LessonList>(viewModel.lessons, resourceView) {
+            resourceView.setTryAgainAction { viewModel.refreshData() }
+            if (it.isEmpty()) {
+
+                adapter.updateList(emptyList())
+            } else {
+                adapter.updateList(it)
+            }
+        }
+    }
+
     private fun FragmentTabsBinding.setupAdapter() {
-        val layoutManager = LinearLayoutManager(requireContext())
-        rvLessons.layoutManager = layoutManager
-        rvLessons.adapter = adapter
+        rvLessons.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            val alphaAdapter = AlphaInAnimationAdapter(
+                this@TabsFragment.adapter
+            ).apply { setDuration(500) }
+            adapter = alphaAdapter
+            addOnScrollListener(LessonsScrollListener(this.adapter as AlphaInAnimationAdapter))
+        }
     }
 
     override fun bindDate(
@@ -102,8 +122,9 @@ private fun FragmentTabsBinding.setupCalendarView(
     }
 }
 
-private fun Fragment.setWindowLimits() {
+private fun Fragment.setupWindow() {
     activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+    activity?.window?.statusBarColor = resources.getColor(R.color.white_base_front, null)
 }
 
 

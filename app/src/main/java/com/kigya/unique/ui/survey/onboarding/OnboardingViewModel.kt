@@ -1,5 +1,8 @@
 package com.kigya.unique.ui.survey.onboarding
 
+import android.util.Log
+import androidx.lifecycle.viewModelScope
+import com.kigya.unique.data.local.LessonRepository
 import com.kigya.unique.data.local.settings.AppSettings
 import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.ui.base.BaseViewModel
@@ -12,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
@@ -21,6 +25,7 @@ typealias ViewStateFlow = MutableStateFlow<OnboardingViewModel.ViewState>
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
     @IoDispatcher dispatcher: CoroutineDispatcher,
+    private val repository: LessonRepository,
     appSettings: AppSettings,
     logger: Logger
 ) : BaseViewModel(appSettings, logger, dispatcher) {
@@ -30,6 +35,23 @@ class OnboardingViewModel @Inject constructor(
     var isReady = false
 
     private val timer = Timer()
+
+    init {
+        prepareDatabaseFromAssets(dispatcher)
+        loadFreshData()
+    }
+
+    private fun loadFreshData() {
+        viewModelScope.launch {
+            repository.getLessons().collect {}
+        }
+    }
+
+    private fun prepareDatabaseFromAssets(dispatcher: CoroutineDispatcher) {
+        viewModelScope.launch(dispatcher) {
+            repository.setToDatabaseFromAssets()
+        }
+    }
 
     fun performAfterDelay(action: () -> Unit) {
         timer.schedule(OnboardingConst.UI_WAITING_TIME) {

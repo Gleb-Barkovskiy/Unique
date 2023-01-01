@@ -53,5 +53,4 @@ object AppModule {
             produceFile = { appContext.preferencesDataStoreFile(ModelConst.DataStore.TIMETABLE_PREFERENCES) }
         )
     }
-
 }

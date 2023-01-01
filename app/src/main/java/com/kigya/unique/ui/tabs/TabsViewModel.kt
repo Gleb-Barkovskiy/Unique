@@ -1,11 +1,11 @@
 package com.kigya.unique.ui.tabs
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.data.local.LessonRepository
-import com.kigya.unique.data.local.calendar.CalendarWeekdayClickListener
+import com.kigya.unique.adapters.calendar.CalendarWeekdayClickListener
 import com.kigya.unique.data.local.settings.AppSettings
-import com.kigya.unique.data.remote.Resource
+import com.kigya.unique.utils.Resource
 import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.ui.base.BaseViewModel
 import com.kigya.unique.utils.calendar.CalendarHelper
@@ -20,11 +20,9 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
-typealias LessonsResource = Resource<List<Lesson>>
-
 @HiltViewModel
 class TabsViewModel @Inject constructor(
-    @IoDispatcher dispatcher: CoroutineDispatcher,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
     appSettings: AppSettings,
     private val repository: LessonRepository,
     logger: Logger
@@ -33,7 +31,7 @@ class TabsViewModel @Inject constructor(
     var selectedDate = CalendarHelper.currentDate
     var previousSelectedDate = CalendarHelper.currentDate
 
-    private var _lessons = MutableStateFlow<LessonsResource>(Resource.Loading())
+    private var _lessons = MutableStateFlow<LessonListResource>(Resource.Loading())
     val lessons = _lessons.asStateFlow()
 
     private var course: Int = 1
@@ -42,33 +40,57 @@ class TabsViewModel @Inject constructor(
     private var regularity: String? = null
 
     init {
-        viewModelScope.safeLaunch {
-            setInitialState(appSettings)
+        setParamsStoreState(appSettings)
+        initLessonsFromDatabaseOrRefresh()
+        loadFreshData()
+    }
+
+    private fun loadFreshData() {
+        viewModelScope.launch {
+            repository.getLessons().collect {}
         }
     }
 
-    private suspend fun setInitialState(appSettings: AppSettings) {
-        appSettings.getParamsFromDataStore().collect { params ->
-            course = params.first
-            group = params.second
-            subgroup = params.third
-            regularity = params.fourth
-            getLessons()
-            refreshData()
+    private fun initLessonsFromDatabaseOrRefresh() {
+        viewModelScope.launch(dispatcher) {
+            getFromDatabaseOrRefresh()
         }
     }
 
-    private fun refreshData() {
-        repository.getLessons(
-            course,
-            group,
-            selectedDate.dayOfWeek.russianValue(),
-            subgroup,
-            regularity
-        )
+    private fun setParamsStoreState(appSettings: AppSettings) {
+        viewModelScope.launch(dispatcher) {
+            Log.d("LessonRepository", "setParamsStoreState")
+            appSettings.getParamsFromDataStore().collect { params ->
+                course = params.first
+                group = params.second
+                subgroup = params.third
+                regularity = params.fourth
+            }
+        }
     }
 
-    private suspend fun getLessons() {
+    fun refreshData() {
+        Log.d("Observer", "refreshData")
+        viewModelScope.launch(dispatcher) {
+            _lessons.value = Resource.Loading()
+            repository.getLessons().collect { lessons ->
+                val filteredLessons = lessons.data?.filter {
+                    it.course == course &&
+                            it.group == group &&
+                            it.subgroup == subgroup &&
+                            it.regularity == regularity &&
+                            it.day == selectedDate.dayOfWeek.russianValue()
+                }
+                _lessons.value =
+                    filteredLessons?.let { Resource.Success(it) }
+                        ?: Resource.Error(Exception("No lessons"))
+            }
+        }
+    }
+
+    private suspend fun getDatabaseLessons() {
+        _lessons.value = Resource.Loading()
+        Log.d("LessonRepository", "getDatabaseLessons")
         repository.getDatabaseLessons(
             course,
             group,
@@ -88,15 +110,20 @@ class TabsViewModel @Inject constructor(
     override fun dateClicked(weekCalendarView: WeekCalendarView, date: LocalDate) {
         swapDates(date)
         weekCalendarView.notifyCalendarChanged()
-        viewModelScope.launch {
-            getLessons()
+        viewModelScope.launch(dispatcher) {
+            Log.d("LessonRepository", "dateClicked")
+            getFromDatabaseOrRefresh()
+        }
+    }
+
+    private suspend fun getFromDatabaseOrRefresh() {
+        Log.d("LessonRepository", "getFromDatabaseOrRefresh")
+        if (repository.getDatabaseSize() == 0) {
+            Log.d("LessonRepository", "getFromDatabaseOrRefresh: refresh")
+            refreshData()
+        } else {
+            Log.d("LessonRepository", "getFromDatabaseOrRefresh: getDatabaseLessons")
+            getDatabaseLessons()
         }
     }
 }
-
-
-
-
-
-
-

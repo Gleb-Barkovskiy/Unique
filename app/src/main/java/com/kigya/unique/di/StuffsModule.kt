@@ -10,10 +10,8 @@ import com.kigya.unique.utils.logger.Logger
 @Module
 @InstallIn(SingletonComponent::class)
 class StuffsModule {
-
     @Provides
     fun provideLogger(): Logger {
         return LogCatLogger
     }
-
 }

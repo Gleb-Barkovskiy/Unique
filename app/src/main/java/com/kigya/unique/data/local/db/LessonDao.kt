@@ -2,16 +2,17 @@ package com.kigya.unique.data.local.db
 
 import androidx.room.*
 import com.kigya.unique.data.dto.lesson.Lesson
+import com.kigya.unique.utils.LessonList
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LessonDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsertLessons(rows: List<Lesson>)
+    suspend fun upsertLessons(rows: LessonList)
 
     @Query("SELECT * FROM lessons")
-    fun getAllLessons(): Flow<List<Lesson>>
+    fun getAllLessons(): Flow<LessonList>
 
     @Query("DELETE FROM lessons")
     suspend fun deleteAllLessons()
@@ -29,5 +30,8 @@ interface LessonDao {
         subgroup: String? = null,
         regularity: String? = null
     ): Flow<List<Lesson>>
+
+    @Query("SELECT COUNT(*) FROM lessons")
+    fun getDatabaseSize(): Int
 
 }

@@ -2,6 +2,7 @@ package com.kigya.unique.data.remote
 
 import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.di.IoDispatcher
+import com.kigya.unique.utils.LessonList
 import com.kigya.unique.utils.constants.ModelConst
 import com.kigya.unique.utils.extensions.fastReplace
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,7 +17,7 @@ class LessonApi @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : LessonApiSource {
 
-    override suspend fun getNetworkData(): List<Lesson> {
+    override suspend fun getNetworkData(): LessonList {
         val rowList = mutableListOf<Lesson>()
         coroutineScope {
             (1..4).map { course ->
@@ -29,11 +30,7 @@ class LessonApi @Inject constructor(
                 }
                 (1..maxGroup).map { group ->
                     async(ioDispatcher) {
-                        rowList += getNetworkDataByCourseAndGroup(
-                            course,
-                            group,
-                            false
-                        )
+                        rowList += getNetworkDataByCourseAndGroup(course, group, false)
                     }
                 }
             }
@@ -50,7 +47,7 @@ class LessonApi @Inject constructor(
         course: Int,
         group: Int,
         isMilitaryFaculty: Boolean
-    ): List<Lesson> {
+    ): LessonList {
         val rowList = mutableListOf<Lesson>()
         val doc: Document? = getDoc(course, group, isMilitaryFaculty)
         val tableList = mutableListOf<String>()

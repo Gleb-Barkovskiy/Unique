@@ -1,19 +1,22 @@
-package com.kigya.unique.ui.tabs
+package com.kigya.unique.adapters.lesson
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.databinding.TimetableItemBinding
+import com.kigya.unique.utils.LessonList
 import com.kigya.unique.utils.lesson.properRegularity
 import com.kigya.unique.utils.lesson.properSubgroup
 import com.kigya.unique.utils.lesson.timeEnd
 import com.kigya.unique.utils.lesson.timeStart
 
+
 class LessonAdapter : RecyclerView.Adapter<LessonAdapter.LessonsViewHolder>() {
 
-    var lessons = emptyList<Lesson>()
+    private var lessons = emptyList<Lesson>()
         @SuppressLint("NotifyDataSetChanged")
         set(newValue) {
             field = newValue
@@ -44,7 +47,14 @@ class LessonAdapter : RecyclerView.Adapter<LessonAdapter.LessonsViewHolder>() {
         tvSubgroup.text = listItem.subgroup.properSubgroup()
     }
 
+    fun updateList(newList: LessonList) {
+        val diffResult = DiffUtil.calculateDiff(LessonDiffUtilCallback(lessons, newList))
+        lessons = newList
+        diffResult.dispatchUpdatesTo(this)
+    }
+
     class LessonsViewHolder(
         val binding: TimetableItemBinding
     ) : RecyclerView.ViewHolder(binding.root)
 }
+

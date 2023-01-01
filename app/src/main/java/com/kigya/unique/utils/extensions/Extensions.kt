@@ -21,7 +21,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.kigya.unique.R
-import com.kigya.unique.utils.result.ResultView
 import com.kigya.unique.utils.result.Success
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -88,30 +87,6 @@ fun Fragment.findTopNavController(): NavController {
 
 fun <T> LiveData<T>.requireValue(): T {
     return this.value ?: throw IllegalStateException("Value is empty")
-}
-
-fun <T> LiveData<Result<T>>.observeResults(
-    fragment: BaseFragment,
-    root: View,
-    resultView: ResultView,
-    onSuccess: (T) -> Unit
-) {
-    observe(fragment.viewLifecycleOwner) { result ->
-        resultView.setResult(fragment, result)
-        val rootView: View = if (root is ScrollView)
-            root.getChildAt(0)
-        else
-            root
-
-        if (rootView is ViewGroup && rootView !is RecyclerView && root !is AbsListView) {
-            rootView.children
-                .filter { it != resultView }
-                .forEach {
-                    it.isVisible = result is Success<*>
-                }
-        }
-        if (result is Success) onSuccess.invoke(result.value)
-    }
 }
 
 typealias ViewModelCreator<VM> = () -> VM

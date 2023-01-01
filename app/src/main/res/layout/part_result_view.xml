@@ -18,13 +18,13 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
-        android:id="@+id/messageTextView"
+        android:id="@+id/tvErrorMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:textAlignment="center"
         android:gravity="center"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:visibility="gone"
         tools:text="Текст ошибки"
         tools:visibility="visible"
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/errorButton"
+        android:id="@+id/btnError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/try_again"
@@ -42,6 +42,6 @@
         tools:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/messageTextView"/>
+        app:layout_constraintTop_toBottomOf="@id/tvErrorMessage"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
