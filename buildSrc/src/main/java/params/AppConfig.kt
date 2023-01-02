@@ -1,3 +1,5 @@
+package params
+
 object AppConfig {
     const val id = "com.kigya.unique"
     const val name = "Unique"

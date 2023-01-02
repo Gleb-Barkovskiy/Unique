@@ -8,7 +8,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kigya.unique.R
 import com.kigya.unique.databinding.FragmentOnboardingBinding
 import com.kigya.unique.ui.base.BaseFragment
-import com.kigya.unique.utils.*
 import com.kigya.unique.utils.constants.OnboardingConst
 import com.kigya.unique.utils.constants.OnboardingConst.Progress.MAX_PROGRESS
 import com.kigya.unique.utils.constants.OnboardingConst.Progress.PROGRESS_WAITING_TIME

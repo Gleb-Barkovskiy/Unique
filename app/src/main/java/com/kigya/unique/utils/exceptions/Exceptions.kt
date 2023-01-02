@@ -1,11 +1,7 @@
 package com.kigya.unique.utils.exceptions
 
 
-open class AppException : RuntimeException {
-    constructor() : super()
-    constructor(message: String) : super(message)
-    constructor(cause: Throwable) : super(cause)
-}
+open class AppException(cause: Throwable) : RuntimeException(cause)
 
 class AuthException(
     cause: Throwable

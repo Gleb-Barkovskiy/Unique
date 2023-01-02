@@ -4,7 +4,6 @@
     <string name="connection_error">Ошибка соединения</string>
     <string name="internal_error">Внутренняя ошибка</string>
     <string name="background_pattern">Background pattern</string>
-    <string name="next_button">Next button</string>
     <string name="cinema_answer">Нет, я делаю Дерюшева</string>
     <string name="top_background_image_in_initial_setup">Top Background Image in Initial Setup</string>
     <string name="initial_setup">Предварительная настройка</string>

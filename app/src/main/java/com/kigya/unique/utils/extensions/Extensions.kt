@@ -1,36 +1,28 @@
 package com.kigya.unique.utils.extensions
 
 import android.content.Context
-import android.content.Context.VIBRATOR_SERVICE
 import android.os.*
 import android.view.View
 import android.view.ViewAnimationUtils
-import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import android.widget.AbsListView
 import android.widget.ImageButton
-import android.widget.ScrollView
-import androidx.core.view.children
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.kigya.unique.R
-import com.kigya.unique.utils.result.Success
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
+import com.kigya.unique.data.dto.account.AccountType
 import com.kigya.unique.ui.base.BaseFragment
 import com.kigya.unique.ui.survey.onboarding.OnSwipeTouchListener
-import com.kigya.unique.utils.result.*
-import kotlin.math.hypot
-import com.kigya.unique.data.dto.account.AccountType
 import com.kigya.unique.ui.views.ResourceView
 import com.kigya.unique.utils.Resource
+import com.kigya.unique.utils.result.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import kotlin.math.hypot
 
 fun <T> MutableLiveData<T>.share(): LiveData<T> = this
 
@@ -93,6 +85,7 @@ fun <T> LiveData<T>.requireValue(): T {
 
 typealias ViewModelCreator<VM> = () -> VM
 
+@Suppress("UNCHECKED_CAST")
 class ViewModelFactory<VM : ViewModel>(
     private val viewModelCreator: ViewModelCreator<VM>
 ) : ViewModelProvider.Factory {
@@ -172,8 +165,7 @@ fun Context.onTouchResponseVibrate(block: () -> Unit) {
             getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
         vibratorManager.defaultVibrator
     } else {
-        @Suppress("DEPRECATION")
-        getSystemService(VIBRATOR_SERVICE) as Vibrator
+        getSystemService(Vibrator::class.java) as Vibrator
     }
 
     vib.vibrate(VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE))
@@ -268,11 +260,9 @@ fun <T, R> BaseFragment.observeResource(
     resourceView: ResourceView,
     onSuccess: (R) -> Unit
 ) = collectFlow(flow) { result ->
-    resourceView.setResource(this, result as Resource<*>)
+    resourceView.setResource(result as Resource<*>)
     if (result is Resource.Success<*>) {
         @Suppress("UNCHECKED_CAST")
         onSuccess(result.data as R)
     }
 }
-
-

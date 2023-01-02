@@ -1,3 +1,7 @@
+package subjections
+
+import params.Versions
+
 object AppDependencies {
 
     // test libraries
@@ -10,7 +14,6 @@ object AppDependencies {
     object Espresso {
         const val core = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     }
-
 
     // android ui libraries
 
@@ -45,16 +48,6 @@ object AppDependencies {
             "com.nex3z:toggle-button-group:${Versions.toggleButtonGroup}"
     }
 
-    object SurroundCardView {
-        const val surroundCardView =
-            "com.furkanakdemir:surroundcardview:${Versions.surroundCardView}"
-    }
-
-    object RoundCornerProgressBar {
-        const val roundCornerProgressBar =
-            "com.akexorcist:round-corner-progress-bar:${Versions.roundCornerProgressBar}"
-    }
-
     object RecyclerViewAnimators {
         const val recyclerViewAnimators =
             "jp.wasabeef:recyclerview-animators:${Versions.recyclerViewAnimators}"
@@ -66,6 +59,19 @@ object AppDependencies {
 
     object CircleProgressBar {
         const val progressBar = "com.mikhaellopez:circularprogressbar:${Versions.progressBar}"
+    }
+
+    object Calendar {
+        const val calendarView = "com.kizitonwose.calendar:view:${Versions.calendarView}"
+    }
+
+    object CardView {
+        const val cardView = "androidx.cardview:cardview:${Versions.cardView}"
+    }
+
+    object SplashScreen {
+        const val splashScreen = "androidx.core:core-splashscreen:${Versions.splashScreen}"
+
     }
 
 
@@ -97,6 +103,8 @@ object AppDependencies {
         const val ktx =
             "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
         const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+        const val extensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleExtensions}"
     }
 
     object Hilt {
@@ -108,11 +116,6 @@ object AppDependencies {
         const val runtime = "androidx.room:room-runtime:${Versions.room}"
         const val ktx = "androidx.room:room-ktx:${Versions.room}"
         const val compiler = "androidx.room:room-compiler:${Versions.room}"
-    }
-
-    object LiveData {
-        const val ktx =
-            "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     }
 
     object DataStore {
@@ -128,6 +131,9 @@ object AppDependencies {
         const val ssp = "com.intuit.ssp:ssp-android:${Versions.ssp}"
     }
 
+    object Fragment {
+        const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
+    }
 }
 
 

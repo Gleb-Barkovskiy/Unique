@@ -38,11 +38,12 @@ object CalendarHelper {
             App.appContext.getColorStateList(Color.WHITE_BASE_FRONT)
     }
 
+
     object Color {
-        const val BLACK_BASE = R.color.black_base
-        const val WHITE_BASE_FRONT = R.color.white_base_front
-        const val WHITE_BASE_DARK = R.color.white_base_dark
-        const val GREEN_BASE = R.color.green_base
+        @JvmStatic val BLACK_BASE = R.color.black_base
+        @JvmStatic val WHITE_BASE_FRONT = R.color.white_base_front
+        @JvmStatic val WHITE_BASE_DARK = R.color.white_base_dark
+        @JvmStatic val GREEN_BASE = R.color.green_base
     }
 
 }

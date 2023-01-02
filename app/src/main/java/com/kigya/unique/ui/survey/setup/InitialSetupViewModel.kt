@@ -10,10 +10,9 @@ import com.kigya.unique.utils.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Timer
 import javax.inject.Inject
 import kotlin.concurrent.schedule
-import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class InitialSetupViewModel @Inject constructor(

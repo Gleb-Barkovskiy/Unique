@@ -3,8 +3,8 @@ package com.kigya.unique.data.local.settings
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import arrow.core.Tuple4
 import com.kigya.unique.data.dto.account.AccountType
+import com.kigya.unique.utils.Quartet
 import com.kigya.unique.utils.constants.PreferencesKeys
 import com.kigya.unique.utils.extensions.mapToAccountType
 import com.kigya.unique.utils.extensions.mapToString
@@ -64,9 +64,9 @@ class AppSettings @Inject constructor(
         }
     }
 
-    override fun getParamsFromDataStore(): Flow<Tuple4<Int, Int, String?, String?>> =
+    override fun getParamsFromDataStore(): Flow<Quartet<Int, Int, String?, String?>> =
         dataStore.data.map { preferences ->
-            Tuple4(
+            Quartet(
                 preferences[PreferencesKeys.COURSE] ?: 1,
                 preferences[PreferencesKeys.GROUP] ?: 1,
                 preferences[PreferencesKeys.SUBGROUP],

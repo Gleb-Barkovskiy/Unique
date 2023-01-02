@@ -1,7 +1,7 @@
 package com.kigya.unique.data.local.settings
 
-import arrow.core.Tuple4
 import com.kigya.unique.data.dto.account.AccountType
+import com.kigya.unique.utils.Quartet
 import kotlinx.coroutines.flow.Flow
 
 interface AppSettingsSource {
@@ -22,6 +22,6 @@ interface AppSettingsSource {
 
     suspend fun setRegularityToDataStore(regularity: String)
 
-    fun getParamsFromDataStore(): Flow<Tuple4<Int, Int, String?, String?>>
+    fun getParamsFromDataStore(): Flow<Quartet<Int, Int, String?, String?>>
 
 }

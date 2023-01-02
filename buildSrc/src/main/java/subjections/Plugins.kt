@@ -1,3 +1,5 @@
+package subjections
+
 object Plugins {
     const val application = "com.android.application"
     const val androidLibrary = "com.android.library"

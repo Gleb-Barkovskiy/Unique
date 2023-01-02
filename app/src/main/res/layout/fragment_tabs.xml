@@ -6,7 +6,6 @@
     android:id="@+id/scrollView"
     style="@style/ItemMatchParent"
     android:background="@color/white_base_front"
-    app:stickyHeader="@+id/calendarView"
     tools:context="com.kigya.unique.ui.tabs.TabsFragment">
 
     <androidx.constraintlayout.widget.Guideline

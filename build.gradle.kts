@@ -1,10 +1,17 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.0.0-alpha10")
+    }
+}
 plugins {
-    id(Plugins.application) version Versions.application apply false
-    id(Plugins.androidLibrary) version Versions.application apply false
-    id(Plugins.kotlinAndroid) version Versions.kotlin apply false
-    id(Plugins.safeargs) version Versions.safeargs apply false
-    id(Plugins.hiltGoogle) version Versions.hiltPlugin apply false
+    with(params.Versions) {
+        id(subjections.Plugins.application) version application apply false
+        id(subjections.Plugins.androidLibrary) version application apply false
+        id(subjections.Plugins.kotlinAndroid) version kotlin apply false
+        id(subjections.Plugins.safeargs) version safeargs apply false
+        id(subjections.Plugins.hiltGoogle) version hiltPlugin apply false
+    }
+
 }
 
 

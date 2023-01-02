@@ -1,5 +1,6 @@
 package extensions
 
+import subjections.AppDependencies
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 fun DependencyHandler.implementation(list: List<String>) {

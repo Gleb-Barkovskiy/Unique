@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("SameParameterValue")
     private fun AppCompatActivity.onBackPressed(isEnabled: Boolean, callback: () -> Unit) {
         onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(isEnabled) {
@@ -110,10 +111,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun isSignedIn() = viewModel.isUserSignedIn
 
+    @Suppress("SameReturnValue")
     private fun getMainNavigationGraphId() = R.navigation.main_graph
 
+    @Suppress("SameReturnValue")
     private fun getTabsDestination() = R.id.tabsFragment
 
+    @Suppress("SameReturnValue")
     private fun getOnboardingDestination() = R.id.onboardingFragment
 
 }

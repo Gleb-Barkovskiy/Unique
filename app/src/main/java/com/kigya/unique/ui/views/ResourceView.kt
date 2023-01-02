@@ -6,16 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.kigya.unique.R
-import com.kigya.unique.utils.Resource
 import com.kigya.unique.databinding.PartResultViewBinding
-import com.kigya.unique.ui.base.BaseFragment
+import com.kigya.unique.utils.Resource
 import com.kigya.unique.utils.exceptions.ConnectionException
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 
 class ResourceView @JvmOverloads constructor(
     context: Context,
@@ -46,7 +40,7 @@ class ResourceView @JvmOverloads constructor(
 
     }
 
-    fun <T> setResource(fragment: BaseFragment, result: Resource<T>) {
+    fun <T> setResource(result: Resource<T>) {
         binding.tvErrorMessage.isVisible = result is Resource.Error<*>
         binding.btnError.isVisible = result is Resource.Error<*>
         binding.progressBar.isVisible = result is Resource.Loading<*>

@@ -1,8 +1,9 @@
+@file:Suppress("SameReturnValue")
+
 package com.kigya.unique.utils.lesson
 
-fun String.Companion.empty(): String {
-    return ""
-}
+@Suppress("SameReturnValue")
+fun String.Companion.empty(): String = ""
 
 fun String.timeStart(): String {
     return this.split("–")[0].trim()
