@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface LessonDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     suspend fun upsertLessons(rows: LessonList)
 
     @Query("SELECT * FROM lessons")
@@ -20,18 +20,23 @@ interface LessonDao {
     @Query(
         "SELECT * FROM lessons WHERE `group` = :group AND `course` = :course" +
                 " AND (:day IS NULL OR `day` = :day)" +
-                " AND (:subgroup IS NULL OR `subgroup` = :subgroup)" +
+                " AND (`subgroup` NOT IN (:subgroupList))" +
                 " AND (:regularity IS NULL OR `regularity` = :regularity)"
     )
     fun getLessons(
         course: Int,
         group: Int,
         day: String? = null,
-        subgroup: String? = null,
-        regularity: String? = null
+        subgroupList: List<String> = SUBGROUPS_DEFAULT_PARAM,
+        regularity: String? = null,
     ): Flow<List<Lesson>>
 
     @Query("SELECT COUNT(*) FROM lessons")
     fun getDatabaseSize(): Int
+
+
+    companion object {
+        private val SUBGROUPS_DEFAULT_PARAM = listOf("а", "б", "в")
+    }
 
 }

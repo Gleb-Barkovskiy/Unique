@@ -4,6 +4,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.kigya.unique.data.dto.account.AccountType
+import com.kigya.unique.ui.tabs.FiltersMapper.toSubgroupList
+import com.kigya.unique.ui.tabs.FiltersMapper.toSubgroupBundle
 import com.kigya.unique.utils.Quartet
 import com.kigya.unique.utils.constants.PreferencesKeys
 import com.kigya.unique.utils.extensions.mapToAccountType
@@ -52,25 +54,25 @@ class AppSettings @Inject constructor(
         }
     }
 
-    override suspend fun setSubgroupToDataStore(subgroup: String) {
+    override suspend fun setSubgroupListToDataStore(subgroupList: List<String>) {
         dataStore.edit { preferences ->
-            preferences[PreferencesKeys.SUBGROUP] = subgroup
+            preferences[PreferencesKeys.SUBGROUP_LIST] = subgroupList.toSubgroupBundle()
         }
     }
 
-    override suspend fun setRegularityToDataStore(regularity: String) {
+    override suspend fun setRegularityToDataStore(isAuto: Boolean) {
         dataStore.edit { preferences ->
-            preferences[PreferencesKeys.REGULARITY] = regularity
+            preferences[PreferencesKeys.IS_AUTO_REGULARITY] = isAuto
         }
     }
 
-    override fun getParamsFromDataStore(): Flow<Quartet<Int, Int, String?, String?>> =
+    override fun getParamsFromDataStore(): Flow<Quartet<Int, Int, List<String>, Boolean>> =
         dataStore.data.map { preferences ->
             Quartet(
                 preferences[PreferencesKeys.COURSE] ?: 1,
                 preferences[PreferencesKeys.GROUP] ?: 1,
-                preferences[PreferencesKeys.SUBGROUP],
-                preferences[PreferencesKeys.REGULARITY]
+                preferences[PreferencesKeys.SUBGROUP_LIST]?.toSubgroupList() ?: emptyList(),
+                preferences[PreferencesKeys.IS_AUTO_REGULARITY] ?: true
             )
         }
 }

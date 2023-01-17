@@ -5,7 +5,7 @@ object Versions {
     // android ui libraries
     const val appcompat = "1.5.1"
     const val material = "1.6.1"
-    const val constraint = "2.1.4"
+    const val constraint = "2.2.0-alpha05"
     const val coreKtx = "1.9.0"
     const val animatedBottomBar = "1.1.0"
     const val powerSpinner = "1.2.4"
@@ -25,7 +25,7 @@ object Versions {
     const val lifecycle = "2.5.1"
     const val lifecycleExtensions = "2.2.0"
     const val hilt = "2.44"
-    const val room = "2.4.3"
+    const val room = "2.5.0-rc01"
     const val dataStore = "1.0.0"
     const val gson = "2.9.1"
     const val fragment = "1.5.5"

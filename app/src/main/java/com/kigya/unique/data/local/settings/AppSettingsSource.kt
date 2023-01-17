@@ -18,10 +18,10 @@ interface AppSettingsSource {
 
     suspend fun setGroupToDataStore(group: Int)
 
-    suspend fun setSubgroupToDataStore(subgroup: String)
+    suspend fun setSubgroupListToDataStore(subgroupList: List<String>)
 
-    suspend fun setRegularityToDataStore(regularity: String)
+    suspend fun setRegularityToDataStore(isAuto: Boolean)
 
-    fun getParamsFromDataStore(): Flow<Quartet<Int, Int, String?, String?>>
+    fun getParamsFromDataStore(): Flow<Quartet<Int, Int, List<String>, Boolean>>
 
 }

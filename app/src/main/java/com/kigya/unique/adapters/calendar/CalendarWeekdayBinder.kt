@@ -1,6 +1,8 @@
 package com.kigya.unique.adapters.calendar
 
 import android.view.View
+import com.kigya.unique.adapters.calendar.interlayers.CalendarDateBinder
+import com.kigya.unique.adapters.calendar.interlayers.CalendarWeekdayClickListener
 import com.kizitonwose.calendar.core.WeekDay
 import com.kizitonwose.calendar.view.WeekCalendarView
 import com.kizitonwose.calendar.view.WeekDayBinder
@@ -18,6 +20,5 @@ class CalendarWeekdayBinder(
             weekDay = data
             dateBinder.bindDate(data.date, tvDay, tvWeekDay, wrapper)
         }
-
     }
 }

@@ -3,7 +3,7 @@ package com.kigya.unique.ui.tabs
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.kigya.unique.data.local.LessonRepository
-import com.kigya.unique.adapters.calendar.CalendarWeekdayClickListener
+import com.kigya.unique.adapters.calendar.interlayers.CalendarWeekdayClickListener
 import com.kigya.unique.data.local.settings.AppSettings
 import com.kigya.unique.utils.Resource
 import com.kigya.unique.di.IoDispatcher
@@ -31,18 +31,33 @@ class TabsViewModel @Inject constructor(
     var selectedDate = CalendarHelper.currentDate
     var previousSelectedDate = CalendarHelper.currentDate
 
+    private var _shouldScroll = MutableStateFlow(false)
+    val shouldScroll = _shouldScroll.asStateFlow()
+
     private var _lessons = MutableStateFlow<LessonListResource>(Resource.Loading())
     val lessons = _lessons.asStateFlow()
 
-    private var course: Int = 1
-    private var group: Int = 1
-    private var subgroup: String? = null
-    private var regularity: String? = null
+    private val _course: MutableStateFlow<Int> = MutableStateFlow(1)
+    val course = _course.asStateFlow().value
+
+    private var _group: MutableStateFlow<Int> = MutableStateFlow(1)
+    val group = _group.asStateFlow().value
+
+    private var _subgroupList: MutableStateFlow<MutableList<String>> =
+        MutableStateFlow(mutableListOf("а", "б", "в"))
+    val subgroupList = _subgroupList.asStateFlow().value
+
+    private var _isAutoWeekModeEnabled = MutableStateFlow(true)
+    val isAutoWeekModeEnabled = _isAutoWeekModeEnabled.asStateFlow().value
 
     init {
         setParamsStoreState(appSettings)
         initLessonsFromDatabaseOrRefresh()
         loadFreshData()
+    }
+
+    fun unableToScroll() {
+        _shouldScroll.value = false
     }
 
     private fun loadFreshData() {
@@ -61,10 +76,10 @@ class TabsViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             Log.d("LessonRepository", "setParamsStoreState")
             appSettings.getParamsFromDataStore().collect { params ->
-                course = params.first
-                group = params.second
-                subgroup = params.third
-                regularity = params.fourth
+                _course.value = params.first
+                _group.value = params.second
+                _subgroupList.value = params.third.toMutableList()
+                _isAutoWeekModeEnabled.value = params.fourth
             }
         }
     }
@@ -75,11 +90,11 @@ class TabsViewModel @Inject constructor(
             _lessons.value = Resource.Loading()
             repository.getLessons().collect { lessons ->
                 val filteredLessons = lessons.data?.filter {
-                    it.course == course &&
-                            it.group == group &&
-                            it.subgroup == subgroup &&
-                            it.regularity == regularity &&
-                            it.day == selectedDate.dayOfWeek.russianValue()
+                    it.course == _course.value &&
+                            it.group == _group.value &&
+                            subgroupList.contains(it.subgroup)
+                    // regularity
+                    it.day == selectedDate.dayOfWeek.russianValue()
                 }
                 _lessons.value =
                     filteredLessons?.let { Resource.Success(it) }
@@ -95,8 +110,8 @@ class TabsViewModel @Inject constructor(
             course,
             group,
             selectedDate.dayOfWeek.russianValue(),
-            subgroup,
-            regularity
+            subgroupList.toList(),
+            null
         ).collect {
             _lessons.value = it
         }
@@ -108,12 +123,17 @@ class TabsViewModel @Inject constructor(
     }
 
     override fun dateClicked(weekCalendarView: WeekCalendarView, date: LocalDate) {
+        enableToScroll()
         swapDates(date)
         weekCalendarView.notifyCalendarChanged()
         viewModelScope.launch(dispatcher) {
             Log.d("LessonRepository", "dateClicked")
             getFromDatabaseOrRefresh()
         }
+    }
+
+    private fun enableToScroll() {
+        _shouldScroll.value = true
     }
 
     private suspend fun getFromDatabaseOrRefresh() {

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mlContainer"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:layoutDescription="@xml/timetable_item_scene">
 
     <TextView
         android:id="@+id/tvLessonStart"
         style="@style/ItemWrapContent"
-        app:layout_constraintHorizontal_bias="0.5"
         android:textSize="@dimen/text_size_m"
         app:fontFamily="@font/jost_semibold"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="11:15" />
@@ -39,7 +41,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+        android:id="@+id/cvContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_s"
@@ -62,8 +64,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_s"
+                android:ellipsize="end"
                 android:maxLines="1"
-                android:scrollbars="horizontal"
                 android:textColor="@color/white_base_front"
                 android:textSize="@dimen/text_size_s"
                 app:fontFamily="@font/jost_semibold"
@@ -93,9 +95,9 @@
                 style="@style/ItemWrapContent"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/options_button"
-                android:minWidth="64dp"
-                android:minHeight="64dp"
-                android:src="@drawable/icon_options"
+                android:minWidth="32dp"
+                android:minHeight="32dp"
+                android:src="@drawable/share"
                 app:layout_constraintBottom_toBottomOf="@id/tvLessonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tvLessonName"
@@ -103,13 +105,13 @@
 
             <View
                 android:id="@+id/delimiterInside"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="2dp"
-
                 android:layout_marginTop="@dimen/margin_xxs"
                 android:alpha="0.2"
                 android:background="@drawable/delimiter_shape"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ibOptions"
                 app:layout_constraintTop_toBottomOf="@id/tvTeacher" />
 
             <ImageView
@@ -235,6 +237,7 @@
                 android:layout_marginTop="@dimen/margin_xs"
                 android:alpha="0.3"
                 android:textColor="@color/white_base_front"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/barrierCategories"
@@ -246,4 +249,4 @@
     </androidx.cardview.widget.CardView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

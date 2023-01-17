@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_sheet_background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clVisibleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            style="@style/GuidelineMaterial.Start" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            style="@style/GuidelineMaterial.End" />
+
+        <TextView
+            android:id="@+id/tvFiltersTitle"
+            style="@style/ItemWrapContent"
+            android:layout_marginTop="@dimen/margin_s"
+            android:text="@string/filters"
+            android:textSize="@dimen/text_size_xl"
+            app:fontFamily="@font/jost_bold"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/close_icon"
+            android:src="@drawable/icon_close"
+            app:layout_constraintBottom_toBottomOf="@id/tvFiltersTitle"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintTop_toTopOf="@id/tvFiltersTitle" />
+
+        <TextView
+            android:id="@+id/tvHintDisplayText"
+            style="@style/ItemWrapContent"
+            android:text="@string/setup_display_params"
+            app:fontFamily="@font/jost_light"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvFiltersTitle" />
+
+
+        <com.nex3z.togglebuttongroup.MultiSelectToggleGroup
+            android:id="@+id/mstgSubgroups"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_s"
+            android:layout_marginTop="@dimen/margin_s"
+            android:layout_marginEnd="@dimen/margin_s"
+            app:layout_constraintTop_toBottomOf="@id/tvHintDisplayText"
+            app:tbgChildSpacing="auto">
+
+            <com.nex3z.togglebuttongroup.button.LabelToggle
+                android:id="@+id/ltSubgroupA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subgroup_a"
+                app:fontFamily="@font/jost_bold"
+                app:tbgMarkerColor="@color/green_base_transparent" />
+
+            <com.nex3z.togglebuttongroup.button.LabelToggle
+                android:id="@+id/ltSubgroupB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subgroup_b"
+                app:tbgMarkerColor="@color/green_base_transparent" />
+
+            <com.nex3z.togglebuttongroup.button.LabelToggle
+                android:id="@+id/ltSubgroupC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subgroup_c"
+                app:tbgMarkerColor="@color/green_base_transparent" />
+
+        </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
+
+        <TextView
+            android:id="@+id/tvWeekTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_s"
+            android:drawablePadding="@dimen/margin_xxs"
+            android:text="@string/week"
+            app:drawableStartCompat="@drawable/icon_filter_target"
+            app:fontFamily="@font/jost_semibold"
+            app:layout_constraintEnd_toEndOf="@id/psvSortByWeek"
+            app:layout_constraintStart_toStartOf="@id/psvSortByWeek"
+            app:layout_constraintTop_toBottomOf="@id/mstgSubgroups" />
+
+        <com.skydoves.powerspinner.PowerSpinnerView
+            android:id="@+id/psvSortByWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white_base_front"
+            android:hapticFeedbackEnabled="true"
+            android:hint="@string/week"
+            android:padding="10dp"
+            android:textColor="@color/gray_base_dark"
+            android:textColorHint="@color/gray_base_dark"
+            android:textSize="@dimen/text_size_xs"
+            app:layout_constraintEnd_toStartOf="@id/psvSortByCourse"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvWeekTitle"
+            app:spinner_arrow_animate="true"
+            app:spinner_arrow_animate_duration="500"
+            app:spinner_arrow_drawable="@drawable/end_icon_week_options"
+            app:spinner_item_array="@array/week_options"
+            app:spinner_item_height="46dp"
+            app:spinner_popup_animation="dropdown"
+            app:spinner_popup_background="@drawable/rounded_shape_all"
+            app:spinner_popup_elevation="14dp" />
+
+        <TextView
+            android:id="@+id/tvCourseTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_s"
+            android:drawablePadding="@dimen/margin_xxs"
+            android:text="@string/сourse"
+            app:drawableStartCompat="@drawable/icon_filter_target"
+            app:fontFamily="@font/jost_semibold"
+            app:layout_constraintEnd_toEndOf="@id/psvSortByCourse"
+            app:layout_constraintStart_toStartOf="@id/psvSortByCourse"
+            app:layout_constraintTop_toBottomOf="@id/mstgSubgroups" />
+
+        <com.skydoves.powerspinner.PowerSpinnerView
+            android:id="@+id/psvSortByCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white_base_front"
+            android:hapticFeedbackEnabled="true"
+            android:hint="@string/сourse"
+            android:padding="10dp"
+            android:textColor="@color/gray_base_dark"
+            android:textColorHint="@color/gray_base_dark"
+            android:textSize="@dimen/text_size_xs"
+            app:layout_constraintEnd_toStartOf="@id/psvSortByGroup"
+            app:layout_constraintStart_toEndOf="@id/psvSortByWeek"
+            app:layout_constraintTop_toBottomOf="@id/tvWeekTitle"
+            app:spinner_arrow_animate="true"
+            app:spinner_arrow_animate_duration="500"
+            app:spinner_arrow_drawable="@drawable/end_icon_week_options"
+            app:spinner_item_array="@array/course_options"
+            app:spinner_item_height="46dp"
+            app:spinner_popup_animation="dropdown"
+            app:spinner_popup_background="@drawable/rounded_shape_all"
+            app:spinner_popup_elevation="14dp" />
+
+        <TextView
+            android:id="@+id/tvGroupTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_s"
+            android:drawablePadding="@dimen/margin_xxs"
+            android:text="@string/group"
+            app:drawableStartCompat="@drawable/icon_filter_target"
+            app:fontFamily="@font/jost_semibold"
+            app:layout_constraintEnd_toEndOf="@id/psvSortByGroup"
+            app:layout_constraintStart_toStartOf="@id/psvSortByGroup"
+            app:layout_constraintTop_toBottomOf="@id/mstgSubgroups" />
+
+        <com.skydoves.powerspinner.PowerSpinnerView
+            android:id="@+id/psvSortByGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white_base_front"
+            android:hapticFeedbackEnabled="true"
+            android:hint="@string/group"
+            android:padding="10dp"
+            android:textColor="@color/gray_base_dark"
+            android:textColorHint="@color/gray_base_dark"
+            android:textSize="@dimen/text_size_xs"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toEndOf="@id/psvSortByCourse"
+            app:layout_constraintTop_toBottomOf="@id/tvWeekTitle"
+            app:spinner_arrow_animate="true"
+            app:spinner_arrow_animate_duration="500"
+            app:spinner_arrow_drawable="@drawable/end_icon_week_options"
+            app:spinner_item_array="@array/group_options_1"
+            app:spinner_item_height="46dp"
+            app:spinner_popup_animation="dropdown"
+            app:spinner_popup_background="@drawable/rounded_shape_all"
+            app:spinner_popup_elevation="14dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCollapsedContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clVisibleContainer">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Collapsed text"
+            android:textColor="@color/black_base"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clExpandedContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clCollapsedContainer">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:text="Expanded text"
+            android:textColor="@color/black_base"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

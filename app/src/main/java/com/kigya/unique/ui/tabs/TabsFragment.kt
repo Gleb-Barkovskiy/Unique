@@ -5,32 +5,43 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import android.widget.Toast
+import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kigya.unique.R
-import com.kigya.unique.adapters.calendar.CalendarDateBinder
+import com.kigya.unique.adapters.calendar.interlayers.CalendarDateBinder
 import com.kigya.unique.adapters.calendar.CalendarWeekdayBinder
-import com.kigya.unique.adapters.calendar.CalendarWeekdayClickListener
+import com.kigya.unique.adapters.calendar.interlayers.CalendarWeekdayClickListener
 import com.kigya.unique.adapters.lesson.LessonAdapter
+import com.kigya.unique.adapters.lesson.LessonSmoothScroller
 import com.kigya.unique.adapters.lesson.LessonsScrollListener
 import com.kigya.unique.data.dto.lesson.Lesson
-import com.kigya.unique.utils.Resource
 import com.kigya.unique.databinding.FragmentTabsBinding
 import com.kigya.unique.ui.base.BaseFragment
+import com.kigya.unique.ui.tabs.FiltersMapper.toCourseHint
+import com.kigya.unique.ui.tabs.FiltersMapper.toGroupHint
+import com.kigya.unique.ui.tabs.FiltersMapper.toSubgroupBundle
+import com.kigya.unique.ui.tabs.FiltersMapper.toWeekHint
+import com.kigya.unique.utils.Resource
 import com.kigya.unique.utils.calendar.CalendarHelper
 import com.kigya.unique.utils.calendar.CalendarHelper.currentDate
 import com.kigya.unique.utils.calendar.CalendarHelper.daysOfWeek
 import com.kigya.unique.utils.calendar.CalendarHelper.endDate
 import com.kigya.unique.utils.calendar.CalendarHelper.startDate
 import com.kigya.unique.utils.converters.LocaleConverter.Russian.russianShortValue
+import com.kigya.unique.utils.extensions.collectFlow
 import com.kigya.unique.utils.extensions.observeResource
 import com.kigya.unique.utils.extensions.startCenterCircularReveal
 import com.kizitonwose.calendar.view.DaySize
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import java.time.LocalDate
+import java.util.ArrayList
 
 typealias LessonList = List<Lesson>
 
@@ -41,7 +52,7 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
 
     private val viewBinding by viewBinding(FragmentTabsBinding::bind)
     override val viewModel by viewModels<TabsViewModel>()
-    private val adapter by lazy { LessonAdapter() }
+    private val adapter by lazy { LessonAdapter(this.requireActivity()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,18 +61,60 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
 
         with(viewBinding) {
             setupCalendarView(viewModel, this@TabsFragment)
-            setupAdapter()
-            observeResource<LessonListResource, LessonList>(viewModel.lessons, resourceView) {
-                resourceView.setTryAgainAction { viewModel.refreshData() }
-                if (it.isEmpty()) {
-                    context?.let { context ->
-                        resourceView.setMessageText(context.getString(R.string.no_lessons))
-                    }
-                    adapter.updateList(emptyList())
-                } else {
-                    adapter.updateList(it)
+            setupRecycler()
+            observeLessons()
+            observeScroll()
+            addShowOptionsClickListener()
+        }
+    }
+
+    private fun FragmentTabsBinding.addShowOptionsClickListener() {
+        btnOptions.setOnClickListener {
+            val bottomFragment = BottomFragment.newInstance()
+            with(viewModel) {
+                bottomFragment.arguments = Bundle().apply {
+                    putString(ARG_COURSE, course.toCourseHint())
+                    putString(ARG_GROUP, group.toGroupHint(course))
+                    putString(ARG_WEEK, isAutoWeekModeEnabled.toWeekHint())
+                    putStringArrayList(ARG_SUBGROUPS, ArrayList(subgroupList))
                 }
             }
+            bottomFragment.show(childFragmentManager, BOTTOM_SHEET_TAG)
+        }
+    }
+
+    private fun FragmentTabsBinding.observeScroll() {
+        with(viewModel) {
+            collectFlow(viewModel.shouldScroll) { shouldScroll ->
+                if (shouldScroll) {
+                    closeOpenedLessons()
+                    performScroll()
+                    unableToScroll()
+                }
+            }
+        }
+    }
+
+    private fun FragmentTabsBinding.closeOpenedLessons() {
+        rvLessons.children
+            .filter { view -> view is MotionLayout }
+            .filterNot { (it as MotionLayout).progress == 0f }
+            .forEach {
+                val position = rvLessons.getChildAdapterPosition(it)
+                Toast.makeText(requireContext(), "position: $position", Toast.LENGTH_SHORT).show()
+                (it as MotionLayout).transitionToStart()
+                adapter.notifyItemChanged(position)
+                adapter.notifyItemChanged(position - 1)
+            }
+    }
+
+    private fun FragmentTabsBinding.performScroll() {
+        if ((adapter).itemCount > 0) {
+            val smoothScroller = LessonSmoothScroller(
+                requireContext()
+            )
+            smoothScroller.targetPosition = 0
+            rvLessons.layoutManager?.startSmoothScroll(smoothScroller)
         }
     }
 
@@ -69,7 +122,7 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
         observeResource<LessonListResource, LessonList>(viewModel.lessons, resourceView) {
             resourceView.setTryAgainAction { viewModel.refreshData() }
             if (it.isEmpty()) {
-
+                setNoLessonsText()
                 adapter.updateList(emptyList())
             } else {
                 adapter.updateList(it)
@@ -77,15 +130,27 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
         }
     }
 
-    private fun FragmentTabsBinding.setupAdapter() {
+    private fun FragmentTabsBinding.setNoLessonsText() {
+        context?.let { context ->
+            resourceView.setMessageText(context.getString(R_NO_LESSONS))
+        }
+    }
+
+    private fun FragmentTabsBinding.setupRecycler() {
         rvLessons.apply {
             layoutManager = LinearLayoutManager(requireContext())
             val alphaAdapter = AlphaInAnimationAdapter(
                 this@TabsFragment.adapter
             ).apply { setDuration(500) }
             adapter = alphaAdapter
-            addOnScrollListener(LessonsScrollListener(this.adapter as AlphaInAnimationAdapter))
+            addOnRecyclerScrollListener()
+            optimizeRecycler()
         }
+    }
+
+    private fun RecyclerView.optimizeRecycler() {
+        setItemViewCacheSize((adapter as AlphaInAnimationAdapter).itemCount)
+        isNestedScrollingEnabled = false
     }
 
     override fun bindDate(
@@ -105,6 +170,16 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
             CalendarHelper.setInactive(tvDate, tvWeekDay, wrapper)
         }
     }
+
+    companion object {
+        private val R_NO_LESSONS = R.string.no_lessons
+        private const val BOTTOM_SHEET_TAG = "bottom_sheet"
+
+        const val ARG_COURSE = "course"
+        const val ARG_GROUP = "group"
+        const val ARG_WEEK = "week"
+        const val ARG_SUBGROUPS = "subgroup"
+    }
 }
 
 private fun FragmentTabsBinding.setupCalendarView(
@@ -121,6 +196,11 @@ private fun FragmentTabsBinding.setupCalendarView(
         daySize = DaySize.SeventhWidth
         scrollToDate(currentDate)
     }
+}
+
+
+private fun RecyclerView.addOnRecyclerScrollListener() {
+    addOnScrollListener(LessonsScrollListener(this.adapter as AlphaInAnimationAdapter))
 }
 
 private fun Fragment.setupWindow() {

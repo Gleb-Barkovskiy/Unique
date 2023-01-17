@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageButton
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
@@ -19,9 +20,15 @@ import com.kigya.unique.ui.base.BaseFragment
 import com.kigya.unique.ui.survey.onboarding.OnSwipeTouchListener
 import com.kigya.unique.ui.views.ResourceView
 import com.kigya.unique.utils.Resource
+import com.kigya.unique.utils.constants.InitialSetupConst
 import com.kigya.unique.utils.result.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlin.concurrent.schedule
 import kotlin.math.hypot
 
 fun <T> MutableLiveData<T>.share(): LiveData<T> = this
@@ -64,6 +71,7 @@ fun String.fastReplace(from: String, to: String): String {
                     i++
                 }
             }
+
             else -> {
                 sb.append(this[i])
                 i++
@@ -255,6 +263,16 @@ fun <T> BaseFragment.collectFlow(flow: Flow<T>, onCollect: (T) -> Unit) {
     }
 }
 
+fun <T> DialogFragment.collectFlow(flow: Flow<T>, onCollect: (T) -> Unit) {
+    viewLifecycleOwner.lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.STARTED) {
+            flow.collect {
+                onCollect(it)
+            }
+        }
+    }
+}
+
 fun <T, R> BaseFragment.observeResource(
     flow: Flow<T>,
     resourceView: ResourceView,
@@ -264,5 +282,16 @@ fun <T, R> BaseFragment.observeResource(
     if (result is Resource.Success<*>) {
         @Suppress("UNCHECKED_CAST")
         onSuccess(result.data as R)
+    }
+}
+
+fun View.delayOnLifecycle(
+    durationOnMillis: Long,
+    dispatcher: CoroutineDispatcher = Dispatchers.Main,
+    block: () -> Unit
+): Job? = findViewTreeLifecycleOwner()?.let { lifecycleOwner ->
+    lifecycleOwner.lifecycle.coroutineScope.launch(dispatcher) {
+        delay(durationOnMillis)
+        block()
     }
 }

@@ -15,5 +15,33 @@
     <string name="timetable">Расписание</string>
     <string name="location_icon">Location Icon</string>
     <string name="no_lessons">Занятий нет</string>
+    <string name="share_timetable_item">Поделиться информацией о занятии</string>
+    <string name="filters">Фильтры</string>
+    <string name="setup_display_params">Настройте параметры отображения</string>
+    <string name="subgroup">Подгруппа</string>
+    <string name="subgroup_a">Подгруппа А</string>
+    <string name="subgroup_b">Подгруппа Б</string>
+    <string name="subgroup_c">Подгруппа В</string>
+    <string name="week">Неделя</string>
+    <string name="close_icon">Close icon</string>
+    <string name="сourse">Курс</string>
+    <string name="group">Группа</string>
+    <string name="save_changes">Сохранить изменения</string>
+    <string name="group_1">Группа 1</string>
+    <string name="group_2">Группа 2</string>
+    <string name="group_3">Группа 3</string>
+    <string name="group_4">Группа 4</string>
+    <string name="group_5">Группа 5</string>
+    <string name="group_6">Группа 6</string>
+    <string name="group_7">Группа 7</string>
+    <string name="group_8">Группа 8</string>
+    <string name="group_9">Группа 9</string>
+    <string name="group_10">Группа 10</string>
+    <string name="group_11">Группа 11</string>
+    <string name="group_vf">Военфак</string>
+    <string name="course_1">Курс 1</string>
+    <string name="course_2">Курс 2</string>
+    <string name="course_3">Курс 3</string>
+    <string name="course_4">Курс 4</string>
 
 </resources>

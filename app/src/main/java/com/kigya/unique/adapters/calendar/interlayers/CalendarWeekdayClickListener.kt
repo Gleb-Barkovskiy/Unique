@@ -1,4 +1,4 @@
-package com.kigya.unique.adapters.calendar
+package com.kigya.unique.adapters.calendar.interlayers
 
 import com.kizitonwose.calendar.view.WeekCalendarView
 import java.time.LocalDate

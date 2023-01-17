@@ -1,17 +1,18 @@
 package com.kigya.unique.data.dto.lesson
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
+import kotlinx.parcelize.Parcelize
 
 @Entity(
     tableName = "lessons"
 )
+@Parcelize
 data class Lesson(
     @PrimaryKey(autoGenerate = true)
-    @SerializedName("id")
     @Expose
     val id: Int? = null,
 
@@ -39,19 +40,15 @@ data class Lesson(
     @Expose
     val regularity: String?,
 
-    @SerializedName("subject")
     @Expose
     val subject: String,
 
-    @SerializedName("teacher")
     @Expose
     val teacher: String,
 
-    @SerializedName("type")
     @Expose
     val type: String?,
 
-    @SerializedName("audience")
     @Expose
     val audience: String?
-) : Serializable
+) : Parcelable

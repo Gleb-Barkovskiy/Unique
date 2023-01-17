@@ -8,4 +8,5 @@
     <color name="green_base_transparent">#343C7E6F</color>
     <color name="green_base_dark">#1C483E</color>
     <color name="gray_base">#BCC1CD</color>
+    <color name="gray_base_dark">#535353</color>
 </resources>

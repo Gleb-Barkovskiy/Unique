@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="week_options">
+        <item>Авто</item>
+        <item>Все</item>
+    </string-array>
+
+    <string-array name="course_options">
+        <item>@string/course_1</item>
+        <item>@string/course_2</item>
+        <item>@string/course_3</item>
+        <item>@string/course_4</item>
+    </string-array>
+
+    <string-array name="group_options_1">
+        <item>@string/group_1</item>
+        <item>@string/group_2</item>
+        <item>@string/group_3</item>
+        <item>@string/group_4</item>
+        <item>@string/group_5</item>
+        <item>@string/group_6</item>
+        <item>@string/group_7</item>
+        <item>@string/group_8</item>
+        <item>@string/group_9</item>
+        <item>@string/group_vf</item>
+    </string-array>
+
+    <string-array name="group_options_2">
+        <item>@string/group_1</item>
+        <item>@string/group_2</item>
+        <item>@string/group_3</item>
+        <item>@string/group_4</item>
+        <item>@string/group_5</item>
+        <item>@string/group_6</item>
+        <item>@string/group_7</item>
+        <item>@string/group_8</item>
+        <item>@string/group_9</item>
+        <item>@string/group_10</item>
+        <item>@string/group_vf</item>
+    </string-array>
+
+    <string-array name="group_options_3">
+        <item>@string/group_1</item>
+        <item>@string/group_2</item>
+        <item>@string/group_3</item>
+        <item>@string/group_4</item>
+        <item>@string/group_5</item>
+        <item>@string/group_6</item>
+        <item>@string/group_7</item>
+        <item>@string/group_8</item>
+        <item>@string/group_9</item>
+        <item>@string/group_10</item>
+        <item>@string/group_vf</item>
+    </string-array>
+
+    <string-array name="group_options_4">
+        <item>@string/group_1</item>
+        <item>@string/group_2</item>
+        <item>@string/group_3</item>
+        <item>@string/group_4</item>
+        <item>@string/group_5</item>
+        <item>@string/group_6</item>
+        <item>@string/group_7</item>
+        <item>@string/group_8</item>
+        <item>@string/group_9</item>
+        <item>@string/group_10</item>
+        <item>@string/group_11</item>
+        <item>@string/group_vf</item>
+    </string-array>
+</resources>

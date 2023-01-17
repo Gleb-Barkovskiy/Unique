@@ -1,20 +1,17 @@
 package com.kigya.unique.data.remote
 
 import com.kigya.unique.data.dto.lesson.Lesson
-import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.utils.LessonList
 import com.kigya.unique.utils.constants.ModelConst
 import com.kigya.unique.utils.extensions.fastReplace
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
 import javax.inject.Inject
 
 class LessonApi @Inject constructor(
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    private val jsoupDocumentApi: JsoupDocumentApi
 ) : LessonApiSource {
 
     override suspend fun getNetworkData(): LessonList {
@@ -29,13 +26,13 @@ class LessonApi @Inject constructor(
                     else -> 0
                 }
                 (1..maxGroup).map { group ->
-                    async(ioDispatcher) {
+                    async() {
                         rowList += getNetworkDataByCourseAndGroup(course, group, false)
                     }
                 }
             }
             (1..4).map { course ->
-                async(ioDispatcher) {
+                async() {
                     rowList += getNetworkDataByCourseAndGroup(course, 0, true)
                 }
             }
@@ -43,7 +40,7 @@ class LessonApi @Inject constructor(
         return rowList
     }
 
-    private fun getNetworkDataByCourseAndGroup(
+    private suspend fun getNetworkDataByCourseAndGroup(
         course: Int,
         group: Int,
         isMilitaryFaculty: Boolean
@@ -107,15 +104,13 @@ class LessonApi @Inject constructor(
         }
     }
 
-    private fun getDoc(course: Int, group: Int, isMilitaryFaculty: Boolean): Document? {
+    private suspend fun getDoc(course: Int, group: Int, isMilitaryFaculty: Boolean): Document? {
         var document: Document? = null
         try {
             document = if (!isMilitaryFaculty) {
-                Jsoup.connect(ModelConst.Api.BASE_LINK + "$course-kurs/$group-gruppa/")
-                    .timeout(30000).get()
+                jsoupDocumentApi.getRegularJsoupDoc(course, group).body()
             } else {
-                Jsoup.connect(ModelConst.Api.BASE_LINK + "$course-kurs/vf/")
-                    .timeout(30000).get()
+                jsoupDocumentApi.getMilitaryJsoupDoc(course).body()
             }
         } catch (e: IOException) {
             e.printStackTrace()

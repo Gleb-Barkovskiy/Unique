@@ -28,15 +28,12 @@ class LessonRepository @Inject constructor(
 
     fun getLessons(): Flow<LessonListResource> = networkBoundResource(
         query = {
-            Log.d("LessonRepository", "getLessons: query")
             lessonDao.getAllLessons()
         },
         fetch = {
-            Log.d("LessonRepository", "getLessons: fetch")
             lessonsApi.getNetworkData()
         },
         saveFetchResult = { rows ->
-            Log.d("LessonRepository", "getLessons: saveFetchResult")
             database.withTransaction {
                 if (rows.isNotEmpty()) lessonDao.deleteAllLessons()
                 lessonDao.upsertLessons(rows)
@@ -48,11 +45,11 @@ class LessonRepository @Inject constructor(
         course: Int,
         group: Int,
         day: String?,
-        subgroup: String?,
+        subgroupList: List<String>,
         regularity: String?
     ): Flow<Resource<List<Lesson>>> = networkBoundResource(
         query = {
-            lessonDao.getLessons(course, group, day, subgroup, regularity)
+            lessonDao.getLessons(course, group, day, subgroupList, regularity)
         },
         fetch = {},
         saveFetchResult = {}
