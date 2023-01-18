@@ -5,7 +5,6 @@ import com.kigya.unique.data.dto.account.AccountType
 import com.kigya.unique.data.local.settings.AppSettings
 import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.ui.base.BaseViewModel
-import com.kigya.unique.utils.constants.InitialSetupConst
 import com.kigya.unique.utils.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -31,7 +30,7 @@ class InitialSetupViewModel @Inject constructor(
     }
 
     fun performAfterDelay(action: () -> Unit) {
-        timer.schedule(InitialSetupConst.UI_WAITING_TIME) {
+        timer.schedule(UI_WAITING_TIME) {
             action()
         }
     }
@@ -39,5 +38,9 @@ class InitialSetupViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         timer.cancel()
+    }
+
+    companion object {
+        const val UI_WAITING_TIME = 1000L
     }
 }

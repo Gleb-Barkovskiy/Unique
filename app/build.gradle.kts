@@ -4,7 +4,6 @@ import params.*
 
 plugins {
     kotlin("android")
-    kotlin("kapt")
     with(subjections.Plugins) {
         id(application)
         id(safeargs)
@@ -12,6 +11,7 @@ plugins {
         id(ktLint) version params.Versions.ktLint
         id("kotlin-parcelize")
     }
+    kotlin("kapt")
 }
 @Suppress("UnstableApiUsage")
 android {
@@ -59,13 +59,7 @@ dependencies {
         testImplementation(testImplementationList)
         androidTestImplementation(androidTestImplementationList)
     }
-
-    implementation("com.fasterxml.jackson.core:jackson-core:2.11.1")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.11.1")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.11.1")
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    
     implementation("com.github.Spikeysanju:MotionToast:1.4")
     implementation("androidx.activity:activity:1.7.0-alpha03")
     implementation("com.nex3z:toggle-button-group:1.2.3")

@@ -1,6 +1,6 @@
 package com.kigya.unique.data.remote
 
-import com.kigya.unique.utils.Resource
+import com.kigya.unique.utils.wrappers.Resource
 import kotlinx.coroutines.flow.*
 
 inline fun <ResultType, RequestType> networkBoundResource(

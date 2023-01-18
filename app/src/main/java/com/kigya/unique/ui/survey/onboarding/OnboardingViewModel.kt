@@ -5,10 +5,10 @@ import com.kigya.unique.data.local.LessonRepository
 import com.kigya.unique.data.local.settings.AppSettings
 import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.ui.base.BaseViewModel
+import com.kigya.unique.ui.survey.onboarding.OnboardingFragment.Companion.OnboardingConst
 import com.kigya.unique.ui.survey.onboarding.OnboardingViewModel.OnboardingUiState.GesturePending
 import com.kigya.unique.ui.survey.onboarding.OnboardingViewModel.OnboardingUiState.GestureReceived
-import com.kigya.unique.utils.constants.OnboardingConst
-import com.kigya.unique.utils.extensions.collectFlow
+import com.kigya.unique.utils.extensions.ui.flow.collectFlow
 import com.kigya.unique.utils.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

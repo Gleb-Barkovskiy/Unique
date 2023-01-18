@@ -8,7 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.kigya.unique.R
 import com.kigya.unique.databinding.PartResultViewBinding
-import com.kigya.unique.utils.Resource
+import com.kigya.unique.utils.wrappers.Resource
 import com.kigya.unique.utils.exceptions.ConnectionException
 
 class ResourceView @JvmOverloads constructor(
@@ -60,4 +60,3 @@ class ResourceView @JvmOverloads constructor(
     }
 
 }
-

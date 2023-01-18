@@ -1,4 +1,4 @@
-package com.kigya.unique.utils.result
+package com.kigya.unique.utils.wrappers
 
 sealed class Result<T> {
 

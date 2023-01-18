@@ -1,4 +1,4 @@
-package com.kigya.unique.ui.tabs
+package com.kigya.unique.utils.mappers
 
 import com.kigya.unique.App
 import com.kigya.unique.R

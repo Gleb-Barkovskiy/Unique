@@ -1,7 +1,7 @@
 package com.kigya.unique.adapters.lesson
 
 import androidx.recyclerview.widget.DiffUtil
-import com.kigya.unique.ui.tabs.LessonList
+import com.kigya.unique.utils.LessonList
 
 class LessonDiffUtilCallback(
     private val oldList: LessonList,

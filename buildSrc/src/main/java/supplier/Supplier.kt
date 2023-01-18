@@ -34,7 +34,10 @@ object Supplier {
         AppDependencies.DataStore.preferences,
         AppDependencies.Gson.gson,
         AppDependencies.Dimens.ssp,
-        AppDependencies.Fragment.fragment
+        AppDependencies.Fragment.fragment,
+        AppDependencies.RecyclerView.recyclerView,
+        AppDependencies.Retrofit.retrofit,
+        AppDependencies.OkHttp.loggingInterceptor
     )
 
     val testImplementationList = listOf(

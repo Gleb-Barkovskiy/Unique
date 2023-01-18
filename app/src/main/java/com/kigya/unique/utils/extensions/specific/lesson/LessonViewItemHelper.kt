@@ -1,6 +1,6 @@
 @file:Suppress("SameReturnValue")
 
-package com.kigya.unique.utils.lesson
+package com.kigya.unique.utils.extensions.specific.lesson
 
 @Suppress("SameReturnValue")
 fun String.Companion.empty(): String = ""

@@ -3,7 +3,7 @@ package com.kigya.unique.data.remote
 import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.utils.LessonList
 import com.kigya.unique.utils.constants.ModelConst
-import com.kigya.unique.utils.extensions.fastReplace
+import com.kigya.unique.utils.extensions.string.fastReplace
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import org.jsoup.nodes.Document

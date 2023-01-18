@@ -15,7 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kigya.unique.R
 import com.kigya.unique.databinding.BottomSheetOptionsBinding
-import kotlin.math.absoluteValue
+import com.kigya.unique.ui.tabs.callbacks.BottomSheetCallback
 
 
 class BottomFragment : BottomSheetDialogFragment() {
@@ -31,9 +31,7 @@ class BottomFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(LAYOUT_RES, container, false)
-    }
+    ): View? = inflater.inflate(LAYOUT_RES, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,46 +42,32 @@ class BottomFragment : BottomSheetDialogFragment() {
 
     private fun BottomSheetOptionsBinding.setInitialArgs() {
         with(arguments) {
-            setInitialCourseState(this@setInitialArgs, this@with)
-            setInitialGroupState(this@setInitialArgs, this@with)
-            setInitialWeekState(this@setInitialArgs, this@with)
-            setInitialActiveSubgroups(this@with, this@setInitialArgs)
+            setInitialCourseState(this@with)
+            setInitialGroupState(this@with)
+            setInitialWeekState(this@with)
+            setInitialActiveSubgroups(this@with)
         }
     }
 
-    private fun setInitialActiveSubgroups(
-        bundle: Bundle?,
-        bottomSheetOptionsBinding: BottomSheetOptionsBinding
-    ): Unit? {
-        val activeSubgroups = bundle?.getStringArrayList(TabsFragment.ARG_SUBGROUPS)
-        return activeSubgroups?.forEach {
+    private fun BottomSheetOptionsBinding.setInitialActiveSubgroups(bundle: Bundle?): Unit? =
+        bundle?.getStringArrayList(TabsFragment.ARG_SUBGROUPS)?.forEach {
             when (it) {
-                SUBGROUP_A -> bottomSheetOptionsBinding.ltSubgroupA.isChecked = true
-                SUBGROUP_B -> bottomSheetOptionsBinding.ltSubgroupB.isChecked = true
-                SUBGROUP_C -> bottomSheetOptionsBinding.ltSubgroupC.isChecked = true
+                SUBGROUP_A -> ltSubgroupA.isChecked = true
+                SUBGROUP_B -> ltSubgroupB.isChecked = true
+                SUBGROUP_C -> ltSubgroupC.isChecked = true
             }
         }
+
+    private fun BottomSheetOptionsBinding.setInitialWeekState(bundle: Bundle?) {
+        psvSortByWeek.hint = bundle?.getString(TabsFragment.ARG_WEEK)
     }
 
-    private fun setInitialWeekState(
-        bottomSheetOptionsBinding: BottomSheetOptionsBinding,
-        bundle: Bundle?
-    ) {
-        bottomSheetOptionsBinding.psvSortByWeek.hint = bundle?.getString(TabsFragment.ARG_WEEK)
+    private fun BottomSheetOptionsBinding.setInitialGroupState(bundle: Bundle?) {
+        psvSortByGroup.hint = bundle?.getString(TabsFragment.ARG_GROUP)
     }
 
-    private fun setInitialGroupState(
-        bottomSheetOptionsBinding: BottomSheetOptionsBinding,
-        bundle: Bundle?
-    ) {
-        bottomSheetOptionsBinding.psvSortByGroup.hint = bundle?.getString(TabsFragment.ARG_GROUP)
-    }
-
-    private fun setInitialCourseState(
-        bottomSheetOptionsBinding: BottomSheetOptionsBinding,
-        bundle: Bundle?
-    ) {
-        bottomSheetOptionsBinding.psvSortByCourse.hint = bundle?.getString(TabsFragment.ARG_COURSE)
+    private fun BottomSheetOptionsBinding.setInitialCourseState(bundle: Bundle?) {
+        psvSortByCourse.hint = bundle?.getString(TabsFragment.ARG_COURSE)
     }
 
     private fun setupDialogBehavior() {
@@ -92,60 +76,16 @@ class BottomFragment : BottomSheetDialogFragment() {
             val bottomSheet = getBottomSheet(dialog)
             val behavior = BottomSheetBehavior.from(bottomSheet)
             setInitialState(behavior, density)
-            val (coordinator, buttons) = addButton(dialog, density)
-            addBehaviorBottomSheetCallback(behavior, buttons, coordinator)
+            val (coordinator, button) = addButton(dialog, density)
+            behavior.addBottomSheetCallback(BottomSheetCallback(viewBinding, button, coordinator))
         }
     }
 
-    private fun addBehaviorBottomSheetCallback(
-        behavior: BottomSheetBehavior<FrameLayout>,
-        buttons: View,
-        coordinator: CoordinatorLayout?
-    ) {
-        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-
-            override fun onStateChanged(bottomSheet: View, newState: Int) = Unit
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                with(viewBinding) {
-                    if (slideOffset > 0) {
-                        buttons.translationY = 0f
-                        clCollapsedContainer.alpha = 1 - 2 * slideOffset
-                        clExpandedContainer.alpha = slideOffset * slideOffset
-                        when (slideOffset) {
-                            in 0.0..0.5 -> if (clExpandedContainer.visibility == View.VISIBLE)
-                                showCollapsedContainer() else Unit
-
-                            in 0.5..1.0 -> showExpandableContainer()
-                            else -> Unit
-                        }
-                    } else {
-                        buttons.y += slideOffset.absoluteValue * OFFSET_BUTTON_COEFFICIENT
-                        coordinator?.let {
-                            it.y += slideOffset.absoluteValue * OFFSET_BUTTON_COEFFICIENT
-                        }
-                    }
-                }
-            }
-        })
-    }
-
-    private fun BottomSheetOptionsBinding.showCollapsedContainer() {
-        clCollapsedContainer.visibility = View.VISIBLE
-        clExpandedContainer.visibility = View.INVISIBLE
-    }
-
-    private fun BottomSheetOptionsBinding.showExpandableContainer() {
-        clCollapsedContainer.visibility = View.GONE
-        clExpandedContainer.visibility = View.VISIBLE
-    }
-
-    private fun setInitialState(
-        behavior: BottomSheetBehavior<FrameLayout>,
-        density: Float
-    ) {
-        behavior.peekHeight = (COLLAPSED_HEIGHT * density).toInt()
-        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    private fun setInitialState(behavior: BottomSheetBehavior<FrameLayout>, density: Float) {
+        behavior.apply {
+            peekHeight = (COLLAPSED_HEIGHT * density).toInt()
+            state = BottomSheetBehavior.STATE_COLLAPSED
+        }
     }
 
     private fun addButton(
@@ -214,7 +154,6 @@ class BottomFragment : BottomSheetDialogFragment() {
         fun newInstance() = BottomFragment()
 
         private const val COLLAPSED_HEIGHT = 228
-        private const val OFFSET_BUTTON_COEFFICIENT = 3
         private val DIALOG_THEME_RES = R.style.AppBottomSheetDialogTheme
         private val LAYOUT_RES = R.layout.bottom_sheet_options
 

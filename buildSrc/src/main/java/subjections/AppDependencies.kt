@@ -53,6 +53,10 @@ object AppDependencies {
             "jp.wasabeef:recyclerview-animators:${Versions.recyclerViewAnimators}"
     }
 
+    object RecyclerView {
+        const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
+    }
+
     object Lottie {
         const val lottie = "com.airbnb.android:lottie:${Versions.lottie}"
     }
@@ -104,7 +108,8 @@ object AppDependencies {
             "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
         const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
-        const val extensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleExtensions}"
+        const val extensions =
+            "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleExtensions}"
     }
 
     object Hilt {
@@ -133,6 +138,14 @@ object AppDependencies {
 
     object Fragment {
         const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
+    }
+
+    object Retrofit {
+        const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    }
+
+    object OkHttp {
+        const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
     }
 }
 

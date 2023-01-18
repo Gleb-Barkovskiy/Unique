@@ -1,4 +1,4 @@
-package com.kigya.unique.ui.survey.onboarding
+package com.kigya.unique.ui.survey.onboarding.listeners
 
 import android.annotation.SuppressLint
 import android.content.Context

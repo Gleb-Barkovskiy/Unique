@@ -13,13 +13,12 @@ import com.kigya.unique.R
 import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.databinding.TimetableItemBinding
 import com.kigya.unique.utils.LessonList
-import com.kigya.unique.utils.calendar.setOnSafeClickListener
-import com.kigya.unique.utils.extensions.delayOnLifecycle
-import com.kigya.unique.utils.lesson.properRegularity
-import com.kigya.unique.utils.lesson.properSubgroup
-import com.kigya.unique.utils.lesson.timeEnd
-import com.kigya.unique.utils.lesson.timeStart
-
+import com.kigya.unique.utils.extensions.specific.lesson.properRegularity
+import com.kigya.unique.utils.extensions.specific.lesson.properSubgroup
+import com.kigya.unique.utils.extensions.specific.lesson.timeEnd
+import com.kigya.unique.utils.extensions.specific.lesson.timeStart
+import com.kigya.unique.utils.extensions.ui.view.delayOnLifecycle
+import com.kigya.unique.utils.extensions.ui.view.setOnSafeClickListener
 
 class LessonAdapter(
     private val activity: Activity,

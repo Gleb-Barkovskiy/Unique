@@ -1,4 +1,4 @@
-package com.kigya.unique.utils.calendar
+package com.kigya.unique.utils.extensions.ui.view
 
 import android.os.SystemClock
 import android.view.View

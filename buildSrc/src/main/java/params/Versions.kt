@@ -16,6 +16,7 @@ object Versions {
     const val calendarView = "2.0.4"
     const val cardView = "1.0.0"
     const val splashScreen = "1.0.0"
+    const val recyclerView = "1.2.1"
 
     // external libraries
     const val jsoup = "1.13.1"
@@ -29,6 +30,8 @@ object Versions {
     const val dataStore = "1.0.0"
     const val gson = "2.9.1"
     const val fragment = "1.5.5"
+    const val retrofit = "2.9.0"
+    const val okHttp = "4.10.0"
 
     // test libraries
     const val junit = "4.13.2"

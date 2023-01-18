@@ -9,12 +9,12 @@ import com.kigya.unique.R
 import com.kigya.unique.data.dto.account.AccountType
 import com.kigya.unique.databinding.FragmentInitialSetupBinding
 import com.kigya.unique.ui.base.BaseFragment
-import com.kigya.unique.utils.extensions.fadeOutAnimation
-import com.kigya.unique.utils.extensions.findTopNavController
-import com.kigya.unique.utils.extensions.moveToCenter
-import com.kigya.unique.utils.extensions.onTouchResponseVibrate
-import com.kigya.unique.utils.extensions.scaleUpEffect
-import com.kigya.unique.utils.extensions.startSidesCircularReveal
+import com.kigya.unique.utils.extensions.context.onTouchResponseVibrate
+import com.kigya.unique.utils.extensions.ui.findTopNavController
+import com.kigya.unique.utils.extensions.ui.view.fadeOutAnimation
+import com.kigya.unique.utils.extensions.ui.view.moveToCenter
+import com.kigya.unique.utils.extensions.ui.view.scaleUpEffect
+import com.kigya.unique.utils.extensions.ui.view.startSidesCircularReveal
 import com.kigya.unique.utils.thread.ThreadUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,7 +40,6 @@ class InitialSetupFragment : BaseFragment(R.layout.fragment_initial_setup) {
             }
         }
     }
-
 
     private fun FragmentInitialSetupBinding.setTeacherClickListener() {
         ibTeacher.setOnClickListener {

@@ -15,8 +15,4 @@ open class BaseViewModel @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private fun logError(e: Throwable) {
-        logger.error(javaClass.simpleName, e)
-    }
-
 }

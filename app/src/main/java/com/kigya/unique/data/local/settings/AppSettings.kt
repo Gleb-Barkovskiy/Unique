@@ -2,14 +2,17 @@ package com.kigya.unique.data.local.settings
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.kigya.unique.data.dto.account.AccountType
-import com.kigya.unique.ui.tabs.FiltersMapper.toSubgroupList
-import com.kigya.unique.ui.tabs.FiltersMapper.toSubgroupBundle
+import com.kigya.unique.utils.mappers.FiltersMapper.toSubgroupBundle
+import com.kigya.unique.utils.mappers.FiltersMapper.toSubgroupList
 import com.kigya.unique.utils.Quartet
-import com.kigya.unique.utils.constants.PreferencesKeys
-import com.kigya.unique.utils.extensions.mapToAccountType
-import com.kigya.unique.utils.extensions.mapToString
+import com.kigya.unique.utils.constants.ModelConst.DEFAULT_SUBGROUPS_VALUE
+import com.kigya.unique.utils.extensions.specific.account.mapToAccountType
+import com.kigya.unique.utils.extensions.specific.account.mapToString
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -71,8 +74,20 @@ class AppSettings @Inject constructor(
             Quartet(
                 preferences[PreferencesKeys.COURSE] ?: 1,
                 preferences[PreferencesKeys.GROUP] ?: 1,
-                preferences[PreferencesKeys.SUBGROUP_LIST]?.toSubgroupList() ?: emptyList(),
+                preferences[PreferencesKeys.SUBGROUP_LIST]?.toSubgroupList()
+                    ?: DEFAULT_SUBGROUPS_VALUE,
                 preferences[PreferencesKeys.IS_AUTO_REGULARITY] ?: true
             )
         }
+
+    companion object {
+        object PreferencesKeys {
+            val COURSE = intPreferencesKey("course")
+            val GROUP = intPreferencesKey("group")
+            val SUBGROUP_LIST = stringPreferencesKey("subgroup")
+            val IS_AUTO_REGULARITY = booleanPreferencesKey("regularity")
+            val ACCOUNT_TYPE = stringPreferencesKey("account_type")
+            val IS_SIGNED_IN = booleanPreferencesKey("is_signed_in")
+        }
+    }
 }

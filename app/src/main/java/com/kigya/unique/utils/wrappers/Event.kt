@@ -1,4 +1,4 @@
-package com.kigya.unique.utils
+package com.kigya.unique.utils.wrappers
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

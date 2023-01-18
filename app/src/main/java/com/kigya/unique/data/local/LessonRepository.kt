@@ -1,13 +1,12 @@
 package com.kigya.unique.data.local
 
-import android.util.Log
 import androidx.room.withTransaction
 import com.google.gson.Gson
 import com.kigya.unique.App
 import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.data.local.db.LessonDatabase
 import com.kigya.unique.data.remote.LessonApi
-import com.kigya.unique.utils.Resource
+import com.kigya.unique.utils.wrappers.Resource
 import com.kigya.unique.data.remote.networkBoundResource
 import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.utils.LessonListResource
@@ -18,8 +17,7 @@ import javax.inject.Inject
 
 class LessonRepository @Inject constructor(
     private val lessonsApi: LessonApi,
-    private val database: LessonDatabase,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    private val database: LessonDatabase
 ) {
 
     private val lessonDao = database.getLessonDao()
@@ -56,10 +54,14 @@ class LessonRepository @Inject constructor(
     )
 
     suspend fun setToDatabaseFromAssets() {
-        val inputStream: InputStream = App.appContext.assets.open("lessons.json")
+        val inputStream: InputStream = App.appContext.assets.open(FILE_NAME)
         val inputString = inputStream.bufferedReader().use { it.readText() }
         val gson = Gson()
         val lessons = gson.fromJson(inputString, Array<Lesson>::class.java).toList()
         lessonDao.upsertLessons(lessons)
+    }
+
+    companion object {
+        private const val FILE_NAME = "lessons.json"
     }
 }

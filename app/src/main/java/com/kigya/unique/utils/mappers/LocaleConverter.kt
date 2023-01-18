@@ -1,4 +1,4 @@
-package com.kigya.unique.utils.converters
+package com.kigya.unique.utils.mappers
 
 import java.time.DayOfWeek
 import java.time.Month

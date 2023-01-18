@@ -1,4 +1,4 @@
-package com.kigya.unique.utils
+package com.kigya.unique.utils.wrappers
 
 sealed class Resource<T>(
     val data: T? = null,

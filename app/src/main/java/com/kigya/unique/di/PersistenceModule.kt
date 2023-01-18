@@ -12,6 +12,8 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.kigya.unique.data.local.db.LessonDatabase
 import com.kigya.unique.data.remote.LessonApiSource
+import com.kigya.unique.di.PersistenceModule.Constants.DATABASE_NAME
+import com.kigya.unique.di.PersistenceModule.Constants.TIMETABLE_PREFERENCES
 import com.kigya.unique.utils.constants.ModelConst
 import dagger.Module
 import dagger.Provides
@@ -30,7 +32,7 @@ object PersistenceModule {
     @Provides
     @Singleton
     fun provideDatabase(app: Application): LessonDatabase =
-        Room.databaseBuilder(app, LessonDatabase::class.java, "lessons_database").build()
+        Room.databaseBuilder(app, LessonDatabase::class.java, DATABASE_NAME).build()
 
     @Singleton
     @Provides
@@ -46,11 +48,16 @@ object PersistenceModule {
             migrations = listOf(
                 SharedPreferencesMigration(
                     appContext,
-                    ModelConst.DataStore.TIMETABLE_PREFERENCES
+                    TIMETABLE_PREFERENCES
                 )
             ),
             scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
-            produceFile = { appContext.preferencesDataStoreFile(ModelConst.DataStore.TIMETABLE_PREFERENCES) }
+            produceFile = { appContext.preferencesDataStoreFile(TIMETABLE_PREFERENCES) }
         )
+    }
+
+    object Constants {
+        const val TIMETABLE_PREFERENCES = "timetable_preferences"
+        const val DATABASE_NAME = "lessons_database"
     }
 }

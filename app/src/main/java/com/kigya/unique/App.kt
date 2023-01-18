@@ -3,6 +3,7 @@ package com.kigya.unique
 import android.app.Application
 import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
+import kotlin.properties.Delegates
 
 @HiltAndroidApp
 class App : Application() {
@@ -13,6 +14,6 @@ class App : Application() {
     }
 
     companion object {
-        lateinit var appContext: Context
+        var appContext: Context by Delegates.notNull()
     }
 }

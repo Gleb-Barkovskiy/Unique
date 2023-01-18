@@ -9,8 +9,5 @@ object ModelConst {
         const val MAX_FOURTH_COURSE = 11
     }
 
-    object DataStore {
-        const val TIMETABLE_PREFERENCES = "timetable_preferences"
-    }
-
+    val DEFAULT_SUBGROUPS_VALUE = listOf("а", "б", "в")
 }

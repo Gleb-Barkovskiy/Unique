@@ -10,6 +10,10 @@ class LessonSmoothScroller(context: Context) : LinearSmoothScroller(context) {
     }
 
     override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float {
-        return 130f / displayMetrics.densityDpi
+        return LOCAL_METRICS / displayMetrics.densityDpi
+    }
+
+    companion object {
+        private const val LOCAL_METRICS = 130f
     }
 }

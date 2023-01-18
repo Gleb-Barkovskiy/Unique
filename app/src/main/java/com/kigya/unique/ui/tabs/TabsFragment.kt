@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kigya.unique.R
-import com.kigya.unique.adapters.calendar.interlayers.CalendarDateBinder
 import com.kigya.unique.adapters.calendar.CalendarWeekdayBinder
+import com.kigya.unique.adapters.calendar.interlayers.CalendarDateBinder
 import com.kigya.unique.adapters.calendar.interlayers.CalendarWeekdayClickListener
 import com.kigya.unique.adapters.lesson.LessonAdapter
 import com.kigya.unique.adapters.lesson.LessonSmoothScroller
@@ -23,29 +23,25 @@ import com.kigya.unique.adapters.lesson.LessonsScrollListener
 import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.databinding.FragmentTabsBinding
 import com.kigya.unique.ui.base.BaseFragment
-import com.kigya.unique.ui.tabs.FiltersMapper.toCourseHint
-import com.kigya.unique.ui.tabs.FiltersMapper.toGroupHint
-import com.kigya.unique.ui.tabs.FiltersMapper.toSubgroupBundle
-import com.kigya.unique.ui.tabs.FiltersMapper.toWeekHint
-import com.kigya.unique.utils.Resource
+import com.kigya.unique.utils.LessonList
+import com.kigya.unique.utils.LessonListResource
 import com.kigya.unique.utils.calendar.CalendarHelper
 import com.kigya.unique.utils.calendar.CalendarHelper.currentDate
 import com.kigya.unique.utils.calendar.CalendarHelper.daysOfWeek
 import com.kigya.unique.utils.calendar.CalendarHelper.endDate
 import com.kigya.unique.utils.calendar.CalendarHelper.startDate
-import com.kigya.unique.utils.converters.LocaleConverter.Russian.russianShortValue
-import com.kigya.unique.utils.extensions.collectFlow
-import com.kigya.unique.utils.extensions.observeResource
-import com.kigya.unique.utils.extensions.startCenterCircularReveal
+import com.kigya.unique.utils.extensions.ui.collectFlow
+import com.kigya.unique.utils.extensions.ui.observeResource
+import com.kigya.unique.utils.extensions.ui.view.startCenterCircularReveal
+import com.kigya.unique.utils.mappers.FiltersMapper.toCourseHint
+import com.kigya.unique.utils.mappers.FiltersMapper.toGroupHint
+import com.kigya.unique.utils.mappers.FiltersMapper.toWeekHint
+import com.kigya.unique.utils.mappers.LocaleConverter.Russian.russianShortValue
+import com.kigya.unique.utils.wrappers.Resource
 import com.kizitonwose.calendar.view.DaySize
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import java.time.LocalDate
-import java.util.ArrayList
-
-typealias LessonList = List<Lesson>
-
-typealias LessonListResource = Resource<LessonList>
 
 @AndroidEntryPoint
 class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {

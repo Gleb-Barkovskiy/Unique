@@ -8,19 +8,18 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kigya.unique.R
 import com.kigya.unique.databinding.FragmentOnboardingBinding
 import com.kigya.unique.ui.base.BaseFragment
-import com.kigya.unique.utils.constants.OnboardingConst
-import com.kigya.unique.utils.constants.OnboardingConst.Progress.MAX_PROGRESS
-import com.kigya.unique.utils.constants.OnboardingConst.Progress.PROGRESS_WAITING_TIME
-import com.kigya.unique.utils.constants.OnboardingConst.UI_WAITING_TIME
-import com.kigya.unique.utils.extensions.collectFlow
-import com.kigya.unique.utils.extensions.fadeInAnimation
-import com.kigya.unique.utils.extensions.fadeOutAnimation
-import com.kigya.unique.utils.extensions.findLocationOfCenterOnTheScreen
-import com.kigya.unique.utils.extensions.onTouchResponseVibrate
-import com.kigya.unique.utils.extensions.preventDissapearing
-import com.kigya.unique.utils.extensions.setDrawableAnimated
-import com.kigya.unique.utils.extensions.setOnLeftSwipeTouchListener
-import com.kigya.unique.utils.extensions.startSidesCircularReveal
+import com.kigya.unique.ui.survey.onboarding.OnboardingFragment.Companion.OnboardingConst.Progress.MAX_PROGRESS
+import com.kigya.unique.ui.survey.onboarding.OnboardingFragment.Companion.OnboardingConst.Progress.PROGRESS_WAITING_TIME
+import com.kigya.unique.ui.survey.onboarding.OnboardingFragment.Companion.OnboardingConst.UI_WAITING_TIME
+import com.kigya.unique.utils.extensions.context.onTouchResponseVibrate
+import com.kigya.unique.utils.extensions.ui.collectFlow
+import com.kigya.unique.utils.extensions.ui.view.fadeInAnimation
+import com.kigya.unique.utils.extensions.ui.view.fadeOutAnimation
+import com.kigya.unique.utils.extensions.ui.view.findLocationOfCenterOnTheScreen
+import com.kigya.unique.utils.extensions.ui.view.preventDissapearing
+import com.kigya.unique.utils.extensions.ui.view.setDrawableAnimated
+import com.kigya.unique.utils.extensions.ui.view.setOnLeftSwipeTouchListener
+import com.kigya.unique.utils.extensions.ui.view.startSidesCircularReveal
 import com.kigya.unique.utils.thread.ThreadUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -108,6 +107,16 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
     companion object {
         @JvmStatic
         private val NEXT_BUTTON_ACTIVE_DRAWABLE = R.drawable.button_next_active
+
+        internal object OnboardingConst {
+            const val UI_WAITING_TIME = 10000L
+            const val POST_DELAYED_TIME = 200L
+
+            object Progress {
+                const val MAX_PROGRESS = 100f
+                const val PROGRESS_WAITING_TIME = 500L
+            }
+        }
     }
 
 }
