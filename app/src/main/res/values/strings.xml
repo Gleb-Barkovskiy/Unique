@@ -43,5 +43,8 @@
     <string name="course_2">Курс 2</string>
     <string name="course_3">Курс 3</string>
     <string name="course_4">Курс 4</string>
+    <string name="swipe_top_settings">Потяните вверх для расширенных настроек</string>
+    <string name="student_view">Режим студента</string>
+    <string name="teacher_view">Режим преподавателя</string>
 
 </resources>

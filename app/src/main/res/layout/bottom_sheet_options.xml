@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bottom_sheet_background">
+    android:background="@drawable/bottom_sheet_background"
+    android:paddingBottom="@dimen/margin_xs">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clVisibleContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_m"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,6 +36,20 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_s"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/close_icon"
+            android:src="@drawable/icon_tick"
+            app:layout_constraintBottom_toBottomOf="@id/tvFiltersTitle"
+            app:layout_constraintEnd_toStartOf="@id/btnClose"
+            app:layout_constraintTop_toTopOf="@id/tvFiltersTitle"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <ImageButton
+            android:id="@+id/btnClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -39,7 +57,8 @@
             android:src="@drawable/icon_close"
             app:layout_constraintBottom_toBottomOf="@id/tvFiltersTitle"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintTop_toTopOf="@id/tvFiltersTitle" />
+            app:layout_constraintTop_toTopOf="@id/tvFiltersTitle"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/tvHintDisplayText"
@@ -65,7 +84,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subgroup_a"
-                app:fontFamily="@font/jost_bold"
                 app:tbgMarkerColor="@color/green_base_transparent" />
 
             <com.nex3z.togglebuttongroup.button.LabelToggle
@@ -206,7 +224,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Collapsed text"
+            android:text="@string/swipe_top_settings"
             android:textColor="@color/black_base"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -222,15 +240,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/clCollapsedContainer">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+            android:id="@+id/sstgMode"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:text="Expanded text"
-            android:textColor="@color/black_base"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="@dimen/margin_s"
+            android:layout_marginTop="@dimen/margin_s"
+            android:layout_marginEnd="@dimen/margin_s"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.nex3z.togglebuttongroup.button.LabelToggle
+                android:id="@+id/ltStudent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_xs"
+                android:text="@string/student_view"
+                app:tbgMarkerColor="@color/green_base_transparent" />
+
+            <com.nex3z.togglebuttongroup.button.LabelToggle
+                android:id="@+id/ltTeacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_xs"
+                android:text="@string/teacher_view"
+                app:tbgMarkerColor="@color/green_base_transparent" />
+
+
+        </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

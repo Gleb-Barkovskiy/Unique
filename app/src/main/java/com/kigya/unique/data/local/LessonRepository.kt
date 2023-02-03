@@ -1,5 +1,6 @@
 package com.kigya.unique.data.local
 
+import android.util.Log
 import androidx.room.withTransaction
 import com.google.gson.Gson
 import com.kigya.unique.App
@@ -47,6 +48,7 @@ class LessonRepository @Inject constructor(
         regularity: String?
     ): Flow<Resource<List<Lesson>>> = networkBoundResource(
         query = {
+            Log.d("TabsViewModel", "getDatabaseLessonss: $course $group $day $subgroupList $regularity")
             lessonDao.getLessons(course, group, day, subgroupList, regularity)
         },
         fetch = {},

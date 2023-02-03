@@ -65,7 +65,7 @@ fun ImageButton.setDrawableAnimated(
 
 }
 
-fun LottieAnimationView.preventDissapearing() = this.setMaxFrame(99)
+fun LottieAnimationView.preventDisappearing() = this.setMaxFrame(99)
 
 fun View.startSidesCircularReveal(fromLeft: Boolean) {
     addOnLayoutChangeListener(object : View.OnLayoutChangeListener {

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.kigya.unique.data.local.LessonRepository
 import com.kigya.unique.adapters.calendar.interlayers.CalendarWeekdayClickListener
+import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.data.local.settings.AppSettings
 import com.kigya.unique.utils.wrappers.Resource
 import com.kigya.unique.di.IoDispatcher
@@ -13,13 +14,23 @@ import com.kigya.unique.utils.calendar.CalendarHelper
 import com.kigya.unique.utils.constants.ModelConst.DEFAULT_SUBGROUPS_VALUE
 import com.kigya.unique.utils.mappers.LocaleConverter.Russian.russianValue
 import com.kigya.unique.utils.logger.Logger
+import com.kigya.unique.utils.mappers.FiltersMapper.toCourseHint
+import com.kigya.unique.utils.mappers.FiltersMapper.toGroupHint
+import com.kigya.unique.utils.mappers.FiltersMapper.toWeekHint
 import com.kizitonwose.calendar.view.WeekCalendarView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.time.DayOfWeek
 import java.time.LocalDate
+import java.util.function.LongFunction
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,14 +64,31 @@ class TabsViewModel @Inject constructor(
     val isAutoWeekModeEnabled = _isAutoWeekModeEnabled.asStateFlow().value
 
     init {
-        setParamsStoreState(appSettings)
-        initLessonsFromDatabaseOrRefresh()
-        loadFreshData()
+        loadData(appSettings)
     }
+
+    private fun loadData(appSettings: AppSettings) {
+        viewModelScope.launch(dispatcher) {
+            appSettings.getParamsFromDataStore().collect { params ->
+                _course.value = params.first
+                _group.value = params.second
+                _subgroupList.value = params.third.toMutableList()
+                _isAutoWeekModeEnabled.value = params.fourth
+                getFromDatabaseOrRefresh()
+            }
+        }
+    }
+
+    fun getCourseHint() = _course.value.toCourseHint()
+
+    fun getGroupHint() = _group.value.toGroupHint(_course.value)
+
+    fun getWeekModeHint() = _isAutoWeekModeEnabled.value.toWeekHint()
 
     fun unableToScroll() {
         _shouldScroll.value = false
     }
+
 
     private fun loadFreshData() {
         viewModelScope.launch() {
@@ -68,22 +96,21 @@ class TabsViewModel @Inject constructor(
         }
     }
 
-    private fun initLessonsFromDatabaseOrRefresh() {
+    fun setParams(
+        course: Int? = null,
+        group: Int? = null,
+        subgroupList: List<String>? = null,
+        isAutoWeekModeEnabled: Boolean? = null
+    ) {
         viewModelScope.launch(dispatcher) {
-            getFromDatabaseOrRefresh()
+            course?.let { appSettings.setCourseToDataStore(it) }
+            group?.let { appSettings.setGroupToDataStore(it) }
+            subgroupList?.let { appSettings.setSubgroupListToDataStore(it) }
+            isAutoWeekModeEnabled?.let { appSettings.setRegularityToDataStore(it) }
+            loadData(appSettings)
         }
     }
 
-    private fun setParamsStoreState(appSettings: AppSettings) {
-        viewModelScope.launch(dispatcher) {
-            appSettings.getParamsFromDataStore().collect { params ->
-                _course.value = params.first
-                _group.value = params.second
-                _subgroupList.value = params.third.toMutableList()
-                _isAutoWeekModeEnabled.value = params.fourth
-            }
-        }
-    }
 
     fun refreshData() {
         viewModelScope.launch(dispatcher) {
@@ -106,13 +133,18 @@ class TabsViewModel @Inject constructor(
     private suspend fun getDatabaseLessons() {
         _lessons.value = Resource.Loading()
         repository.getDatabaseLessons(
-            course,
-            group,
+            _course.value,
+            _group.value,
             selectedDate.dayOfWeek.russianValue(),
-            subgroupList.toList(),
+            _subgroupList.value.toList(),
             null
         ).collect {
             _lessons.value = it
+            lessons.value.data?.let { lessons ->
+                if (lessons.isEmpty()) {
+                    refreshData()
+                }
+            }
         }
     }
 
@@ -122,6 +154,7 @@ class TabsViewModel @Inject constructor(
     }
 
     override fun dateClicked(weekCalendarView: WeekCalendarView, date: LocalDate) {
+        if (date == selectedDate || date.dayOfWeek == DayOfWeek.SUNDAY) return
         enableToScroll()
         swapDates(date)
         weekCalendarView.notifyCalendarChanged()

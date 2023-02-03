@@ -18,19 +18,19 @@ object FiltersMapper {
         with(App.appContext.resources) {
             return when (course) {
                 1 -> with(getStringArray(R.array.group_options_1)) {
-                    return this[this@toGroupHint - 1]
+                    return this[this@toGroupHint]
                 }
 
                 2 -> with(getStringArray(R.array.group_options_2)) {
-                    return this[this@toGroupHint - 1]
+                    return this[this@toGroupHint]
                 }
 
                 3 -> with(getStringArray(R.array.group_options_3)) {
-                    return this[this@toGroupHint - 1]
+                    return this[this@toGroupHint]
                 }
 
                 4 -> with(getStringArray(R.array.group_options_4)) {
-                    return this[this@toGroupHint - 1]
+                    return this[this@toGroupHint]
                 }
 
                 else -> "Курс"

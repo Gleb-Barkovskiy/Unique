@@ -38,12 +38,12 @@ object Versions {
     const val extJunit = "1.1.3"
     const val espresso = "3.4.0"
 
-    // android plygins
+    // android plugins
     const val hiltPlugin = "2.43.2"
     const val safeargs = "2.5.0"
-    const val kotlin = "1.7.10"
+    const val kotlin = "1.8.0"
     const val application = "7.3.0"
-    const val jvmVersion = "1.8"
+    const val jvmVersion = "17"
     const val ktLint = "11.0.0"
     const val ssp = "1.1.0"
 }

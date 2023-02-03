@@ -13,7 +13,6 @@ plugins {
     }
     kotlin("kapt")
 }
-@Suppress("UnstableApiUsage")
 android {
     with(AppConfig) {
         this@android.compileSdk = this@with.compileSdk
@@ -39,7 +38,7 @@ android {
         }
     }
     compileOptions {
-        JavaVersion.VERSION_1_8.apply {
+        JavaVersion.VERSION_17.apply {
             sourceCompatibility = this
             targetCompatibility = this
         }
@@ -61,7 +60,7 @@ dependencies {
     }
     
     implementation("com.github.Spikeysanju:MotionToast:1.4")
-    implementation("androidx.activity:activity:1.7.0-alpha03")
+    implementation("androidx.activity:activity:1.7.0-alpha04")
     implementation("com.nex3z:toggle-button-group:1.2.3")
 
 }

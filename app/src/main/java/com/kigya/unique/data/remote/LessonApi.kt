@@ -1,12 +1,19 @@
 package com.kigya.unique.data.remote
 
+import android.content.Context
+import android.util.Log
+import com.google.gson.Gson
 import com.kigya.unique.data.dto.lesson.Lesson
+import com.kigya.unique.di.NetworkModule.Const.BASE_URL
 import com.kigya.unique.utils.LessonList
 import com.kigya.unique.utils.constants.ModelConst
 import com.kigya.unique.utils.extensions.string.fastReplace
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import javax.inject.Inject
 
@@ -52,6 +59,7 @@ class LessonApi @Inject constructor(
         getRows(doc, subjectTeacherList, tableList)
         val result = tableList.chunked(6)
         addResultToList(result, rowList, course, group, subjectTeacherList)
+        if (course == 3 && group == 1) Log.d("SSS", "getNetworkDataByCourseAndGroup: $rowList")
         return rowList
     }
 
@@ -104,18 +112,33 @@ class LessonApi @Inject constructor(
         }
     }
 
-    private suspend fun getDoc(course: Int, group: Int, isMilitaryFaculty: Boolean): Document? {
+    private fun getDoc(course: Int, group: Int, isMilitaryFaculty: Boolean): Document? {
         var document: Document? = null
         try {
             document = if (!isMilitaryFaculty) {
-                jsoupDocumentApi.getRegularJsoupDoc(course, group).body()
+                Jsoup.connect("$BASE_URL$course-kurs/$group-gruppa/").timeout(30000).get()
             } else {
-                jsoupDocumentApi.getMilitaryJsoupDoc(course).body()
+                Jsoup.connect("$BASE_URL$course-kurs/vf/").timeout(30000).get()
             }
         } catch (e: IOException) {
             e.printStackTrace()
         }
         return document
+    }
+
+    fun <T> T.saveToCache(context: Context, fileName: String) {
+        val file = File(context.cacheDir, fileName)
+        val gson = Gson()
+
+        try {
+            val outputStream = FileOutputStream(file)
+            outputStream.use {
+                val json = gson.toJson(this)
+                it.write(json.toByteArray())
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 
 }

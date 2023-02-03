@@ -3,13 +3,13 @@ package com.kigya.unique.ui.tabs.callbacks
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
+import androidx.core.view.marginTop
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.kigya.unique.databinding.BottomSheetOptionsBinding
 import kotlin.math.absoluteValue
 
 class BottomSheetCallback(
     private val viewBinding: BottomSheetOptionsBinding,
-    private val button: View,
     private val coordinator: CoordinatorLayout?
 ) : BottomSheetBehavior.BottomSheetCallback() {
 
@@ -18,7 +18,6 @@ class BottomSheetCallback(
     override fun onSlide(bottomSheet: View, slideOffset: Float) {
         with(viewBinding) {
             if (slideOffset > 0) {
-                button.translationY = 0f
                 clCollapsedContainer.alpha = 1 - 2 * slideOffset
                 clExpandedContainer.alpha = slideOffset * slideOffset
                 when (slideOffset) {
@@ -29,9 +28,8 @@ class BottomSheetCallback(
                     else -> Unit
                 }
             } else {
-                button.y += slideOffset.absoluteValue * OFFSET_BUTTON_COEFFICIENT
                 coordinator?.let {
-                    it.y += slideOffset.absoluteValue * OFFSET_BUTTON_COEFFICIENT
+                    it.y += slideOffset.absoluteValue
                 }
             }
         }
@@ -45,9 +43,5 @@ class BottomSheetCallback(
     private fun BottomSheetOptionsBinding.showExpandableContainer() {
         clCollapsedContainer.visibility = View.GONE
         clExpandedContainer.visibility = View.VISIBLE
-    }
-
-    companion object {
-        private const val OFFSET_BUTTON_COEFFICIENT = 3
     }
 }

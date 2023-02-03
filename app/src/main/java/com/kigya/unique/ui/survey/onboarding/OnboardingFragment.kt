@@ -16,7 +16,7 @@ import com.kigya.unique.utils.extensions.ui.collectFlow
 import com.kigya.unique.utils.extensions.ui.view.fadeInAnimation
 import com.kigya.unique.utils.extensions.ui.view.fadeOutAnimation
 import com.kigya.unique.utils.extensions.ui.view.findLocationOfCenterOnTheScreen
-import com.kigya.unique.utils.extensions.ui.view.preventDissapearing
+import com.kigya.unique.utils.extensions.ui.view.preventDisappearing
 import com.kigya.unique.utils.extensions.ui.view.setDrawableAnimated
 import com.kigya.unique.utils.extensions.ui.view.setOnLeftSwipeTouchListener
 import com.kigya.unique.utils.extensions.ui.view.startSidesCircularReveal
@@ -37,7 +37,7 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
             startProgress()
             handleUserGesture()
             handleDelayAction()
-            lottieManAnimation.preventDissapearing()
+            lottieManAnimation.preventDisappearing()
             onButtonNextClicked()
         }
     }

@@ -1,11 +1,11 @@
 package com.kigya.unique.ui.tabs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -20,7 +20,6 @@ import com.kigya.unique.adapters.calendar.interlayers.CalendarWeekdayClickListen
 import com.kigya.unique.adapters.lesson.LessonAdapter
 import com.kigya.unique.adapters.lesson.LessonSmoothScroller
 import com.kigya.unique.adapters.lesson.LessonsScrollListener
-import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.databinding.FragmentTabsBinding
 import com.kigya.unique.ui.base.BaseFragment
 import com.kigya.unique.utils.LessonList
@@ -33,11 +32,7 @@ import com.kigya.unique.utils.calendar.CalendarHelper.startDate
 import com.kigya.unique.utils.extensions.ui.collectFlow
 import com.kigya.unique.utils.extensions.ui.observeResource
 import com.kigya.unique.utils.extensions.ui.view.startCenterCircularReveal
-import com.kigya.unique.utils.mappers.FiltersMapper.toCourseHint
-import com.kigya.unique.utils.mappers.FiltersMapper.toGroupHint
-import com.kigya.unique.utils.mappers.FiltersMapper.toWeekHint
 import com.kigya.unique.utils.mappers.LocaleConverter.Russian.russianShortValue
-import com.kigya.unique.utils.wrappers.Resource
 import com.kizitonwose.calendar.view.DaySize
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
@@ -69,13 +64,13 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
             val bottomFragment = BottomFragment.newInstance()
             with(viewModel) {
                 bottomFragment.arguments = Bundle().apply {
-                    putString(ARG_COURSE, course.toCourseHint())
-                    putString(ARG_GROUP, group.toGroupHint(course))
-                    putString(ARG_WEEK, isAutoWeekModeEnabled.toWeekHint())
+                    putString(ARG_COURSE, getCourseHint())
+                    putString(ARG_GROUP, getGroupHint())
+                    putString(ARG_WEEK, getWeekModeHint())
                     putStringArrayList(ARG_SUBGROUPS, ArrayList(subgroupList))
                 }
             }
-            bottomFragment.show(childFragmentManager, BOTTOM_SHEET_TAG)
+            bottomFragment.show(parentFragmentManager, BOTTOM_SHEET_TAG)
         }
     }
 
@@ -97,7 +92,6 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
             .filterNot { (it as MotionLayout).progress == 0f }
             .forEach {
                 val position = rvLessons.getChildAdapterPosition(it)
-                Toast.makeText(requireContext(), "position: $position", Toast.LENGTH_SHORT).show()
                 (it as MotionLayout).transitionToStart()
                 adapter.notifyItemChanged(position)
                 adapter.notifyItemChanged(position - 1)
@@ -128,7 +122,7 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
 
     private fun FragmentTabsBinding.setNoLessonsText() {
         context?.let { context ->
-            resourceView.setMessageText(context.getString(R_NO_LESSONS))
+            resourceView.setMessageText(context.getString(R.string.no_lessons))
         }
     }
 
@@ -168,7 +162,6 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
     }
 
     companion object {
-        private val R_NO_LESSONS = R.string.no_lessons
         private const val BOTTOM_SHEET_TAG = "bottom_sheet"
 
         const val ARG_COURSE = "course"

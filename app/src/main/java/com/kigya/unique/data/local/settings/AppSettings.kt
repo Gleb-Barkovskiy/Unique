@@ -1,5 +1,6 @@
 package com.kigya.unique.data.local.settings
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -48,6 +49,7 @@ class AppSettings @Inject constructor(
     override suspend fun setCourseToDataStore(course: Int) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.COURSE] = course
+            Log.d("AppSettings", "setCourseToDataStore: $course")
         }
     }
 
