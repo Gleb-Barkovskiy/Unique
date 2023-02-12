@@ -1,4 +1,4 @@
-package com.kigya.unique.data.remote
+package com.kigya.unique.data.remote.lesson
 
 import com.kigya.unique.utils.LessonList
 

@@ -10,11 +10,6 @@ import kotlin.math.abs
 internal open class OnSwipeTouchListener(ctx: Context) : View.OnTouchListener {
     private val gestureDetector: GestureDetector
 
-    companion object {
-        private const val SWIPE_THRESHOLD = 100
-        private const val SWIPE_VELOCITY_THRESHOLD = 100
-    }
-
     init {
         gestureDetector = GestureDetector(ctx, GestureListener())
     }
@@ -32,7 +27,7 @@ internal open class OnSwipeTouchListener(ctx: Context) : View.OnTouchListener {
             e1: MotionEvent,
             e2: MotionEvent,
             velocityX: Float,
-            velocityY: Float
+            velocityY: Float,
         ): Boolean {
             var result = false
             try {
@@ -66,4 +61,9 @@ internal open class OnSwipeTouchListener(ctx: Context) : View.OnTouchListener {
     open fun onSwipeLeft() = Unit
     open fun onSwipeTop() = Unit
     open fun onSwipeBottom() = Unit
+
+    companion object {
+        private const val SWIPE_THRESHOLD = 100
+        private const val SWIPE_VELOCITY_THRESHOLD = 100
+    }
 }

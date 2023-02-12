@@ -2,7 +2,6 @@ package com.kigya.unique.ui.survey.setup
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kigya.unique.R
@@ -11,11 +10,11 @@ import com.kigya.unique.databinding.FragmentInitialSetupBinding
 import com.kigya.unique.ui.base.BaseFragment
 import com.kigya.unique.utils.extensions.context.onTouchResponseVibrate
 import com.kigya.unique.utils.extensions.ui.findTopNavController
-import com.kigya.unique.utils.extensions.ui.view.fadeOutAnimation
 import com.kigya.unique.utils.extensions.ui.view.moveToCenter
+import com.kigya.unique.utils.extensions.ui.view.playFadeOutAnimation
 import com.kigya.unique.utils.extensions.ui.view.scaleUpEffect
 import com.kigya.unique.utils.extensions.ui.view.startSidesCircularReveal
-import com.kigya.unique.utils.thread.ThreadUtil
+import com.kigya.unique.utils.system.thread.ThreadUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,13 +26,11 @@ class InitialSetupFragment : BaseFragment(R.layout.fragment_initial_setup) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.startSidesCircularReveal(false)
-        with(viewBinding) {
-            setStudentClickListener()
-            setTeacherClickListener()
-        }
+        setStudentClickListener()
+        setTeacherClickListener()
     }
 
-    private fun Fragment.navigateToTabs() {
+    private fun navigateToTabs() {
         viewModel.performAfterDelay {
             ThreadUtil.runOnUiThread {
                 findTopNavController().navigate(R.id.action_initialSetupFragment_to_tabsFragment)
@@ -41,21 +38,25 @@ class InitialSetupFragment : BaseFragment(R.layout.fragment_initial_setup) {
         }
     }
 
-    private fun FragmentInitialSetupBinding.setTeacherClickListener() {
-        ibTeacher.setOnClickListener {
-            context?.onTouchResponseVibrate {
-                performChoiceActions(it, AccountType.TEACHER) {
-                    ibStudent.fadeOutAnimation()
+    private fun setTeacherClickListener() {
+        with(viewBinding) {
+            ibTeacher.setOnClickListener {
+                context?.onTouchResponseVibrate {
+                    performChoiceActions(it, AccountType.TEACHER) {
+                        ibStudent.playFadeOutAnimation()
+                    }
                 }
             }
         }
     }
 
-    private fun FragmentInitialSetupBinding.setStudentClickListener() {
-        ibStudent.setOnClickListener {
-            performChoiceActions(it, AccountType.STUDENT) {
-                context?.onTouchResponseVibrate {
-                    ibTeacher.fadeOutAnimation()
+    private fun setStudentClickListener() {
+        with(viewBinding) {
+            ibStudent.setOnClickListener {
+                performChoiceActions(it, AccountType.STUDENT) {
+                    context?.onTouchResponseVibrate {
+                        ibTeacher.playFadeOutAnimation()
+                    }
                 }
             }
         }
@@ -68,5 +69,4 @@ class InitialSetupFragment : BaseFragment(R.layout.fragment_initial_setup) {
         viewModel.signIn(accountType)
         navigateToTabs()
     }
-
 }

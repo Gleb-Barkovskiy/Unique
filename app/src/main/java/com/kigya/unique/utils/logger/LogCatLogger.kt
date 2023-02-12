@@ -11,5 +11,4 @@ object LogCatLogger : Logger {
     override fun error(tag: String, e: Throwable) {
         Log.e(tag, "Error!", e)
     }
-
 }

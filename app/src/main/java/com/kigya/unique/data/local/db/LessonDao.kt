@@ -20,9 +20,9 @@ interface LessonDao {
 
     @Query(
         "SELECT * FROM lessons WHERE `group` = :group AND `course` = :course" +
-                " AND (:day IS NULL OR `day` = :day)" +
-                " AND (`subgroup` LIKE '' OR `subgroup` IN (:subgroupList))" +
-                " AND (:regularity IS NULL OR `regularity` = :regularity)"
+            " AND (:day IS NULL OR `day` = :day)" +
+            " AND (`subgroup` LIKE '' OR `subgroup` IN (:subgroupList))" +
+            "AND ((:regularity IS NULL) OR `regularity` LIKE '' OR `regularity` = :regularity)",
     )
     fun getLessons(
         course: Int,
@@ -34,5 +34,4 @@ interface LessonDao {
 
     @Query("SELECT COUNT(*) FROM lessons")
     fun getDatabaseSize(): Int
-
 }

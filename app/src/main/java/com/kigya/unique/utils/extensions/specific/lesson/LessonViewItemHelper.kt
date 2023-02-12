@@ -2,39 +2,43 @@
 
 package com.kigya.unique.utils.extensions.specific.lesson
 
-@Suppress("SameReturnValue")
-fun String.Companion.empty(): String = ""
+import com.kigya.unique.utils.constants.ModelConst.FIRST_WEEK_STRING_SHORT
+import com.kigya.unique.utils.extensions.specific.lesson.Const.DELIMITER_BETWEEN_TIMETABLE_TIME
+import com.kigya.unique.utils.extensions.specific.lesson.Const.EVERY_WEEK_FULL
+import com.kigya.unique.utils.extensions.specific.lesson.Const.FIRST_WEEK_FULL
+import com.kigya.unique.utils.extensions.specific.lesson.Const.SECOND_WEEK_FULL
+import com.kigya.unique.utils.extensions.string.empty
 
-fun String.timeStart(): String {
-    return this.split("–")[0].trim()
-}
+fun getStartTime(str: String) =
+    str.split(DELIMITER_BETWEEN_TIMETABLE_TIME)[0].trim()
 
-fun String.timeEnd(): String {
-    return this.split("–")[1].trim()
-}
+fun getEndTime(str: String) =
+    str.split(DELIMITER_BETWEEN_TIMETABLE_TIME)[1].trim()
 
-fun String?.properSubgroup(): String {
-    return if (this.isNullOrBlank()) String.empty() else {
-        "${Const.SUBGROUP} $this"
-    }
-}
-
-fun String?.properRegularity(): String {
-    return if (this.isNullOrBlank()) {
-        Const.EVERY_WEEK
+fun getSubgroupFullStringValue(str: String?) =
+    if (str.isNullOrBlank()) {
+        String.empty()
     } else {
-        if (this == "1н") {
-            Const.FIRST_WEEK
+        "${Const.SUBGROUP} $str"
+    }
+
+fun getRegularityFullStringValue(str: String?) =
+    if (str.isNullOrBlank()) {
+        EVERY_WEEK_FULL
+    } else {
+        if (str == FIRST_WEEK_STRING_SHORT) {
+            FIRST_WEEK_FULL
         } else {
-            Const.SECOND_WEEK
+            SECOND_WEEK_FULL
         }
     }
-}
 
 private object Const {
-    const val EVERY_WEEK = "Каждую неделю"
-    const val FIRST_WEEK = "Первая неделя"
-    const val SECOND_WEEK = "Вторая неделя"
+    const val EVERY_WEEK_FULL = "Каждую неделю"
+    const val FIRST_WEEK_FULL = "Первая неделя"
+    const val SECOND_WEEK_FULL = "Вторая неделя"
 
     const val SUBGROUP = "Подгруппа"
+
+    const val DELIMITER_BETWEEN_TIMETABLE_TIME = "–"
 }

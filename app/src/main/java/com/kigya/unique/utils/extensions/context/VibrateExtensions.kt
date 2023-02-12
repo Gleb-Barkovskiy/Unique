@@ -6,6 +6,8 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 
+private const val MILLIS_SHOT = 10L
+
 fun Context.onTouchResponseVibrate(block: () -> Unit) {
     val vib = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val vibratorManager =
@@ -15,6 +17,6 @@ fun Context.onTouchResponseVibrate(block: () -> Unit) {
         getSystemService(Vibrator::class.java) as Vibrator
     }
 
-    vib.vibrate(VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE))
+    vib.vibrate(VibrationEffect.createOneShot(MILLIS_SHOT, VibrationEffect.DEFAULT_AMPLITUDE))
     block()
 }

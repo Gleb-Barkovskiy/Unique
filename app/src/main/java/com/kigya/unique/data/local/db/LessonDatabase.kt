@@ -7,7 +7,7 @@ import com.kigya.unique.data.dto.lesson.Lesson
 @Database(
     entities = [Lesson::class],
     version = 1,
-    exportSchema = false
+    exportSchema = false,
 )
 abstract class LessonDatabase : RoomDatabase() {
     abstract fun getLessonDao(): LessonDao

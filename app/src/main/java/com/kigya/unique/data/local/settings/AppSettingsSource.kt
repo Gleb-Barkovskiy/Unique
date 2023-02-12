@@ -23,5 +23,4 @@ interface AppSettingsSource {
     suspend fun setRegularityToDataStore(isAuto: Boolean)
 
     fun getParamsFromDataStore(): Flow<Quartet<Int, Int, List<String>, Boolean>>
-
 }

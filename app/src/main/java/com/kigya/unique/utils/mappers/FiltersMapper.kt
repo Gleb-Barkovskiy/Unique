@@ -4,43 +4,51 @@ import com.kigya.unique.App
 import com.kigya.unique.R
 
 object FiltersMapper {
-    fun Boolean.toWeekHint(): String =
+    fun getWeekOptionsStringValue(isAuto: Boolean): String =
         with(App.appContext.resources.getStringArray(R.array.week_options)) {
-            return if (this@toWeekHint) this[0] else this[1]
+            return if (isAuto) this[0] else this[1]
         }
 
-    fun Int.toCourseHint(): String =
+    fun getCourseHintByArrayIndex(index: Int): String =
         with(App.appContext.resources.getStringArray(R.array.course_options)) {
-            return this[this@toCourseHint - 1]
+            return this[index - 1]
         }
 
-    fun Int.toGroupHint(course: Int): String {
+    fun getGroupHintByArrayIndex(index: Int, course: Int): String {
         with(App.appContext.resources) {
-            return when (course) {
+            when (course) {
                 1 -> with(getStringArray(R.array.group_options_1)) {
-                    return this[this@toGroupHint]
+                    return this[index]
                 }
 
                 2 -> with(getStringArray(R.array.group_options_2)) {
-                    return this[this@toGroupHint]
+                    return this[index]
                 }
 
                 3 -> with(getStringArray(R.array.group_options_3)) {
-                    return this[this@toGroupHint]
+                    return this[index]
                 }
 
                 4 -> with(getStringArray(R.array.group_options_4)) {
-                    return this[this@toGroupHint]
+                    return this[index]
                 }
 
-                else -> "Курс"
+                else -> with(getStringArray(R.array.group_options_1)) {
+                    return this[index]
+                }
             }
         }
-
     }
 
-    fun List<String>.toSubgroupBundle() = this.joinToString(separator = " ")
+    fun getResourceByCourse(course: Int) = when (course) {
+        0 -> R.array.group_options_1
+        1 -> R.array.group_options_2
+        2 -> R.array.group_options_3
+        3 -> R.array.group_options_4
+        else -> R.array.group_options_1
+    }
 
-    fun String.toSubgroupList() = this.split(" ")
+    fun getSubgroupBundle(list: List<String>) = list.joinToString(separator = " ")
 
+    fun getSubgroupList(str: String) = str.split(" ")
 }

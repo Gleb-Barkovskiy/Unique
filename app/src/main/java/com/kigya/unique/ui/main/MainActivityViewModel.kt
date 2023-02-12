@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.kigya.unique.data.local.settings.AppSettings
 import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.ui.base.BaseViewModel
+import com.kigya.unique.usecase.SetupUseCase
 import com.kigya.unique.utils.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,9 +20,9 @@ import kotlin.properties.Delegates
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
     @IoDispatcher dispatcher: CoroutineDispatcher,
-    appSettings: AppSettings,
-    logger: Logger
-) : BaseViewModel(appSettings, logger, dispatcher) {
+    logger: Logger,
+    private val setupUseCase: SetupUseCase,
+) : BaseViewModel(dispatcher, logger) {
 
     private var _isUserSignedIn by Delegates.notNull<Boolean>()
 
@@ -30,16 +31,20 @@ class MainActivityViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            delay(2000)
+            delay(SPLASH_DELAY)
             _isLoading.value = false
         }
     }
 
     val isUserSignedIn: Boolean
         get() = runBlocking {
-            appSettings.isSignedIn().take(1).collect {
+            setupUseCase.isUserSignedIn().collect {
                 _isUserSignedIn = it
             }
             _isUserSignedIn
         }
+
+    companion object {
+        private const val SPLASH_DELAY = 2000L
+    }
 }

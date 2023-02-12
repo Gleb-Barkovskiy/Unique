@@ -14,10 +14,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.hypot
 
-fun View.fadeOutAnimation(
-    duration: Long = 500,
+private const val DEFAULT_DURATION = 500L
+private const val LOTTIE_MAX_FRAME = 99
+
+fun View.playFadeOutAnimation(
+    duration: Long = DEFAULT_DURATION,
     visibility: Int = View.INVISIBLE,
-    completion: (() -> Unit)? = null
+    completion: (() -> Unit)? = null,
 ) {
     animate()
         .alpha(0f)
@@ -30,7 +33,10 @@ fun View.fadeOutAnimation(
         }
 }
 
-fun View.fadeInAnimation(duration: Long = 500, completion: (() -> Unit)? = null) {
+fun View.playFadeInAnimation(
+    duration: Long = DEFAULT_DURATION,
+    completion: (() -> Unit)? = null,
+) {
     alpha = 0f
     visibility = View.VISIBLE
     animate()
@@ -44,9 +50,9 @@ fun View.fadeInAnimation(duration: Long = 500, completion: (() -> Unit)? = null)
 }
 
 fun ImageButton.setDrawableAnimated(
-    duration: Long = 500,
+    duration: Long = DEFAULT_DURATION,
     drawable: Int,
-    completion: (() -> Unit)? = null
+    completion: (() -> Unit)? = null,
 ) {
     animate()
         .alpha(0f)
@@ -62,16 +68,22 @@ fun ImageButton.setDrawableAnimated(
                     }
                 }
         }
-
 }
 
-fun LottieAnimationView.preventDisappearing() = this.setMaxFrame(99)
+fun LottieAnimationView.preventDisappearing() = this.setMaxFrame(LOTTIE_MAX_FRAME)
 
 fun View.startSidesCircularReveal(fromLeft: Boolean) {
     addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
         override fun onLayoutChange(
-            v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int,
-            oldRight: Int, oldBottom: Int
+            v: View,
+            left: Int,
+            top: Int,
+            right: Int,
+            bottom: Int,
+            oldLeft: Int,
+            oldTop: Int,
+            oldRight: Int,
+            oldBottom: Int,
         ) {
             v.removeOnLayoutChangeListener(this)
             val cx = if (fromLeft) v.left else v.right
@@ -89,8 +101,15 @@ fun View.startSidesCircularReveal(fromLeft: Boolean) {
 fun View.startCenterCircularReveal() {
     addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
         override fun onLayoutChange(
-            v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int,
-            oldRight: Int, oldBottom: Int
+            v: View,
+            left: Int,
+            top: Int,
+            right: Int,
+            bottom: Int,
+            oldLeft: Int,
+            oldTop: Int,
+            oldRight: Int,
+            oldBottom: Int,
         ) {
             v.removeOnLayoutChangeListener(this)
             val cx = v.width / 2
@@ -131,7 +150,7 @@ fun View.moveToCenter() {
 fun View.delayOnLifecycle(
     durationOnMillis: Long,
     dispatcher: CoroutineDispatcher = Dispatchers.Main,
-    block: () -> Unit
+    block: () -> Unit,
 ): Job? = findViewTreeLifecycleOwner()?.let { lifecycleOwner ->
     lifecycleOwner.lifecycle.coroutineScope.launch(dispatcher) {
         delay(durationOnMillis)

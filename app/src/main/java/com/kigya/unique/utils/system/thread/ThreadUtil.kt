@@ -1,4 +1,4 @@
-package com.kigya.unique.utils.thread
+package com.kigya.unique.utils.system.thread
 
 import android.os.Handler
 import android.os.Looper

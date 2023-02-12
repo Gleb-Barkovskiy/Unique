@@ -1,13 +1,15 @@
-package com.kigya.unique.data.remote
+package com.kigya.unique.data.remote.lesson
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.Gson
+import com.kigya.unique.App
 import com.kigya.unique.data.dto.lesson.Lesson
+import com.kigya.unique.data.remote.fetch.JsoupDocumentApi
 import com.kigya.unique.di.NetworkModule.Const.BASE_URL
 import com.kigya.unique.utils.LessonList
 import com.kigya.unique.utils.constants.ModelConst
 import com.kigya.unique.utils.extensions.string.fastReplace
+import com.kigya.unique.utils.mappers.LessonMapper
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import org.jsoup.Jsoup
@@ -18,7 +20,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class LessonApi @Inject constructor(
-    private val jsoupDocumentApi: JsoupDocumentApi
+    private val jsoupDocumentApi: JsoupDocumentApi,
 ) : LessonApiSource {
 
     override suspend fun getNetworkData(): LessonList {
@@ -44,13 +46,14 @@ class LessonApi @Inject constructor(
                 }
             }
         }
+        rowList.saveToCache(App.appContext, "lessons.json")
         return rowList
     }
 
-    private suspend fun getNetworkDataByCourseAndGroup(
+    private fun getNetworkDataByCourseAndGroup(
         course: Int,
         group: Int,
-        isMilitaryFaculty: Boolean
+        isMilitaryFaculty: Boolean,
     ): LessonList {
         val rowList = mutableListOf<Lesson>()
         val doc: Document? = getDoc(course, group, isMilitaryFaculty)
@@ -59,17 +62,15 @@ class LessonApi @Inject constructor(
         getRows(doc, subjectTeacherList, tableList)
         val result = tableList.chunked(6)
         addResultToList(result, rowList, course, group, subjectTeacherList)
-        if (course == 3 && group == 1) Log.d("SSS", "getNetworkDataByCourseAndGroup: $rowList")
         return rowList
     }
-
 
     private fun addResultToList(
         result: List<List<String>>,
         rowList: MutableList<Lesson>,
         course: Int,
         group: Int,
-        subjectTeacher: MutableList<Pair<String, String>>
+        subjectTeacher: MutableList<Pair<String, String>>,
     ) {
         result.forEachIndexed { index, list ->
             rowList.add(
@@ -78,15 +79,13 @@ class LessonApi @Inject constructor(
                     group = group,
                     day = list[0],
                     time = list[1],
-                    subgroup = if (list[2].substringBefore(" ")
-                            .contains("н")
-                    ) "" else list[2].substringBefore(" "),
-                    regularity = list[2].substringAfter(" "),
+                    subgroup = LessonMapper.getSubgroupRegularityPair(list[2]).first,
+                    regularity = LessonMapper.getSubgroupRegularityPair(list[2]).second,
                     subject = subjectTeacher[index].first,
                     teacher = subjectTeacher[index].second,
                     type = list[4],
-                    audience = list[5]
-                )
+                    audience = list[5],
+                ),
             )
         }
     }
@@ -94,7 +93,7 @@ class LessonApi @Inject constructor(
     private fun getRows(
         doc: Document?,
         subjectTeacher: MutableList<Pair<String, String>>,
-        tableList: MutableList<String>
+        tableList: MutableList<String>,
     ) {
         doc?.getElementsByTag("tbody")?.forEach { table ->
             table.children()[0].siblingElements().forEach { row ->
@@ -103,8 +102,11 @@ class LessonApi @Inject constructor(
                         val childString = child.toString()
                         val pair = childString.fastReplace("<td class=\"subject-teachers\">", "")
                             .fastReplace("</td>", "").split("<br>")
-                        if (pair.size == 2) subjectTeacher.add(Pair(pair[0], pair[1]))
-                        else subjectTeacher.add(Pair(pair[0], ""))
+                        if (pair.size == 2) {
+                            subjectTeacher.add(Pair(pair[0], pair[1]))
+                        } else {
+                            subjectTeacher.add(Pair(pair[0], ""))
+                        }
                     }
                     tableList.add(cell.text())
                 }
@@ -126,7 +128,7 @@ class LessonApi @Inject constructor(
         return document
     }
 
-    fun <T> T.saveToCache(context: Context, fileName: String) {
+    private fun <T> T.saveToCache(context: Context, fileName: String) {
         val file = File(context.cacheDir, fileName)
         val gson = Gson()
 
@@ -140,5 +142,4 @@ class LessonApi @Inject constructor(
             e.printStackTrace()
         }
     }
-
 }

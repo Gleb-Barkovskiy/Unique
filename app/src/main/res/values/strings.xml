@@ -19,9 +19,10 @@
     <string name="filters">Фильтры</string>
     <string name="setup_display_params">Настройте параметры отображения</string>
     <string name="subgroup">Подгруппа</string>
-    <string name="subgroup_a">Подгруппа А</string>
-    <string name="subgroup_b">Подгруппа Б</string>
-    <string name="subgroup_c">Подгруппа В</string>
+    <string name="subgroup_a">А</string>
+    <string name="subgroup_b">Б</string>
+    <string name="subgroup_c">В</string>
+    <string name="subgroup_d">Г</string>
     <string name="week">Неделя</string>
     <string name="close_icon">Close icon</string>
     <string name="сourse">Курс</string>
@@ -46,5 +47,6 @@
     <string name="swipe_top_settings">Потяните вверх для расширенных настроек</string>
     <string name="student_view">Режим студента</string>
     <string name="teacher_view">Режим преподавателя</string>
+    <string name="displaying_subgroups">Отображаемые подгруппы</string>
 
 </resources>

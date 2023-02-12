@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.0-alpha02")
+        classpath("com.android.tools.build:gradle:8.1.0-alpha03")
     }
 }
 plugins {

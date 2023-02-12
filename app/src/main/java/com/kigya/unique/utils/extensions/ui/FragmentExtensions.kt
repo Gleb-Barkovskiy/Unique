@@ -44,7 +44,7 @@ fun <T> DialogFragment.collectFlow(flow: Flow<T>, onCollect: (T) -> Unit) {
 fun <T, R> BaseFragment.observeResource(
     flow: Flow<T>,
     resourceView: ResourceView,
-    onSuccess: (R) -> Unit
+    onSuccess: (R) -> Unit,
 ) = collectFlow(flow) { result ->
     resourceView.setResource(result as Resource<*>)
     if (result is Resource.Success<*>) {

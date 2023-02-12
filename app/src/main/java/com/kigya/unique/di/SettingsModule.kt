@@ -12,6 +12,6 @@ import dagger.hilt.components.SingletonComponent
 abstract class SettingsModule {
     @Binds
     abstract fun bindAppSettings(
-        appSettings: AppSettings
+        appSettings: AppSettings,
     ): AppSettingsSource
 }

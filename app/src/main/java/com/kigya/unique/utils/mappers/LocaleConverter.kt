@@ -79,5 +79,4 @@ object LocaleConverter {
             const val DECEMBER = "Декабрь"
         }
     }
-
 }

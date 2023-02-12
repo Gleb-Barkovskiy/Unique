@@ -1,20 +1,12 @@
 package com.kigya.unique.adapters.lesson
 
 import androidx.recyclerview.widget.DiffUtil
-import com.kigya.unique.utils.LessonList
+import com.kigya.unique.data.dto.lesson.Lesson
 
-class LessonDiffUtilCallback(
-    private val oldList: LessonList,
-    private val newList: LessonList
-) : DiffUtil.Callback() {
+object LessonDiffUtilCallback : DiffUtil.ItemCallback<Lesson>() {
+    override fun areItemsTheSame(oldItem: Lesson, newItem: Lesson): Boolean =
+        oldItem.id == newItem.id
 
-    override fun getOldListSize() = oldList.size
-
-    override fun getNewListSize() = newList.size
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        oldList[oldItemPosition] == newList[newItemPosition]
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        oldList[oldItemPosition] == newList[newItemPosition]
+    override fun areContentsTheSame(oldItem: Lesson, newItem: Lesson): Boolean =
+        oldItem == newItem
 }

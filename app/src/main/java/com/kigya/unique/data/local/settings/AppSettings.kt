@@ -1,6 +1,5 @@
 package com.kigya.unique.data.local.settings
 
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -8,12 +7,11 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.kigya.unique.data.dto.account.AccountType
-import com.kigya.unique.utils.mappers.FiltersMapper.toSubgroupBundle
-import com.kigya.unique.utils.mappers.FiltersMapper.toSubgroupList
 import com.kigya.unique.utils.Quartet
 import com.kigya.unique.utils.constants.ModelConst.DEFAULT_SUBGROUPS_VALUE
-import com.kigya.unique.utils.extensions.specific.account.mapToAccountType
-import com.kigya.unique.utils.extensions.specific.account.mapToString
+import com.kigya.unique.utils.mappers.AccountTypeMapper
+import com.kigya.unique.utils.mappers.FiltersMapper.getSubgroupBundle
+import com.kigya.unique.utils.mappers.FiltersMapper.getSubgroupList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -21,7 +19,7 @@ import javax.inject.Singleton
 
 @Singleton
 class AppSettings @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
 ) : AppSettingsSource {
 
     override fun isSignedIn(): Flow<Boolean> =
@@ -37,19 +35,18 @@ class AppSettings @Inject constructor(
 
     override suspend fun setCurrentAccountType(accountType: AccountType) {
         dataStore.edit { preferences ->
-            preferences[PreferencesKeys.ACCOUNT_TYPE] = accountType.mapToString()
+            preferences[PreferencesKeys.ACCOUNT_TYPE] = AccountTypeMapper.mapToString(accountType)
         }
     }
 
     override fun getCurrentAccountType(): Flow<AccountType> =
         dataStore.data.map {
-            it[PreferencesKeys.ACCOUNT_TYPE]?.mapToAccountType() ?: AccountType.STUDENT
+            AccountTypeMapper.mapToAccountType(it[PreferencesKeys.ACCOUNT_TYPE] ?: STUDENT_STRING_NAME)
         }
 
     override suspend fun setCourseToDataStore(course: Int) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.COURSE] = course
-            Log.d("AppSettings", "setCourseToDataStore: $course")
         }
     }
 
@@ -61,7 +58,7 @@ class AppSettings @Inject constructor(
 
     override suspend fun setSubgroupListToDataStore(subgroupList: List<String>) {
         dataStore.edit { preferences ->
-            preferences[PreferencesKeys.SUBGROUP_LIST] = subgroupList.toSubgroupBundle()
+            preferences[PreferencesKeys.SUBGROUP_LIST] = getSubgroupBundle(subgroupList)
         }
     }
 
@@ -76,13 +73,14 @@ class AppSettings @Inject constructor(
             Quartet(
                 preferences[PreferencesKeys.COURSE] ?: 1,
                 preferences[PreferencesKeys.GROUP] ?: 1,
-                preferences[PreferencesKeys.SUBGROUP_LIST]?.toSubgroupList()
+                preferences[PreferencesKeys.SUBGROUP_LIST]?.let { getSubgroupList(it) }
                     ?: DEFAULT_SUBGROUPS_VALUE,
-                preferences[PreferencesKeys.IS_AUTO_REGULARITY] ?: true
+                preferences[PreferencesKeys.IS_AUTO_REGULARITY] ?: false,
             )
         }
 
     companion object {
+        const val STUDENT_STRING_NAME = "STUDENT"
         object PreferencesKeys {
             val COURSE = intPreferencesKey("course")
             val GROUP = intPreferencesKey("group")

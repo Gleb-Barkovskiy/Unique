@@ -9,7 +9,7 @@ typealias ViewModelCreator<VM> = () -> VM
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory<VM : ViewModel>(
-    private val viewModelCreator: ViewModelCreator<VM>
+    private val viewModelCreator: ViewModelCreator<VM>,
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return viewModelCreator() as T

@@ -7,9 +7,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-@Entity(
-    tableName = "lessons"
-)
+@Entity(tableName = "lessons")
 @Parcelize
 data class Lesson(
     @PrimaryKey(autoGenerate = true)
@@ -50,5 +48,5 @@ data class Lesson(
     val type: String?,
 
     @Expose
-    val audience: String?
+    val audience: String?,
 ) : Parcelable

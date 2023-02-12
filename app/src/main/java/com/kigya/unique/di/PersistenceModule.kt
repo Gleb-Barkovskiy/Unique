@@ -11,10 +11,9 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.kigya.unique.data.local.db.LessonDatabase
-import com.kigya.unique.data.remote.LessonApiSource
+import com.kigya.unique.data.remote.lesson.LessonApiSource
 import com.kigya.unique.di.PersistenceModule.Constants.DATABASE_NAME
 import com.kigya.unique.di.PersistenceModule.Constants.TIMETABLE_PREFERENCES
-import com.kigya.unique.utils.constants.ModelConst
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,16 +42,16 @@ object PersistenceModule {
     fun providePreferencesDataStore(@ApplicationContext appContext: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             corruptionHandler = ReplaceFileCorruptionHandler(
-                produceNewData = { emptyPreferences() }
+                produceNewData = { emptyPreferences() },
             ),
             migrations = listOf(
                 SharedPreferencesMigration(
                     appContext,
-                    TIMETABLE_PREFERENCES
-                )
+                    TIMETABLE_PREFERENCES,
+                ),
             ),
             scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
-            produceFile = { appContext.preferencesDataStoreFile(TIMETABLE_PREFERENCES) }
+            produceFile = { appContext.preferencesDataStoreFile(TIMETABLE_PREFERENCES) },
         )
     }
 

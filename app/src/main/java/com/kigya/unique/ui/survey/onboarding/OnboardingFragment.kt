@@ -13,14 +13,14 @@ import com.kigya.unique.ui.survey.onboarding.OnboardingFragment.Companion.Onboar
 import com.kigya.unique.ui.survey.onboarding.OnboardingFragment.Companion.OnboardingConst.UI_WAITING_TIME
 import com.kigya.unique.utils.extensions.context.onTouchResponseVibrate
 import com.kigya.unique.utils.extensions.ui.collectFlow
-import com.kigya.unique.utils.extensions.ui.view.fadeInAnimation
-import com.kigya.unique.utils.extensions.ui.view.fadeOutAnimation
 import com.kigya.unique.utils.extensions.ui.view.findLocationOfCenterOnTheScreen
+import com.kigya.unique.utils.extensions.ui.view.playFadeInAnimation
+import com.kigya.unique.utils.extensions.ui.view.playFadeOutAnimation
 import com.kigya.unique.utils.extensions.ui.view.preventDisappearing
 import com.kigya.unique.utils.extensions.ui.view.setDrawableAnimated
 import com.kigya.unique.utils.extensions.ui.view.setOnLeftSwipeTouchListener
 import com.kigya.unique.utils.extensions.ui.view.startSidesCircularReveal
-import com.kigya.unique.utils.thread.ThreadUtil
+import com.kigya.unique.utils.system.thread.ThreadUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,18 +32,20 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.startSidesCircularReveal(false)
-        with(viewBinding) {
-            setInitialState()
-            startProgress()
-            handleUserGesture()
-            handleDelayAction()
-            lottieManAnimation.preventDisappearing()
-            onButtonNextClicked()
-        }
+        setInitialScreenState()
+        startProgressCircularReveal()
+        handleUserGesture()
+        handleDelayAction()
+        preventLottieAnimationDisappearing()
+        setNextButtonClickListener()
     }
 
-    private fun FragmentOnboardingBinding.onButtonNextClicked() {
-        btnNext.setOnClickListener {
+    private fun preventLottieAnimationDisappearing() {
+        viewBinding.lottieManAnimation.preventDisappearing()
+    }
+
+    private fun setNextButtonClickListener() {
+        viewBinding.btnNext.setOnClickListener {
             if (viewModel.isReady) {
                 context?.onTouchResponseVibrate {
                     it.findLocationOfCenterOnTheScreen()
@@ -53,11 +55,11 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
         }
     }
 
-    private fun FragmentOnboardingBinding.startProgress() {
-        circularProgressBar.setProgressWithAnimation(MAX_PROGRESS, UI_WAITING_TIME)
+    private fun startProgressCircularReveal() {
+        viewBinding.circularProgressBar.setProgressWithAnimation(MAX_PROGRESS, UI_WAITING_TIME)
     }
 
-    private fun FragmentOnboardingBinding.setInitialState() {
+    private fun setInitialScreenState() {
         collectFlow(viewModel.retainer) {
             viewModel.handleIfTriggered(it) {
                 changeUiState()
@@ -65,7 +67,7 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
         }
     }
 
-    private fun FragmentOnboardingBinding.handleDelayAction() {
+    private fun handleDelayAction() {
         viewModel.performAfterDelay {
             ThreadUtil.runOnUiThread {
                 viewModel.onUiTriggered {
@@ -75,9 +77,9 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
         }
     }
 
-    private fun FragmentOnboardingBinding.handleUserGesture() {
+    private fun handleUserGesture() {
         activity?.let {
-            main.setOnLeftSwipeTouchListener {
+            viewBinding.clMainContainer.setOnLeftSwipeTouchListener {
                 with(viewModel) {
                     handleIfPending {
                         onUiTriggered {
@@ -89,24 +91,24 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
         }
     }
 
-    private fun FragmentOnboardingBinding.changeUiState() {
+    private fun changeUiState() {
         context?.onTouchResponseVibrate {
-            lottieSwipeAnimation.fadeOutAnimation()
-            lottieSwipeAnimation.pauseAnimation()
-            tvCinemaAnswer.run {
-                postDelayed(
-                    this::fadeInAnimation,
-                    OnboardingConst.POST_DELAYED_TIME
-                )
+            with(viewBinding) {
+                lottieSwipeAnimation.playFadeOutAnimation()
+                lottieSwipeAnimation.pauseAnimation()
+                tvCinemaAnswer.run {
+                    postDelayed(
+                        this::playFadeInAnimation,
+                        OnboardingConst.POST_DELAYED_TIME,
+                    )
+                }
+                btnNext.setDrawableAnimated(drawable = R.drawable.button_next_active)
+                circularProgressBar.setProgressWithAnimation(MAX_PROGRESS, PROGRESS_WAITING_TIME)
             }
-            btnNext.setDrawableAnimated(drawable = NEXT_BUTTON_ACTIVE_DRAWABLE)
-            circularProgressBar.setProgressWithAnimation(MAX_PROGRESS, PROGRESS_WAITING_TIME)
         }
     }
 
     companion object {
-        @JvmStatic
-        private val NEXT_BUTTON_ACTIVE_DRAWABLE = R.drawable.button_next_active
 
         internal object OnboardingConst {
             const val UI_WAITING_TIME = 10000L
@@ -118,5 +120,4 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
             }
         }
     }
-
 }

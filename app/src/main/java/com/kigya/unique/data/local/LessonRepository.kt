@@ -6,19 +6,17 @@ import com.google.gson.Gson
 import com.kigya.unique.App
 import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.data.local.db.LessonDatabase
-import com.kigya.unique.data.remote.LessonApi
-import com.kigya.unique.utils.wrappers.Resource
+import com.kigya.unique.data.remote.lesson.LessonApi
 import com.kigya.unique.data.remote.networkBoundResource
-import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.utils.LessonListResource
-import kotlinx.coroutines.CoroutineDispatcher
+import com.kigya.unique.utils.wrappers.Resource
 import kotlinx.coroutines.flow.Flow
 import java.io.InputStream
 import javax.inject.Inject
 
 class LessonRepository @Inject constructor(
     private val lessonsApi: LessonApi,
-    private val database: LessonDatabase
+    private val database: LessonDatabase,
 ) {
 
     private val lessonDao = database.getLessonDao()
@@ -37,7 +35,7 @@ class LessonRepository @Inject constructor(
                 if (rows.isNotEmpty()) lessonDao.deleteAllLessons()
                 lessonDao.upsertLessons(rows)
             }
-        }
+        },
     )
 
     fun getDatabaseLessons(
@@ -45,14 +43,15 @@ class LessonRepository @Inject constructor(
         group: Int,
         day: String?,
         subgroupList: List<String>,
-        regularity: String?
+        regularity: String?,
     ): Flow<Resource<List<Lesson>>> = networkBoundResource(
         query = {
-            Log.d("TabsViewModel", "getDatabaseLessonss: $course $group $day $subgroupList $regularity")
-            lessonDao.getLessons(course, group, day, subgroupList, regularity)
+            lessonDao.getLessons(course, group, day, subgroupList, regularity).also {
+                Log.d("TabsViewModel", "getDatabaseLessonsss: $regularity")
+            }
         },
         fetch = {},
-        saveFetchResult = {}
+        saveFetchResult = {},
     )
 
     suspend fun setToDatabaseFromAssets() {

@@ -2,7 +2,6 @@ package com.kigya.unique.ui.survey.onboarding
 
 import androidx.lifecycle.viewModelScope
 import com.kigya.unique.data.local.LessonRepository
-import com.kigya.unique.data.local.settings.AppSettings
 import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.ui.base.BaseViewModel
 import com.kigya.unique.ui.survey.onboarding.OnboardingFragment.Companion.OnboardingConst
@@ -24,10 +23,9 @@ typealias ViewStateFlow = MutableStateFlow<OnboardingViewModel.ViewState>
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
     @IoDispatcher dispatcher: CoroutineDispatcher,
+    logger: Logger,
     private val repository: LessonRepository,
-    appSettings: AppSettings,
-    logger: Logger
-) : BaseViewModel(appSettings, logger, dispatcher) {
+) : BaseViewModel(dispatcher, logger) {
 
     private val _retainer: ViewStateFlow = MutableStateFlow(ViewState(GesturePending))
     val retainer = _retainer.asStateFlow()
@@ -78,7 +76,7 @@ class OnboardingViewModel @Inject constructor(
 
     fun handleIfTriggered(
         viewState: ViewState,
-        gestureHandled: () -> Unit
+        gestureHandled: () -> Unit,
     ) {
         if (viewState.uiState == GestureReceived) gestureHandled()
     }
@@ -94,7 +92,7 @@ class OnboardingViewModel @Inject constructor(
     }
 
     data class ViewState(
-        val uiState: OnboardingUiState
+        val uiState: OnboardingUiState,
     )
 
     sealed class OnboardingUiState {

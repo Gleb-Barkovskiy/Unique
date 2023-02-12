@@ -32,9 +32,9 @@
 
     <ImageButton
         android:id="@+id/btnOptions"
-        style="@style/ItemWrapContent"
+        style="@style/ImageButtonMaterial"
         android:layout_marginTop="@dimen/margin_s"
-        android:background="@android:color/transparent"
+        android:background="@drawable/ripple_touch_effect"
         android:contentDescription="@string/options_button"
         android:src="@drawable/options_button"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
@@ -42,11 +42,8 @@
 
     <TextView
         android:id="@+id/tvTimeHint"
-        style="@style/ItemWrapContent"
+        style="@style/TextViewTimeTimetableBottom"
         android:text="@string/time"
-        android:textColor="@color/gray_base"
-        android:textSize="@dimen/text_size_s"
-        app:fontFamily="@font/jost_medium"
         app:layout_constraintBottom_toBottomOf="@id/btnOptions"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toTopOf="@id/btnOptions"
@@ -54,15 +51,22 @@
 
     <TextView
         android:id="@+id/tvTimetableHint"
-        style="@style/ItemWrapContent"
+        style="@style/TextViewTimeTimetableBottom"
         android:layout_marginStart="@dimen/margin_m"
         android:text="@string/timetable"
-        android:textColor="@color/gray_base"
-        android:textSize="@dimen/text_size_s"
-        app:fontFamily="@font/jost_medium"
         app:layout_constraintBottom_toBottomOf="@id/btnOptions"
         app:layout_constraintStart_toEndOf="@id/tvTimeHint"
         app:layout_constraintTop_toTopOf="@id/btnOptions"
+        tools:viewBindingIgnore="true" />
+
+    <TextView
+        android:id="@+id/tvCurrentWeek"
+        style="@style/TextViewTimeTimetableBottom"
+        android:layout_marginStart="@dimen/margin_m"
+        app:layout_constraintBottom_toBottomOf="@id/btnOptions"
+        app:layout_constraintEnd_toStartOf="@id/btnOptions"
+        app:layout_constraintTop_toTopOf="@id/btnOptions"
+        tools:text="1н"
         tools:viewBindingIgnore="true" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -70,22 +74,21 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/margin_s"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/tvTimetableHint"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/timetable_item" />
 
     <com.kigya.unique.ui.views.ResourceView
         android:id="@+id/resourceView"
-        android:layout="@layout/part_result_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout="@layout/part_result_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

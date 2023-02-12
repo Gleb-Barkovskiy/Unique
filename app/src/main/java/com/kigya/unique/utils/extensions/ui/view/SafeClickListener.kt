@@ -5,7 +5,7 @@ import android.view.View
 
 class SafeListener(
     private val interval: Int = 1000,
-    private val onSafeClick: (View) -> Unit
+    private val onSafeClick: (View) -> Unit,
 ) : View.OnClickListener {
 
     private var lastClickTime: Long = 0L
@@ -20,18 +20,22 @@ class SafeListener(
 }
 
 fun View.setOnSafeClickListener(
-    onSafeClick: (View) -> Unit
+    onSafeClick: (View) -> Unit,
 ) {
-    setOnClickListener(SafeListener { v ->
-        onSafeClick(v)
-    })
+    setOnClickListener(
+        SafeListener { v ->
+            onSafeClick(v)
+        },
+    )
 }
 
 fun View.setOnSafeClickListener(
     interval: Int,
-    onSafeClick: (View) -> Unit
+    onSafeClick: (View) -> Unit,
 ) {
-    setOnClickListener(SafeListener(interval) { v ->
-        onSafeClick(v)
-    })
+    setOnClickListener(
+        SafeListener(interval) { v ->
+            onSafeClick(v)
+        },
+    )
 }

@@ -1,9 +1,9 @@
-package com.kigya.unique.data.remote
+package com.kigya.unique.data.remote.fetch
 
-import com.kigya.unique.data.remote.JsoupConverterFactory.Const.CHARSET_NAME
-import com.kigya.unique.data.remote.JsoupConverterFactory.Const.TIMEOUT
-import com.kigya.unique.data.remote.JsoupConverterFactory.Const.XML_APPLICATION_TYPE
-import com.kigya.unique.data.remote.JsoupConverterFactory.Const.XML_TEXT_TYPE
+import com.kigya.unique.data.remote.fetch.JsoupConverterFactory.Const.CHARSET_NAME
+import com.kigya.unique.data.remote.fetch.JsoupConverterFactory.Const.TIMEOUT
+import com.kigya.unique.data.remote.fetch.JsoupConverterFactory.Const.XML_APPLICATION_TYPE
+import com.kigya.unique.data.remote.fetch.JsoupConverterFactory.Const.XML_TEXT_TYPE
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
@@ -25,12 +25,10 @@ object JsoupConverterFactory : Converter.Factory() {
     override fun responseBodyConverter(
         type: Type,
         annotations: Array<out Annotation>,
-        retrofit: Retrofit
-    ): Converter<ResponseBody, *>? {
-        return when (type) {
-            Document::class.java -> JsoupConverter(retrofit.baseUrl().toString())
-            else -> null
-        }
+        retrofit: Retrofit,
+    ): Converter<ResponseBody, *>? = when (type) {
+        Document::class.java -> JsoupConverter(retrofit.baseUrl().toString())
+        else -> null
     }
 
     private class JsoupConverter(val baseUri: String) : Converter<ResponseBody, Document?> {
@@ -38,7 +36,7 @@ object JsoupConverterFactory : Converter.Factory() {
         override fun convert(value: ResponseBody): Document? {
             val charset = value.contentType()?.charset() ?: Charset.forName(CHARSET_NAME)
             val parser = when (value.contentType().toString()) {
-                XML_APPLICATION_TYPE, XML_TEXT_TYPE-> Parser.xmlParser()
+                XML_APPLICATION_TYPE, XML_TEXT_TYPE -> Parser.xmlParser()
                 else -> Parser.htmlParser()
             }
             return Jsoup.parse(value.byteStream(), charset.name(), baseUri, parser)

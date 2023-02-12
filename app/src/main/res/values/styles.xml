@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="BaseAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/white_base_back</item>
+        <item name="colorPrimaryVariant">@color/white_base_dark</item>
+        <item name="colorOnPrimary">@color/gray_base</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/green_base</item>
+        <item name="colorSecondaryVariant">@color/green_base_dark</item>
+        <item name="colorOnSecondary">@color/green_base_transparent</item>
+        <item name="titleTextColor">@color/black_base</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Customize your theme here. -->
+        <item name="actionOverflowButtonStyle">@id/invisible</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="fontFamily">@font/jost_regular</item>
+        <item name="android:textColor">@color/black_base</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:colorBackground">@color/white_base_back</item>
+    </style>
+
     <style name="ItemWrapContent">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -16,9 +39,86 @@
         <item name="android:layout_height">0dp</item>
     </style>
 
+    <style name="TextViewBase" parent="ItemWrapContent">
+        <item name="android:textSize">@dimen/text_size_s</item>
+        <item name="fontFamily">@font/jost_semibold</item>
+    </style>
+
+    <style name="TextViewOptions" parent="ItemWrapContent">
+        <item name="android:layout_marginTop">@dimen/margin_s</item>
+        <item name="android:drawablePadding">@dimen/margin_xxs</item>
+        <item name="drawableStartCompat">@drawable/icon_filter_target</item>
+    </style>
+
+    <style name="LabelToggleStyle" parent="ImageButtonMaterial">
+        <item name="tbgMarkerColor">?attr/colorSecondary</item>
+    </style>
+
+    <style name="MaterialButtonStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_xs</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:backgroundTint">@color/green_base</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="cornerRadius">20dp</item>
+        <item name="fontFamily">@font/jost_medium</item>
+    </style>
+
+    <style name="TextViewTimeTimetableTop" parent="TextViewBase">
+        <item name="android:textSize">@dimen/text_size_m</item>
+    </style>
+
+    <style name="TextViewTimeTimetableBottom" parent="TextViewBase">
+        <item name="android:textColor">@color/gray_base</item>
+        <item name="android:textSize">@dimen/text_size_xs</item>
+    </style>
+
+    <style name="TextViewTimetableInfo" parent="TextViewBase">
+        <item name="android:layout_marginStart">@dimen/margin_xxs</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollbars">horizontal</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_xs</item>
+        <item name="fontFamily">@font/jost_medium</item>
+    </style>
+
+    <style name="TextViewTimetableInside" parent="TextViewBase">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/margin_s</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="TextViewTimetableInside.Teacher" parent="TextViewTimetableInside">
+        <item name="android:textSize">@dimen/text_size_xs</item>
+    </style>
+
+    <style name="ViewDelimiterOutside">
+        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginStart">70dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_xxs</item>
+        <item name="android:layout_marginBottom">@dimen/margin_xxs</item>
+        <item name="android:background">@drawable/delimiter_shape</item>
+    </style>
+
+    <style name="ViewDelimiterInside">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_xxs</item>
+        <item name="android:alpha">0.2</item>
+        <item name="android:background">@drawable/delimiter_shape</item>
+    </style>
+
     <style name="ImageButtonMaterial" parent="ItemWrapContent">
-        <item name="android:background">@null</item>
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:src">@null</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
     </style>
 
     <style name="GuidelineMaterial" parent="ItemWrapContent">
@@ -38,7 +138,40 @@
     </style>
 
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bottom_sheet_background</item>
+        <item name="android:background">@drawable/rounded_shape_dialog</item>
+    </style>
+
+    <style name="TimetableCardViewStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_m</item>
+        <item name="android:backgroundTint">?attr/colorSecondary</item>
+        <item name="android:elevation">4dp</item>
+        <item name="cardCornerRadius">15dp</item>
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <style name="BottomSheetOptionsStyle">
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@color/white_base_front</item>
+        <item name="android:gravity">center</item>
+        <item name="android:hapticFeedbackEnabled">true</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/gray_base_dark</item>
+        <item name="android:textColorHint">@color/gray_base_dark</item>
+        <item name="android:textSize">@dimen/text_size_xs</item>
+        <item name="spinner_item_height">46dp</item>
+        <item name="spinner_popup_animation">dropdown</item>
+        <item name="spinner_popup_background">@drawable/rounded_shape_all</item>
+        <item name="spinner_popup_elevation">14dp</item>
+        <item name="spinner_arrow_animate">true</item>
+        <item name="spinner_arrow_animate_duration">500</item>
+        <item name="spinner_arrow_drawable">@drawable/end_icon_week_options</item>
+        <item name="spinner_popup_animation_style">@style/Animation.AppCompat.DropDownUp</item>
     </style>
 
 </resources>

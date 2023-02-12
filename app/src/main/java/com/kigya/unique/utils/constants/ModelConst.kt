@@ -9,5 +9,13 @@ object ModelConst {
         const val MAX_FOURTH_COURSE = 11
     }
 
-    val DEFAULT_SUBGROUPS_VALUE = listOf("а", "б", "в")
+    const val SUBGROUP_A = "а"
+    const val SUBGROUP_B = "б"
+    const val SUBGROUP_C = "в"
+    const val SUBGROUP_D = "г"
+
+    val DEFAULT_SUBGROUPS_VALUE = listOf(SUBGROUP_A, SUBGROUP_B, SUBGROUP_C, SUBGROUP_D)
+
+    const val FIRST_WEEK_STRING_SHORT = "1н"
+    const val SECOND_WEEK_STRING_SHORT = "2н"
 }

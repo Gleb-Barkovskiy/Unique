@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             fm: FragmentManager,
             f: Fragment,
             v: View,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
         ) {
             super.onFragmentViewCreated(fm, f, v, savedInstanceState)
             if (f is NavHostFragment) return
@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onDestroy() {
         supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentListener)
         navController = null
@@ -68,19 +67,24 @@ class MainActivity : AppCompatActivity() {
         onBackPressed(true) {
             if (navController.currentDestination?.id == R.id.initialSetupFragment ||
                 navController.currentDestination?.id == R.id.tabsFragment
-            ) finish()
-            else navController.popBackStack()
+            ) {
+                finish()
+            } else {
+                navController.popBackStack()
+            }
         }
     }
 
     @Suppress("SameParameterValue")
-    private fun AppCompatActivity.onBackPressed(isEnabled: Boolean, callback: () -> Unit) {
-        onBackPressedDispatcher.addCallback(this,
+    private fun onBackPressed(isEnabled: Boolean, callback: () -> Unit) {
+        onBackPressedDispatcher.addCallback(
+            this,
             object : OnBackPressedCallback(isEnabled) {
                 override fun handleOnBackPressed() {
                     callback()
                 }
-            })
+            },
+        )
     }
 
     override fun onSupportNavigateUp(): Boolean =
@@ -89,7 +93,7 @@ class MainActivity : AppCompatActivity() {
     private fun prepareRootNavController(isSignedIn: Boolean, navController: NavController) {
         val graph = navController.navInflater.inflate(getMainNavigationGraphId())
         graph.setStartDestination(
-            if (isSignedIn) getTabsDestination() else getOnboardingDestination()
+            if (isSignedIn) getTabsDestination() else getOnboardingDestination(),
         )
         navController.graph = graph
     }
@@ -115,5 +119,4 @@ class MainActivity : AppCompatActivity() {
 
     @Suppress("SameReturnValue")
     private fun getOnboardingDestination() = R.id.onboardingFragment
-
 }

@@ -1,5 +1,8 @@
 package com.kigya.unique.utils.extensions.string
 
+@Suppress("SameReturnValue")
+fun String.Companion.empty(): String = ""
+
 fun String.fastReplace(from: String, to: String): String {
     val sb = StringBuilder()
     var i = 0

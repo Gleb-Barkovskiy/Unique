@@ -1,7 +1,7 @@
 package com.kigya.unique.di
 
-import com.kigya.unique.data.remote.JsoupConverterFactory
-import com.kigya.unique.data.remote.JsoupDocumentApi
+import com.kigya.unique.data.remote.fetch.JsoupConverterFactory
+import com.kigya.unique.data.remote.fetch.JsoupDocumentApi
 import com.kigya.unique.di.NetworkModule.Const.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -30,5 +30,4 @@ object NetworkModule {
     object Const {
         const val BASE_URL = "https://mmf.bsu.by/ru/raspisanie-zanyatij/dnevnoe-otdelenie/"
     }
-
 }

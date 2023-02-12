@@ -14,7 +14,7 @@ import kotlin.properties.Delegates
 class CalendarWeekdayViewContainer(
     view: View,
     calendarView: WeekCalendarView,
-    clickListener: CalendarWeekdayClickListener
+    clickListener: CalendarWeekdayClickListener,
 ) : ViewContainer(view) {
 
     var tvDay by Delegates.notNull<TextView>()
