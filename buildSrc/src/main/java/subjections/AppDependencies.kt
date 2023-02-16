@@ -75,9 +75,7 @@ object AppDependencies {
 
     object SplashScreen {
         const val splashScreen = "androidx.core:core-splashscreen:${Versions.splashScreen}"
-
     }
-
 
     // external libraries
 
@@ -115,6 +113,8 @@ object AppDependencies {
     object Hilt {
         const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
         const val compiler = "com.google.dagger:hilt-compiler:${Versions.hilt}"
+        const val hiltCompiler = "androidx.hilt:hilt-compiler:${Versions.hiltCompiler}"
+        const val workManager = "androidx.hilt:hilt-work:${Versions.hiltWorkManager}"
     }
 
     object Room {
@@ -147,9 +147,16 @@ object AppDependencies {
     object OkHttp {
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
     }
+
+    object Activity {
+        const val activity = "androidx.activity:activity:${Versions.activity}"
+    }
+
+    object WorkManager {
+        const val manager = "androidx.work:work-runtime-ktx:${Versions.workManager}"
+    }
+
+    object StartUp {
+        const val runtime = "androidx.startup:startup-runtime:${Versions.startUp}"
+    }
 }
-
-
-
-
-

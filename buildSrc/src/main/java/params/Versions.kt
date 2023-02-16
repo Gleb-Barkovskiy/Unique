@@ -32,6 +32,11 @@ object Versions {
     const val fragment = "1.5.5"
     const val retrofit = "2.9.0"
     const val okHttp = "4.10.0"
+    const val activity = "1.7.0-alpha04"
+    const val workManager = "2.8.0"
+    const val hiltWorkManager = "1.0.0"
+    const val hiltCompiler = "1.0.0"
+    const val startUp = "1.1.1"
 
     // test libraries
     const val junit = "4.13.2"
@@ -46,4 +51,5 @@ object Versions {
     const val jvmVersion = "17"
     const val ktLint = "11.0.0"
     const val ssp = "1.1.0"
+
 }

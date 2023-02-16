@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clParent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/margin_xs"
+    tools:background="@color/white_base_front">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        style="@style/GuidelineMaterial.Start" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        style="@style/GuidelineMaterial.End" />
+
+    <TextView
+        android:id="@+id/tvFiltersTitle"
+        style="@style/ItemWrapContent"
+        android:layout_marginTop="@dimen/margin_s"
+        android:text="@string/filters"
+        android:textSize="@dimen/text_size_xl"
+        app:fontFamily="@font/jost_bold"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnClose"
+        style="@style/ImageButtonMaterial"
+        android:contentDescription="@string/close_icon"
+        android:src="@drawable/icon_close"
+        app:layout_constraintBottom_toBottomOf="@id/tvFiltersTitle"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintTop_toTopOf="@id/tvFiltersTitle" />
+
+    <TextView
+        android:id="@+id/tvHintDisplayText"
+        style="@style/ItemWrapContent"
+        android:text="@string/setup_display_params"
+        app:fontFamily="@font/jost_light"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/tvFiltersTitle" />
+
+    <TextView
+        android:id="@+id/tvChooseTeacherTitle"
+        style="@style/ItemWrapContent"
+        android:layout_marginTop="@dimen/margin_s"
+        android:text="@string/choose_teacher"
+        android:textSize="@dimen/text_size_s"
+        app:fontFamily="@font/jost_medium"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/tvHintDisplayText" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilTeacher"
+        style="@style/OutlinedBox.Material.Teacher"
+        android:hint="@string/full_name"
+        app:boxStrokeColor="@color/green_base"
+        app:hintAnimationEnabled="true"
+        app:expandedHintEnabled="false"
+        app:hintEnabled="true"
+        app:boxStrokeWidth="0.1dp"
+        app:hintTextColor="@color/green_base"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/tvChooseTeacherTitle">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/start_typing"
+            android:textColorHint="@color/gray_base_dark"
+            android:backgroundTint="@color/white_base_front"
+            android:inputType="textPersonName"
+            android:textSize="@dimen/text_size_s" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

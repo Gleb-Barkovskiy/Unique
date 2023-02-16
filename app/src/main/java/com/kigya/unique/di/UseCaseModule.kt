@@ -1,8 +1,10 @@
 package com.kigya.unique.di
 
+import androidx.work.WorkManager
 import com.kigya.unique.data.local.LessonRepository
 import com.kigya.unique.data.local.settings.AppSettings
-import com.kigya.unique.usecase.LoadLessonsUseCase
+import com.kigya.unique.usecase.LessonsUseCase
+import com.kigya.unique.usecase.ScheduleWorkUseCase
 import com.kigya.unique.usecase.SetupUseCase
 import dagger.Module
 import dagger.Provides
@@ -21,5 +23,10 @@ object UseCaseModule {
     fun provideLoadLessonsUseCase(
         appSettings: AppSettings,
         repository: LessonRepository,
-    ): LoadLessonsUseCase = LoadLessonsUseCase(appSettings, repository)
+    ): LessonsUseCase = LessonsUseCase(appSettings, repository)
+
+    @Provides
+    fun provideScheduleWorkUseCase(
+        workManager: WorkManager,
+    ): ScheduleWorkUseCase = ScheduleWorkUseCase(workManager)
 }

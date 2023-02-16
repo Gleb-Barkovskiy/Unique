@@ -29,6 +29,7 @@ object Supplier {
         AppDependencies.Lifecycle.viewModel,
         AppDependencies.Lifecycle.extensions,
         AppDependencies.Hilt.hilt,
+        AppDependencies.Hilt.workManager,
         AppDependencies.Room.runtime,
         AppDependencies.Room.ktx,
         AppDependencies.DataStore.preferences,
@@ -37,7 +38,10 @@ object Supplier {
         AppDependencies.Fragment.fragment,
         AppDependencies.RecyclerView.recyclerView,
         AppDependencies.Retrofit.retrofit,
-        AppDependencies.OkHttp.loggingInterceptor
+        AppDependencies.OkHttp.loggingInterceptor,
+        AppDependencies.Activity.activity,
+        AppDependencies.WorkManager.manager,
+        AppDependencies.StartUp.runtime,
     )
 
     val testImplementationList = listOf(
@@ -55,6 +59,7 @@ object Supplier {
 
     val kaptList = listOf(
         AppDependencies.Room.compiler,
-        AppDependencies.Hilt.compiler
+        AppDependencies.Hilt.compiler,
+        AppDependencies.Hilt.hiltCompiler
     )
 }

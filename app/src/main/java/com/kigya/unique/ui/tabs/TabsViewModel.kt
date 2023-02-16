@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.kigya.unique.adapters.calendar.interlayers.CalendarWeekdayClickListener
 import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.ui.base.BaseViewModel
-import com.kigya.unique.usecase.LoadLessonsUseCase
+import com.kigya.unique.usecase.LessonsUseCase
 import com.kigya.unique.utils.LessonListResource
 import com.kigya.unique.utils.calendar.CalendarHelper
 import com.kigya.unique.utils.constants.ModelConst.DEFAULT_SUBGROUPS_VALUE
@@ -27,7 +27,7 @@ import javax.inject.Inject
 class TabsViewModel @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
     logger: Logger,
-    private val loadLessonsUseCase: LoadLessonsUseCase,
+    private val loadLessonsUseCase: LessonsUseCase,
 ) : BaseViewModel(dispatcher, logger), CalendarWeekdayClickListener {
 
     var selectedDate = CalendarHelper.currentDate

@@ -26,6 +26,8 @@ android {
             testInstrumentationRunner = this@with.testInstrumentationRunner
             signingConfig = signingConfigs.getByName("debug")
         }
+
+        flavorDimensions.add("type")
     }
 
     buildTypes {
@@ -58,10 +60,8 @@ dependencies {
         testImplementation(testImplementationList)
         androidTestImplementation(androidTestImplementationList)
     }
-    
-    implementation("com.github.Spikeysanju:MotionToast:1.4")
-    implementation("androidx.activity:activity:1.7.0-alpha04")
-    implementation("com.nex3z:toggle-button-group:1.2.3")
-    implementation("com.github.okcredit:OkLayoutInflater:1.0.2")
+
+    implementation("androidx.startup:startup-runtime:1.1.1")
+
 
 }

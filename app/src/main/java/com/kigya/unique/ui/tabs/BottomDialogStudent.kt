@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kigya.unique.R
-import com.kigya.unique.databinding.BottomSheetOptionsBinding
+import com.kigya.unique.databinding.BottomSheetStudentBinding
 import com.kigya.unique.ui.main.MainActivity
 import com.kigya.unique.utils.constants.ModelConst.SUBGROUP_A
 import com.kigya.unique.utils.constants.ModelConst.SUBGROUP_B
@@ -20,21 +20,16 @@ import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BottomDialogFragment : BottomSheetDialogFragment() {
+class BottomDialogStudent : BottomSheetDialogFragment() {
 
-    private val viewBinding by viewBinding(BottomSheetOptionsBinding::bind)
+    private val viewBinding by viewBinding(BottomSheetStudentBinding::bind)
     private val viewModel by viewModels<TabsViewModel>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? = inflater.inflate(R.layout.bottom_sheet_options, container, false)
+    ): View? = inflater.inflate(R.layout.bottom_sheet_student, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -123,6 +118,6 @@ class BottomDialogFragment : BottomSheetDialogFragment() {
     override fun getTheme() = R.style.AppBottomSheetDialogTheme
 
     companion object {
-        fun newInstance() = BottomDialogFragment()
+        fun newInstance() = BottomDialogStudent()
     }
 }

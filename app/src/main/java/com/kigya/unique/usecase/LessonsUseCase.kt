@@ -1,6 +1,6 @@
 package com.kigya.unique.usecase
 
-import android.util.Log
+import com.kigya.unique.data.dto.account.AccountType
 import com.kigya.unique.data.local.LessonRepository
 import com.kigya.unique.data.local.settings.AppSettings
 import com.kigya.unique.utils.LessonListResource
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.take
 import java.time.LocalDate
 import javax.inject.Inject
 
-class LoadLessonsUseCase @Inject constructor(
+class LessonsUseCase @Inject constructor(
     private val appSettings: AppSettings,
     private val repository: LessonRepository,
 ) {
@@ -32,7 +32,6 @@ class LoadLessonsUseCase @Inject constructor(
                 addAll(params.third)
             }
             val isAuto: Boolean = params.fourth
-            Log.d("TabsViewModel", "getIsAutoLoad: $isAuto")
             if (repository.getDatabaseSize() == 0) {
                 refreshData(course, group, subgroupList, isAuto, lessons, selectedDate)
             } else {
@@ -44,7 +43,6 @@ class LoadLessonsUseCase @Inject constructor(
     suspend fun getIsAuto(): Boolean {
         val result = CompletableDeferred<Boolean>()
         appSettings.getParamsFromDataStore().take(1).collect {
-            Log.d("TabsViewModel", "getIsAuto: $it")
             result.complete(it.fourth)
         }
         return result.await()
@@ -103,7 +101,6 @@ class LoadLessonsUseCase @Inject constructor(
         selectedDate: LocalDate,
     ) {
         lessons.value = Resource.Loading()
-        Log.d("TabsViewModel", "getDatabaseLessons: $isAutoWeekModeEnabled")
         repository.getDatabaseLessons(
             course.value,
             group.value,
@@ -117,5 +114,13 @@ class LoadLessonsUseCase @Inject constructor(
         ).collect {
             lessons.value = it
         }
+    }
+
+    suspend fun getCurrentAccountType(): AccountType {
+        val result = CompletableDeferred<AccountType>()
+        appSettings.getCurrentAccountType().take(1).collect {
+            result.complete(it)
+        }
+        return result.await()
     }
 }

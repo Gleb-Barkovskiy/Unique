@@ -174,4 +174,23 @@
         <item name="spinner_popup_animation_style">@style/Animation.AppCompat.DropDownUp</item>
     </style>
 
+    <style name="OutlinedBox.Material" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">?attr/colorPrimary</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxStrokeWidth">0.1dp</item>
+    </style>
+
+    <style name="OutlinedBox.Material.Teacher" parent="OutlinedBox.Material">
+        <item name="endIconMode">clear_text</item>
+        <item name="android:layout_marginTop">@dimen/margin_s</item>
+        <item name="android:layout_marginBottom">@dimen/margin_s</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_m</item>
+        <item name="android:layout_marginEnd">@dimen/margin_m</item>
+    </style>
+
 </resources>

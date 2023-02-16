@@ -32,6 +32,13 @@ interface LessonDao {
         regularity: String? = null,
     ): Flow<List<Lesson>>
 
+    @Query(
+        "SELECT * FROM lessons WHERE `teacher` LIKE :name",
+    )
+    fun getLessons(
+        name: String,
+    ): Flow<List<Lesson>>
+
     @Query("SELECT COUNT(*) FROM lessons")
     fun getDatabaseSize(): Int
 }

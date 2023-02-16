@@ -1,9 +1,9 @@
 package com.kigya.unique.ui.main
 
 import androidx.lifecycle.viewModelScope
-import com.kigya.unique.data.local.settings.AppSettings
 import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.ui.base.BaseViewModel
+import com.kigya.unique.usecase.ScheduleWorkUseCase
 import com.kigya.unique.usecase.SetupUseCase
 import com.kigya.unique.utils.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,7 +11,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -21,6 +20,7 @@ import kotlin.properties.Delegates
 class MainActivityViewModel @Inject constructor(
     @IoDispatcher dispatcher: CoroutineDispatcher,
     logger: Logger,
+    scheduleWorkUseCase: ScheduleWorkUseCase,
     private val setupUseCase: SetupUseCase,
 ) : BaseViewModel(dispatcher, logger) {
 
@@ -34,6 +34,7 @@ class MainActivityViewModel @Inject constructor(
             delay(SPLASH_DELAY)
             _isLoading.value = false
         }
+        scheduleWorkUseCase()
     }
 
     val isUserSignedIn: Boolean

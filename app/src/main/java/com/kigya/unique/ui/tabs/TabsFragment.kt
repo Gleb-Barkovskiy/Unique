@@ -75,7 +75,7 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
     private fun addShowOptionsClickListener() {
         viewBinding.btnOptions.setOnClickListener {
             requireActivity().onTouchResponseVibrate {
-                val bottomFragment = BottomDialogFragment.newInstance()
+                val bottomFragment = BottomDialogStudent.newInstance()
                 with(viewModel) {
                     bottomFragment.arguments = Bundle().apply {
                         putString(ARG_COURSE, getCourseHint())
