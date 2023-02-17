@@ -14,6 +14,8 @@ interface AppSettingsSource {
 
     fun getCurrentAccountType(): Flow<AccountType>
 
+    fun getTeacherFromDataStore(): Flow<String>
+
     suspend fun setCourseToDataStore(course: Int)
 
     suspend fun setGroupToDataStore(group: Int)
@@ -21,6 +23,8 @@ interface AppSettingsSource {
     suspend fun setSubgroupListToDataStore(subgroupList: List<String>)
 
     suspend fun setRegularityToDataStore(isAuto: Boolean)
+
+    suspend fun setTeacherToDataStore(teacher: String)
 
     fun getParamsFromDataStore(): Flow<Quartet<Int, Int, List<String>, Boolean>>
 }

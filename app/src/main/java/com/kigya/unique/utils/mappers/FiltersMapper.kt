@@ -3,6 +3,9 @@ package com.kigya.unique.utils.mappers
 import com.kigya.unique.App
 import com.kigya.unique.R
 
+private const val TEACHER_REGEX = "\\b[А-Я][а-я]+\\s+[А-Я]\\.\\s*[А-Я]?\\.?"
+private const val DIGITS_REGEX = "\\d"
+
 object FiltersMapper {
     fun getWeekOptionsStringValue(isAuto: Boolean): String =
         with(App.appContext.resources.getStringArray(R.array.week_options)) {
@@ -51,4 +54,10 @@ object FiltersMapper {
     fun getSubgroupBundle(list: List<String>) = list.joinToString(separator = " ")
 
     fun getSubgroupList(str: String) = str.split(" ")
+
+    fun getTeacherOrNull(teacher: String): String? {
+        val pattern = Regex(TEACHER_REGEX)
+        val match = pattern.find(teacher)
+        return match?.value
+    }
 }

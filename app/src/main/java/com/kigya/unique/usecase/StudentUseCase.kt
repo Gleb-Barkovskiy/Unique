@@ -1,10 +1,11 @@
 package com.kigya.unique.usecase
 
-import com.kigya.unique.data.dto.account.AccountType
+import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.data.local.LessonRepository
 import com.kigya.unique.data.local.settings.AppSettings
 import com.kigya.unique.utils.LessonListResource
 import com.kigya.unique.utils.calendar.CalendarHelper
+import com.kigya.unique.utils.mappers.FiltersMapper
 import com.kigya.unique.utils.mappers.LocaleConverter.Russian.russianValue
 import com.kigya.unique.utils.wrappers.Resource
 import kotlinx.coroutines.CompletableDeferred
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.take
 import java.time.LocalDate
 import javax.inject.Inject
 
-class LessonsUseCase @Inject constructor(
+class StudentUseCase @Inject constructor(
     private val appSettings: AppSettings,
     private val repository: LessonRepository,
 ) {
@@ -114,13 +115,5 @@ class LessonsUseCase @Inject constructor(
         ).collect {
             lessons.value = it
         }
-    }
-
-    suspend fun getCurrentAccountType(): AccountType {
-        val result = CompletableDeferred<AccountType>()
-        appSettings.getCurrentAccountType().take(1).collect {
-            result.complete(it)
-        }
-        return result.await()
     }
 }

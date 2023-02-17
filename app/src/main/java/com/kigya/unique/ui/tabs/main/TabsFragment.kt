@@ -1,4 +1,4 @@
-package com.kigya.unique.ui.tabs
+package com.kigya.unique.ui.tabs.main
 
 import android.os.Bundle
 import android.view.View
@@ -19,6 +19,8 @@ import com.kigya.unique.adapters.lesson.LessonAdapter
 import com.kigya.unique.adapters.lesson.interlayers.LessonsScrollListener
 import com.kigya.unique.databinding.FragmentTabsBinding
 import com.kigya.unique.ui.base.BaseFragment
+import com.kigya.unique.ui.tabs.sheet.student.DialogStudentFragment
+import com.kigya.unique.ui.tabs.sheet.teacher.DialogTeacherFragment
 import com.kigya.unique.utils.LessonList
 import com.kigya.unique.utils.LessonListResource
 import com.kigya.unique.utils.calendar.CalendarHelper
@@ -75,18 +77,31 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
     private fun addShowOptionsClickListener() {
         viewBinding.btnOptions.setOnClickListener {
             requireActivity().onTouchResponseVibrate {
-                val bottomFragment = BottomDialogStudent.newInstance()
-                with(viewModel) {
-                    bottomFragment.arguments = Bundle().apply {
-                        putString(ARG_COURSE, getCourseHint())
-                        putString(ARG_GROUP, getGroupHint())
-                        putString(ARG_WEEK, getWeekModeHint())
-                        putStringArrayList(ARG_SUBGROUPS, ArrayList(subgroupList))
-                    }
+                if (viewModel.isStudentMode()) {
+                    openStudentBottomSheet()
+                } else {
+                    openTeacherBottomSheet()
                 }
-                bottomFragment.show(parentFragmentManager, BOTTOM_SHEET_TAG)
             }
         }
+    }
+
+    private fun openStudentBottomSheet() {
+        val bottomFragment = DialogStudentFragment.newInstance()
+        with(viewModel) {
+            bottomFragment.arguments = Bundle().apply {
+                putString(ARG_COURSE, getCourseHint())
+                putString(ARG_GROUP, getGroupHint())
+                putString(ARG_WEEK, getWeekModeHint())
+                putStringArrayList(ARG_SUBGROUPS, ArrayList(subgroupList))
+            }
+        }
+        bottomFragment.show(parentFragmentManager, BOTTOM_SHEET_STUDENT_TAG)
+    }
+
+    private fun openTeacherBottomSheet() {
+        val bottomFragment = DialogTeacherFragment.newInstance()
+        bottomFragment.show(parentFragmentManager, BOTTOM_SHEET_STUDENT_TAG)
     }
 
     private fun observeScroll() {
@@ -199,7 +214,8 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
     }
 
     companion object {
-        private const val BOTTOM_SHEET_TAG = "bottom_sheet"
+        private const val BOTTOM_SHEET_STUDENT_TAG = "bottom_sheet_student"
+        private const val BOTTOM_SHEET_TEACHER_TAG = "bottom_sheet_teacher"
 
         const val ARG_COURSE = "course"
         const val ARG_GROUP = "group"

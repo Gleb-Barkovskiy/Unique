@@ -6,7 +6,7 @@
     android:id="@+id/scrollView"
     style="@style/ItemMatchParent"
     android:background="@color/white_base_front"
-    tools:context="com.kigya.unique.ui.tabs.TabsFragment">
+    tools:context="com.kigya.unique.ui.tabs.main.TabsFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStart"

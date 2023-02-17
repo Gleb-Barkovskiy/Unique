@@ -54,6 +54,8 @@ android {
 }
 
 dependencies {
+    implementation("androidx.core:core-ktx:+")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
     with(Supplier) {
         implementation(implementationList)
         kapt(kaptList)

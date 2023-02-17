@@ -51,7 +51,7 @@
     </style>
 
     <style name="LabelToggleStyle" parent="ImageButtonMaterial">
-        <item name="tbgMarkerColor">?attr/colorSecondary</item>
+        <item name="tbgMarkerColor">@color/green_base_transparent</item>
     </style>
 
     <style name="MaterialButtonStyle">

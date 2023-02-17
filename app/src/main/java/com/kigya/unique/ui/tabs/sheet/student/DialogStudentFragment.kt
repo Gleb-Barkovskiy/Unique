@@ -1,4 +1,4 @@
-package com.kigya.unique.ui.tabs
+package com.kigya.unique.ui.tabs.sheet.student
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kigya.unique.R
 import com.kigya.unique.databinding.BottomSheetStudentBinding
 import com.kigya.unique.ui.main.MainActivity
+import com.kigya.unique.ui.tabs.main.TabsViewModel
+import com.kigya.unique.ui.tabs.main.TabsFragment
 import com.kigya.unique.utils.constants.ModelConst.SUBGROUP_A
 import com.kigya.unique.utils.constants.ModelConst.SUBGROUP_B
 import com.kigya.unique.utils.constants.ModelConst.SUBGROUP_C
@@ -20,10 +22,11 @@ import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BottomDialogStudent : BottomSheetDialogFragment() {
+class DialogStudentFragment : BottomSheetDialogFragment() {
 
     private val viewBinding by viewBinding(BottomSheetStudentBinding::bind)
-    private val viewModel by viewModels<TabsViewModel>()
+    private val commonViewModel by viewModels<TabsViewModel>()
+    private val dialogViewModel by viewModels<DialogStudentViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,7 +60,7 @@ class BottomDialogStudent : BottomSheetDialogFragment() {
     private fun setSaveClickListener() {
         with(viewBinding) {
             btnSave.setOnClickListener {
-                viewModel.setParams(
+                commonViewModel.setParams(
                     if (psvSortByCourse.selectedIndex == -1) null else psvSortByCourse.selectedIndex + 1,
                     if (psvSortByGroup.selectedIndex == -1) null else psvSortByGroup.selectedIndex,
                     listOfNotNull(
@@ -68,6 +71,7 @@ class BottomDialogStudent : BottomSheetDialogFragment() {
                     ),
                     if (psvSortByWeek.selectedIndex == -1) null else psvSortByWeek.selectedIndex == 0,
                 )
+                commonViewModel.setAccountType(if (viewBinding.ltStudent.isChecked) 0 else 1)
                 restartApp()
             }
         }
@@ -88,6 +92,7 @@ class BottomDialogStudent : BottomSheetDialogFragment() {
             setInitialGroupState(this)
             setInitialWeekState(this)
             setInitialActiveSubgroups(this)
+            setStudentAccountMode()
         }
     }
 
@@ -102,6 +107,10 @@ class BottomDialogStudent : BottomSheetDialogFragment() {
                 }
             }
         }
+
+    private fun setStudentAccountMode() {
+        viewBinding.ltStudent.isChecked = true
+    }
 
     private fun setInitialWeekState(bundle: Bundle?) {
         viewBinding.psvSortByWeek.hint = bundle?.getString(TabsFragment.ARG_WEEK)
@@ -118,6 +127,6 @@ class BottomDialogStudent : BottomSheetDialogFragment() {
     override fun getTheme() = R.style.AppBottomSheetDialogTheme
 
     companion object {
-        fun newInstance() = BottomDialogStudent()
+        fun newInstance() = DialogStudentFragment()
     }
 }

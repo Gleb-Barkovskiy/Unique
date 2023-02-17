@@ -31,3 +31,7 @@ fun String.fastReplace(from: String, to: String): String {
     }
     return sb.toString()
 }
+
+fun String.findMatchInOrNull(list: List<String>): String? = list.firstOrNull {
+    it.lowercase().contains(this.lowercase())
+}

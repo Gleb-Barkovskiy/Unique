@@ -10,4 +10,12 @@ object AccountTypeMapper {
     }
 
     fun mapToString(accountType: AccountType) = accountType.name
+
+    fun mapSelectionToAccountType(index: Int) = when (index) {
+        0 -> AccountType.STUDENT
+        1 -> AccountType.TEACHER
+        else -> {
+            AccountType.STUDENT
+        }
+    }
 }

@@ -59,26 +59,62 @@
         style="@style/OutlinedBox.Material.Teacher"
         android:hint="@string/full_name"
         app:boxStrokeColor="@color/green_base"
-        app:hintAnimationEnabled="true"
-        app:expandedHintEnabled="false"
-        app:hintEnabled="true"
         app:boxStrokeWidth="0.1dp"
+        app:expandedHintEnabled="false"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
         app:hintTextColor="@color/green_base"
+        app:errorTextColor="@color/green_base_dark"
+        app:boxStrokeErrorColor="@color/green_base_dark"
+        app:errorIconTint="@color/green_base_dark"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/tvChooseTeacherTitle">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/mactvTeacherName"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/start_typing"
-            android:textColorHint="@color/gray_base_dark"
             android:backgroundTint="@color/white_base_front"
+            android:hint="@string/start_typing"
             android:inputType="textPersonName"
+            android:textColorHint="@color/gray_base_dark"
             android:textSize="@dimen/text_size_s" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+        android:id="@+id/sstgMode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_s"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/tilTeacher"
+        app:tbgChildSpacing="auto">
+
+        <com.nex3z.togglebuttongroup.button.LabelToggle
+            android:id="@+id/ltStudent"
+            style="@style/LabelToggleStyle"
+            android:layout_marginEnd="@dimen/margin_xs"
+            android:text="@string/student_view" />
+
+        <com.nex3z.togglebuttongroup.button.LabelToggle
+            android:id="@+id/ltTeacher"
+            style="@style/LabelToggleStyle"
+            android:layout_marginStart="@dimen/margin_xs"
+            android:text="@string/teacher_view" />
+
+    </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSave"
+        style="@style/MaterialButtonStyle"
+        android:text="@string/save_changes"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/sstgMode" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

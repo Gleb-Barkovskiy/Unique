@@ -41,7 +41,14 @@ class AppSettings @Inject constructor(
 
     override fun getCurrentAccountType(): Flow<AccountType> =
         dataStore.data.map {
-            AccountTypeMapper.mapToAccountType(it[PreferencesKeys.ACCOUNT_TYPE] ?: STUDENT_STRING_NAME)
+            AccountTypeMapper.mapToAccountType(
+                it[PreferencesKeys.ACCOUNT_TYPE] ?: STUDENT_STRING_NAME,
+            )
+        }
+
+    override fun getTeacherFromDataStore(): Flow<String> =
+        dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.TEACHER] ?: ""
         }
 
     override suspend fun setCourseToDataStore(course: Int) {
@@ -68,6 +75,12 @@ class AppSettings @Inject constructor(
         }
     }
 
+    override suspend fun setTeacherToDataStore(teacher: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.TEACHER] = teacher
+        }
+    }
+
     override fun getParamsFromDataStore(): Flow<Quartet<Int, Int, List<String>, Boolean>> =
         dataStore.data.map { preferences ->
             Quartet(
@@ -81,6 +94,7 @@ class AppSettings @Inject constructor(
 
     companion object {
         const val STUDENT_STRING_NAME = "STUDENT"
+
         object PreferencesKeys {
             val COURSE = intPreferencesKey("course")
             val GROUP = intPreferencesKey("group")
@@ -88,6 +102,7 @@ class AppSettings @Inject constructor(
             val IS_AUTO_REGULARITY = booleanPreferencesKey("regularity")
             val ACCOUNT_TYPE = stringPreferencesKey("account_type")
             val IS_SIGNED_IN = booleanPreferencesKey("is_signed_in")
+            val TEACHER = stringPreferencesKey("teacher")
         }
     }
 }
