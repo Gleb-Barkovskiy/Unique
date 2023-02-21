@@ -1,4 +1,4 @@
-package com.kigya.unique.ui.tabs.main
+package com.kigya.unique.ui.timetable.main
 
 import android.os.Bundle
 import android.view.View
@@ -19,16 +19,16 @@ import com.kigya.unique.adapters.lesson.LessonAdapter
 import com.kigya.unique.adapters.lesson.interlayers.LessonsScrollListener
 import com.kigya.unique.databinding.FragmentTabsBinding
 import com.kigya.unique.ui.base.BaseFragment
-import com.kigya.unique.ui.tabs.sheet.student.DialogStudentFragment
-import com.kigya.unique.ui.tabs.sheet.teacher.DialogTeacherFragment
+import com.kigya.unique.ui.timetable.sheet.student.DialogStudentFragment
+import com.kigya.unique.ui.timetable.sheet.teacher.DialogTeacherFragment
 import com.kigya.unique.utils.LessonList
 import com.kigya.unique.utils.LessonListResource
-import com.kigya.unique.utils.calendar.CalendarHelper
-import com.kigya.unique.utils.calendar.CalendarHelper.currentDate
-import com.kigya.unique.utils.calendar.CalendarHelper.daysOfWeek
-import com.kigya.unique.utils.calendar.CalendarHelper.endDate
-import com.kigya.unique.utils.calendar.CalendarHelper.getWeekStringValueAbbreviation
-import com.kigya.unique.utils.calendar.CalendarHelper.startDate
+import com.kigya.unique.utils.helpers.CalendarHelper
+import com.kigya.unique.utils.helpers.CalendarHelper.currentDate
+import com.kigya.unique.utils.helpers.CalendarHelper.daysOfWeek
+import com.kigya.unique.utils.helpers.CalendarHelper.endDate
+import com.kigya.unique.utils.helpers.CalendarHelper.getWeekStringValueAbbreviation
+import com.kigya.unique.utils.helpers.CalendarHelper.startDate
 import com.kigya.unique.utils.extensions.context.onTouchResponseVibrate
 import com.kigya.unique.utils.extensions.ui.collectFlow
 import com.kigya.unique.utils.extensions.ui.observeResource
@@ -42,17 +42,17 @@ import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import java.time.LocalDate
 
 @AndroidEntryPoint
-class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
+class TimetableFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
 
     private val viewBinding by viewBinding(FragmentTabsBinding::bind)
-    override val viewModel by viewModels<TabsViewModel>()
-    private val adapter by lazy { LessonAdapter(this.requireActivity()) }
+    override val viewModel by viewModels<TimetableViewModel>()
+    private val adapter by lazy { LessonAdapter(this.requireActivity(), viewModel.isStudentMode()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.startCenterCircularReveal()
         setupWindow()
-        setupCalendarView(viewModel, this@TabsFragment)
+        setupCalendarView(viewModel, this@TimetableFragment)
         setupRecycler()
         observeLessons()
         observeScroll()
@@ -101,7 +101,10 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
 
     private fun openTeacherBottomSheet() {
         val bottomFragment = DialogTeacherFragment.newInstance()
-        bottomFragment.show(parentFragmentManager, BOTTOM_SHEET_STUDENT_TAG)
+        bottomFragment.arguments = Bundle().apply {
+            putString(ARG_WEEK, viewModel.getWeekModeHint())
+        }
+        bottomFragment.show(parentFragmentManager, BOTTOM_SHEET_TEACHER_TAG)
     }
 
     private fun observeScroll() {
@@ -153,7 +156,7 @@ class TabsFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
                 layoutManager = LinearLayoutManager(requireContext())
                 itemAnimator = null
                 val alphaAdapter =
-                    AlphaInAnimationAdapter(this@TabsFragment.adapter).apply {
+                    AlphaInAnimationAdapter(this@TimetableFragment.adapter).apply {
                         setDuration(ALPHA_IN_ANIMATION_ADAPTER_DURATION)
                     }
                 adapter = alphaAdapter

@@ -1,8 +1,13 @@
 package com.kigya.unique.adapters.calendar
 
+import android.content.Context
+import android.content.res.Resources
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import com.kigya.unique.App
 import com.kigya.unique.adapters.calendar.interlayers.CalendarWeekdayClickListener
 import com.kigya.unique.databinding.CalendarDayItemBinding
 import com.kigya.unique.utils.extensions.ui.view.setOnSafeClickListener

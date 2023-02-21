@@ -10,6 +10,7 @@
     <TextView
         android:id="@+id/tvLessonStart"
         style="@style/TextViewTimeTimetableTop"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="11:15" />
@@ -17,6 +18,7 @@
     <TextView
         android:id="@+id/tvLessonEnd"
         style="@style/TextViewTimeTimetableBottom"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/tvLessonStart"
         app:layout_constraintStart_toStartOf="@id/tvLessonStart"
         app:layout_constraintTop_toBottomOf="@id/tvLessonStart"
@@ -25,6 +27,7 @@
     <View
         android:id="@+id/delimiterOutside"
         style="@style/ViewDelimiterOutside"
+        android:layout_marginStart="63dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,6 +35,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvContainer"
         style="@style/TimetableCardViewStyle"
+        android:layout_marginStart="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/delimiterOutside"
         app:layout_constraintTop_toTopOf="parent">
@@ -39,11 +43,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/margin_s">
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/tvLessonName"
                 style="@style/TextViewTimetableInside"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@id/ibOptions"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +58,7 @@
             <TextView
                 android:id="@+id/tvTeacher"
                 style="@style/TextViewTimetableInside.Teacher"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvLessonName"
@@ -62,6 +68,8 @@
                 android:id="@+id/ibOptions"
                 style="@style/ImageButtonMaterial"
                 android:contentDescription="@string/options_button"
+                android:minWidth="49dp"
+                android:minHeight="49dp"
                 android:src="@drawable/share"
                 app:layout_constraintBottom_toBottomOf="@id/tvLessonName"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -87,6 +95,7 @@
             <TextView
                 android:id="@+id/tv_audience"
                 style="@style/TextViewTimetableInfo"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/ivLocation"
                 app:layout_constraintStart_toEndOf="@id/ivLocation"
                 app:layout_constraintTop_toTopOf="@id/ivLocation"
@@ -117,6 +126,7 @@
             <TextView
                 android:id="@+id/tvType"
                 style="@style/TextViewTimetableInfo"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/ivType"
                 app:layout_constraintStart_toEndOf="@id/ivType"
                 app:layout_constraintTop_toTopOf="@id/ivType"
@@ -149,6 +159,7 @@
             <TextView
                 android:id="@+id/tvSubgroup"
                 style="@style/TextViewTimetableInfo"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/ivType"
                 app:layout_constraintStart_toEndOf="@id/ivSubgroup"
                 app:layout_constraintTop_toTopOf="@id/ivSubgroup"
@@ -164,6 +175,7 @@
                 style="@style/TextViewTimetableInfo"
                 android:layout_marginTop="@dimen/margin_xxs"
                 android:layout_marginEnd="@dimen/margin_xs"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/tvGroup"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
@@ -173,17 +185,18 @@
             <TextView
                 android:id="@+id/tvGroup"
                 style="@style/TextViewTimetableInfo"
-                android:layout_marginTop="@dimen/margin_xxs"
-                app:layout_constraintTop_toBottomOf="@id/tvSubgroup"
-                app:layout_constraintStart_toEndOf="@id/tvCourse"
                 android:layout_marginStart="@dimen/margin_s"
+                android:layout_marginTop="@dimen/margin_xxs"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tvCourse"
+                app:layout_constraintTop_toBottomOf="@id/tvSubgroup"
                 tools:text="Группа: 9" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/gCourseGroup"
-                android:visibility="invisible"
                 style="@style/ItemWrapContent"
+                android:visibility="invisible"
                 app:constraint_referenced_ids="tvCourse, tvGroup" />
 
             <androidx.constraintlayout.widget.Barrier
@@ -198,13 +211,12 @@
                 android:layout_marginTop="@dimen/margin_xs"
                 android:alpha="0.3"
                 android:textColor="@color/white_base_front"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/barrierCategories"
                 tools:text="Каждую неделю" />
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

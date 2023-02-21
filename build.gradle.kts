@@ -1,7 +1,7 @@
 buildscript {
     val kotlin_version by extra("1.8.20-Beta")
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.0-alpha03")
+        classpath("com.android.tools.build:gradle:8.1.0-alpha05")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
     repositories {
@@ -16,10 +16,8 @@ plugins {
         id(subjections.Plugins.safeargs) version safeargs apply false
         id(subjections.Plugins.hiltGoogle) version hiltPlugin apply false
     }
-
 }
 
-
-tasks.register("clean",Delete::class){
+tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }

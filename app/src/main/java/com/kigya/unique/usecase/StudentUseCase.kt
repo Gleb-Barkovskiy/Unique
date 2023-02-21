@@ -1,16 +1,12 @@
 package com.kigya.unique.usecase
 
-import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.data.local.LessonRepository
 import com.kigya.unique.data.local.settings.AppSettings
 import com.kigya.unique.utils.LessonListResource
-import com.kigya.unique.utils.calendar.CalendarHelper
-import com.kigya.unique.utils.mappers.FiltersMapper
+import com.kigya.unique.utils.helpers.CalendarHelper
 import com.kigya.unique.utils.mappers.LocaleConverter.Russian.russianValue
 import com.kigya.unique.utils.wrappers.Resource
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.take
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -39,14 +35,6 @@ class StudentUseCase @Inject constructor(
                 getDatabaseLessons(course, group, subgroupList, isAuto, lessons, selectedDate)
             }
         }
-    }
-
-    suspend fun getIsAuto(): Boolean {
-        val result = CompletableDeferred<Boolean>()
-        appSettings.getParamsFromDataStore().take(1).collect {
-            result.complete(it.fourth)
-        }
-        return result.await()
     }
 
     suspend fun setParams(

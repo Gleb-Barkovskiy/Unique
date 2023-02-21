@@ -21,7 +21,7 @@
         style="@style/ItemWrapContent"
         android:layout_marginTop="@dimen/margin_s"
         android:text="@string/filters"
-        android:textSize="@dimen/text_size_xl"
+        android:textSize="20sp"
         app:fontFamily="@font/jost_bold"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +40,7 @@
         style="@style/ItemWrapContent"
         android:text="@string/setup_display_params"
         app:fontFamily="@font/jost_light"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/tvFiltersTitle" />
 
@@ -48,7 +49,7 @@
         style="@style/ItemWrapContent"
         android:layout_marginTop="@dimen/margin_s"
         android:text="@string/displaying_subgroups"
-        android:textSize="@dimen/text_size_s"
+        android:textSize="16sp"
         app:fontFamily="@font/jost_medium"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -69,6 +70,7 @@
             android:id="@+id/ltSubgroupA"
             style="@style/ImageButtonMaterial"
             android:text="@string/subgroup_a"
+            android:textSize="14sp"
             app:tbgMarkerColor="@color/green_base_transparent" />
 
         <com.nex3z.togglebuttongroup.button.LabelToggle
@@ -95,6 +97,7 @@
         android:id="@+id/tvWeekTitle"
         style="@style/TextViewOptions"
         android:text="@string/week"
+        android:textSize="16sp"
         app:drawableStartCompat="@drawable/icon_filter_target"
         app:fontFamily="@font/jost_medium"
         app:layout_constraintEnd_toEndOf="@id/psvSortByWeek"
@@ -104,6 +107,7 @@
     <com.skydoves.powerspinner.PowerSpinnerView
         android:id="@+id/psvSortByWeek"
         style="@style/BottomSheetOptionsStyle"
+        android:textSize="16sp"
         android:hint="@string/week"
         app:layout_constraintEnd_toStartOf="@id/psvSortByCourse"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -114,6 +118,7 @@
     <TextView
         android:id="@+id/tvCourseTitle"
         style="@style/TextViewOptions"
+        android:textSize="16sp"
         android:text="@string/сourse"
         app:drawableStartCompat="@drawable/icon_filter_target"
         app:fontFamily="@font/jost_medium"
@@ -124,6 +129,7 @@
     <com.skydoves.powerspinner.PowerSpinnerView
         android:id="@+id/psvSortByCourse"
         style="@style/BottomSheetOptionsStyle"
+        android:textSize="16sp"
         android:hint="@string/сourse"
         app:layout_constraintEnd_toStartOf="@id/psvSortByGroup"
         app:layout_constraintStart_toEndOf="@id/psvSortByWeek"
@@ -135,6 +141,7 @@
         style="@style/TextViewOptions"
         android:text="@string/group"
         app:fontFamily="@font/jost_medium"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/psvSortByGroup"
         app:layout_constraintStart_toStartOf="@id/psvSortByGroup"
         app:layout_constraintTop_toBottomOf="@id/mstgSubgroups" />
@@ -142,6 +149,7 @@
     <com.skydoves.powerspinner.PowerSpinnerView
         android:id="@+id/psvSortByGroup"
         style="@style/BottomSheetOptionsStyle"
+        android:textSize="16sp"
         android:hint="@string/group"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toEndOf="@id/psvSortByCourse"
@@ -152,7 +160,7 @@
         android:id="@+id/sstgMode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_s"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="@dimen/margin_s"
         android:layout_marginEnd="@dimen/margin_s"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
@@ -164,13 +172,13 @@
             android:id="@+id/ltStudent"
             style="@style/LabelToggleStyle"
             android:layout_marginEnd="@dimen/margin_xs"
-            android:text="@string/student_view" />
+            android:text="@string/student" />
 
         <com.nex3z.togglebuttongroup.button.LabelToggle
             android:id="@+id/ltTeacher"
             style="@style/LabelToggleStyle"
             android:layout_marginStart="@dimen/margin_xs"
-            android:text="@string/teacher_view" />
+            android:text="@string/teacher" />
 
     </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
 
@@ -178,6 +186,7 @@
         android:id="@+id/btnSave"
         style="@style/MaterialButtonStyle"
         android:text="@string/save_changes"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/sstgMode" />

@@ -54,9 +54,10 @@ class LessonRepository @Inject constructor(
     fun getDatabaseLessons(
         teacher: String,
         day: String?,
+        regularity: String?,
     ): Flow<Resource<List<Lesson>>> = networkBoundResource(
         query = {
-            lessonDao.getLessons(teacher, day)
+            lessonDao.getLessons(teacher, day, regularity)
         },
         fetch = {},
         saveFetchResult = {},

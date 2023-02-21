@@ -2,7 +2,6 @@ package com.kigya.unique.usecase
 
 import com.kigya.unique.data.dto.account.AccountType
 import com.kigya.unique.data.local.settings.AppSettings
-import com.kigya.unique.di.IoDispatcher
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.take
 import javax.inject.Inject
@@ -23,5 +22,13 @@ class SetupUseCase @Inject constructor(
     suspend fun signIn(accountType: AccountType) {
         appSettings.signIn()
         appSettings.setCurrentAccountType(accountType)
+    }
+
+    suspend fun getIsAuto(): Boolean {
+        val result = CompletableDeferred<Boolean>()
+        appSettings.getParamsFromDataStore().take(1).collect {
+            result.complete(it.fourth)
+        }
+        return result.await()
     }
 }

@@ -21,7 +21,7 @@
         style="@style/ItemWrapContent"
         android:layout_marginTop="@dimen/margin_s"
         android:text="@string/filters"
-        android:textSize="@dimen/text_size_xl"
+        android:textSize="20sp"
         app:fontFamily="@font/jost_bold"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,6 +39,7 @@
         android:id="@+id/tvHintDisplayText"
         style="@style/ItemWrapContent"
         android:text="@string/setup_display_params"
+        android:textSize="14sp"
         app:fontFamily="@font/jost_light"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/tvFiltersTitle" />
@@ -48,7 +49,7 @@
         style="@style/ItemWrapContent"
         android:layout_marginTop="@dimen/margin_s"
         android:text="@string/choose_teacher"
-        android:textSize="@dimen/text_size_s"
+        android:textSize="18sp"
         app:fontFamily="@font/jost_medium"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -81,7 +82,7 @@
             android:imeOptions="actionDone"
             android:inputType="textPersonName"
             android:textColorHint="@color/gray_base_dark"
-            android:textSize="@dimen/text_size_s" />
+            android:textSize="16sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,6 +91,7 @@
         style="@style/TextViewOptions"
         android:layout_marginEnd="@dimen/margin_xs"
         android:text="@string/week"
+        android:textSize="14sp"
         app:drawableStartCompat="@drawable/icon_filter_target"
         app:fontFamily="@font/jost_medium"
         app:layout_constraintEnd_toStartOf="@id/psvSortByWeek"
@@ -102,6 +104,7 @@
         style="@style/BottomSheetOptionsStyle"
         android:layout_marginStart="@dimen/margin_xs"
         android:hint="@string/week"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/tvWeekTitle"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -114,7 +117,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_s"
-        android:layout_marginTop="@dimen/margin_s"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="@dimen/margin_s"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -124,21 +127,23 @@
         <com.nex3z.togglebuttongroup.button.LabelToggle
             android:id="@+id/ltStudent"
             style="@style/LabelToggleStyle"
-            android:layout_marginEnd="@dimen/margin_xs"
-            android:text="@string/student_view" />
+            android:text="@string/student"
+            android:textSize="14sp" />
 
         <com.nex3z.togglebuttongroup.button.LabelToggle
             android:id="@+id/ltTeacher"
             style="@style/LabelToggleStyle"
-            android:layout_marginStart="@dimen/margin_xs"
-            android:text="@string/teacher_view" />
+            android:text="@string/teacher"
+            android:textSize="14sp" />
 
     </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSave"
         style="@style/MaterialButtonStyle"
+        android:layout_height="60dp"
         android:text="@string/save_changes"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/sstgMode" />

@@ -1,4 +1,4 @@
-package com.kigya.unique.ui.tabs.main
+package com.kigya.unique.ui.timetable.main
 
 import androidx.lifecycle.viewModelScope
 import com.kigya.unique.adapters.calendar.interlayers.CalendarWeekdayClickListener
@@ -9,7 +9,7 @@ import com.kigya.unique.usecase.SetupUseCase
 import com.kigya.unique.usecase.StudentUseCase
 import com.kigya.unique.usecase.TeacherUseCase
 import com.kigya.unique.utils.LessonListResource
-import com.kigya.unique.utils.calendar.CalendarHelper
+import com.kigya.unique.utils.helpers.CalendarHelper
 import com.kigya.unique.utils.constants.ModelConst.DEFAULT_SUBGROUPS_VALUE
 import com.kigya.unique.utils.logger.Logger
 import com.kigya.unique.utils.mappers.AccountTypeMapper
@@ -30,7 +30,7 @@ import javax.inject.Inject
 import kotlin.properties.Delegates
 
 @HiltViewModel
-class TabsViewModel @Inject constructor(
+class TimetableViewModel @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
     logger: Logger,
     private val setupUseCase: SetupUseCase,
@@ -57,29 +57,32 @@ class TabsViewModel @Inject constructor(
 
     private var isAutoWeekModeEnabled: Boolean = true
 
-    private var currentMode by Delegates.notNull<AccountType>()
-
-    private val savedTeacher by lazy { runBlocking { teacherUseCase.getSavedTeacher() } }
+    val savedTeacher by lazy { runBlocking { teacherUseCase.getSavedTeacher() } }
+    var teacherList by Delegates.notNull<List<String>>()
 
     init {
-        setCurrentMode()
         loadData()
         setWeekMode()
+        teacherList = getTeachers()
     }
 
-    private fun setCurrentMode() {
-        runBlocking { currentMode = setupUseCase.getCurrentAccountType() }
-    }
+    fun isStudentMode(): Boolean =
+        runBlocking { setupUseCase.getCurrentAccountType() == AccountType.STUDENT }
 
-    fun isStudentMode(): Boolean = currentMode == AccountType.STUDENT
+    private fun getTeachers(): List<String> = runBlocking { teacherUseCase.getTeacherList() }
+
+    fun saveParams(teacher: String, isAuto: Boolean?) =
+        viewModelScope.launch(dispatcher) {
+            teacherUseCase.setParams(teacher, isAuto)
+        }
 
     override fun dateClicked(weekCalendarView: WeekCalendarView, date: LocalDate) {
         enableToScroll()
         swapDates(date)
         weekCalendarView.notifyCalendarChanged()
-        if (currentMode == AccountType.TEACHER) {
+        if (!isStudentMode()) {
             viewModelScope.launch(dispatcher) {
-                teacherUseCase.loadData(savedTeacher, _lessons, selectedDate)
+                teacherUseCase.loadData(savedTeacher, _lessons, selectedDate, isAutoWeekModeEnabled)
             }
         } else {
             viewModelScope.launch(dispatcher) {
@@ -118,7 +121,7 @@ class TabsViewModel @Inject constructor(
     }
 
     fun setAccountType(index: Int) {
-        viewModelScope.launch {
+        runBlocking {
             setupUseCase.signIn(AccountTypeMapper.mapSelectionToAccountType(index))
         }
     }
@@ -131,6 +134,7 @@ class TabsViewModel @Inject constructor(
                         teacherUseCase.getSavedTeacher(),
                         _lessons,
                         selectedDate,
+                        isAutoWeekModeEnabled,
                     )
                 }
             } else {
@@ -141,7 +145,7 @@ class TabsViewModel @Inject constructor(
 
     private fun setWeekMode() {
         viewModelScope.launch(dispatcher) {
-            isAutoWeekModeEnabled = studentUseCase.getIsAuto()
+            isAutoWeekModeEnabled = setupUseCase.getIsAuto()
         }
     }
 

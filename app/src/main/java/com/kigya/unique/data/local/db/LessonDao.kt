@@ -33,12 +33,15 @@ interface LessonDao {
     ): Flow<List<Lesson>>
 
     @Query(
-        "SELECT * FROM lessons WHERE `teacher` LIKE '%' || :name || '%' AND (:day IS NULL OR `day` = :day)" +
-            "GROUP BY `time`, `audience`, `subject`, `type`",
+        "SELECT * FROM lessons WHERE `teacher` LIKE '%' || :name || '%' " +
+            "AND (:day IS NULL OR `day` = :day)" +
+            "AND ((:regularity IS NULL) OR `regularity` LIKE '' OR `regularity` = :regularity)" +
+            "GROUP BY `time`, `audience`, `subject`, `type`, `regularity`",
     )
     fun getLessons(
         name: String,
         day: String? = null,
+        regularity: String? = null,
     ): Flow<List<Lesson>>
 
     @Query("SELECT COUNT(*) FROM lessons")

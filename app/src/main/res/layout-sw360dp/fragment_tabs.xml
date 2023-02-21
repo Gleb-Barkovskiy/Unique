@@ -43,6 +43,7 @@
     <TextView
         android:id="@+id/tvTimeHint"
         style="@style/TextViewTimeTimetableBottom"
+        android:textSize="16sp"
         android:text="@string/time"
         app:layout_constraintBottom_toBottomOf="@id/btnOptions"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -52,7 +53,8 @@
     <TextView
         android:id="@+id/tvTimetableHint"
         style="@style/TextViewTimeTimetableBottom"
-        android:layout_marginStart="@dimen/margin_m"
+        android:layout_marginStart="40dp"
+        android:textSize="16sp"
         android:text="@string/timetable"
         app:layout_constraintBottom_toBottomOf="@id/btnOptions"
         app:layout_constraintStart_toEndOf="@id/tvTimeHint"
@@ -63,6 +65,7 @@
         android:id="@+id/tvCurrentWeek"
         style="@style/TextViewTimeTimetableBottom"
         android:layout_marginStart="@dimen/margin_m"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/btnOptions"
         app:layout_constraintEnd_toStartOf="@id/btnOptions"
         app:layout_constraintTop_toTopOf="@id/btnOptions"

@@ -11,26 +11,27 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/ItemMatchParent"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="15dp">
+        android:layout_margin="10dp">
 
         <TextView
             android:id="@+id/tvDayItemWeekDay"
             style="@style/ItemMatchParent"
             android:gravity="center_horizontal"
             android:textColor="@color/gray_base"
-            android:textSize="16sp"
+            android:textSize="10sp"
             app:layout_constraintBottom_toTopOf="@id/tvDayItemDate"
             app:layout_constraintEnd_toEndOf="@id/tvDayItemDate"
             app:layout_constraintStart_toStartOf="@id/tvDayItemDate"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
+            tools:ignore="SmallSp"
             tools:text="ВТ" />
 
         <TextView
             android:id="@+id/tvDayItemDate"
             style="@style/ItemMatchParent"
             android:gravity="center_horizontal"
-            android:textSize="18sp"
+            android:textSize="10sp"
             app:fontFamily="@font/jost_medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

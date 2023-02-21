@@ -5,7 +5,7 @@ import android.content.Intent
 import com.kigya.unique.R
 
 object IntentCreator {
-    fun creareShareImplicitIntent(activity: Activity, message: String, hint: String) {
+    fun createShareImplicitIntent(activity: Activity, message: String, hint: String) {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.apply {
             putExtra(Intent.EXTRA_TEXT, message)

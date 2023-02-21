@@ -1,14 +1,14 @@
-package com.kigya.unique.utils.calendar
+package com.kigya.unique.utils.helpers
 
 import android.view.ViewGroup
 import android.widget.TextView
 import com.kigya.unique.App
 import com.kigya.unique.R
-import com.kigya.unique.utils.calendar.CalendarHelper.Const.FEBRUARY_MONTH
-import com.kigya.unique.utils.calendar.CalendarHelper.Const.FEBRUARY_SECOND_WEEK_GUARANTEED
-import com.kigya.unique.utils.calendar.CalendarHelper.Const.SEPTEMBER_FIRST_WEEK_GUARANTEED
-import com.kigya.unique.utils.calendar.CalendarHelper.Const.SEPTERMBER_MONTH
-import com.kigya.unique.utils.calendar.CalendarHelper.Const.WEEK_SERIAL_DELIMITER
+import com.kigya.unique.utils.helpers.CalendarHelper.Const.FEBRUARY_MONTH
+import com.kigya.unique.utils.helpers.CalendarHelper.Const.FEBRUARY_SECOND_WEEK_GUARANTEED
+import com.kigya.unique.utils.helpers.CalendarHelper.Const.SEPTEMBER_FIRST_WEEK_GUARANTEED
+import com.kigya.unique.utils.helpers.CalendarHelper.Const.SEPTERMBER_MONTH
+import com.kigya.unique.utils.helpers.CalendarHelper.Const.WEEK_SERIAL_DELIMITER
 import com.kigya.unique.utils.constants.ModelConst.FIRST_WEEK_STRING_SHORT
 import com.kigya.unique.utils.constants.ModelConst.SECOND_WEEK_STRING_SHORT
 import com.kizitonwose.calendar.core.atStartOfMonth

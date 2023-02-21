@@ -52,4 +52,8 @@
     <string name="start_typing">Начните писать</string>
     <string name="full_name">ФИО</string>
     <string name="no_teacher">Преподаватель не найден</string>
+    <string name="course_template">Курс: %s</string>
+    <string name="group_template">Группа: %s</string>
+    <string name="student">Студент</string>
+    <string name="teacher">Преподаватель</string>
 </resources>

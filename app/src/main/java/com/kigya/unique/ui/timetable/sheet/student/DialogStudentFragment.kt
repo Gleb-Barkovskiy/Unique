@@ -1,4 +1,4 @@
-package com.kigya.unique.ui.tabs.sheet.student
+package com.kigya.unique.ui.timetable.sheet.student
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kigya.unique.R
 import com.kigya.unique.databinding.BottomSheetStudentBinding
 import com.kigya.unique.ui.main.MainActivity
-import com.kigya.unique.ui.tabs.main.TabsViewModel
-import com.kigya.unique.ui.tabs.main.TabsFragment
+import com.kigya.unique.ui.timetable.main.TimetableFragment
+import com.kigya.unique.ui.timetable.main.TimetableViewModel
 import com.kigya.unique.utils.constants.ModelConst.SUBGROUP_A
 import com.kigya.unique.utils.constants.ModelConst.SUBGROUP_B
 import com.kigya.unique.utils.constants.ModelConst.SUBGROUP_C
@@ -25,8 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DialogStudentFragment : BottomSheetDialogFragment() {
 
     private val viewBinding by viewBinding(BottomSheetStudentBinding::bind)
-    private val commonViewModel by viewModels<TabsViewModel>()
-    private val dialogViewModel by viewModels<DialogStudentViewModel>()
+    private val commonViewModel by viewModels<TimetableViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +39,7 @@ class DialogStudentFragment : BottomSheetDialogFragment() {
         setSaveClickListener()
         setCloseClickListener()
         setOnCourseClickListener()
+        hideElementsWhenRootClicked()
     }
 
     private fun setOnCourseClickListener() {
@@ -54,6 +54,16 @@ class DialogStudentFragment : BottomSheetDialogFragment() {
                     }
                 },
             )
+        }
+    }
+
+    private fun hideElementsWhenRootClicked() {
+        with(viewBinding) {
+            root.setOnClickListener {
+                psvSortByCourse.dismiss()
+                psvSortByGroup.dismiss()
+                psvSortByWeek.dismiss()
+            }
         }
     }
 
@@ -83,8 +93,9 @@ class DialogStudentFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun restartApp() =
+    private fun restartApp() {
         IntentCreator.createRestartIntent(requireActivity(), MainActivity::class.java)
+    }
 
     private fun setInitialArgs() {
         with(arguments) {
@@ -98,7 +109,7 @@ class DialogStudentFragment : BottomSheetDialogFragment() {
 
     private fun setInitialActiveSubgroups(bundle: Bundle?): Unit? =
         with(viewBinding) {
-            bundle?.getStringArrayList(TabsFragment.ARG_SUBGROUPS)?.forEach {
+            bundle?.getStringArrayList(TimetableFragment.ARG_SUBGROUPS)?.forEach {
                 when (it) {
                     SUBGROUP_A -> ltSubgroupA.isChecked = true
                     SUBGROUP_B -> ltSubgroupB.isChecked = true
@@ -113,15 +124,15 @@ class DialogStudentFragment : BottomSheetDialogFragment() {
     }
 
     private fun setInitialWeekState(bundle: Bundle?) {
-        viewBinding.psvSortByWeek.hint = bundle?.getString(TabsFragment.ARG_WEEK)
+        viewBinding.psvSortByWeek.hint = bundle?.getString(TimetableFragment.ARG_WEEK)
     }
 
     private fun setInitialGroupState(bundle: Bundle?) {
-        viewBinding.psvSortByGroup.hint = bundle?.getString(TabsFragment.ARG_GROUP)
+        viewBinding.psvSortByGroup.hint = bundle?.getString(TimetableFragment.ARG_GROUP)
     }
 
     private fun setInitialCourseState(bundle: Bundle?) {
-        viewBinding.psvSortByCourse.hint = bundle?.getString(TabsFragment.ARG_COURSE)
+        viewBinding.psvSortByCourse.hint = bundle?.getString(TimetableFragment.ARG_COURSE)
     }
 
     override fun getTheme() = R.style.AppBottomSheetDialogTheme
