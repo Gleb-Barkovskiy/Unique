@@ -34,7 +34,9 @@ class TeacherUseCase @Inject constructor(
                 requiredList.add(FiltersMapper.getTeacherOrNull(teacherString))
             }
         }
-        return requiredList.filterNotNull().distinct()
+        return FiltersMapper.getDistinctTeachersWithFormatting(
+            requiredList.filterNotNull().distinct(),
+        )
     }
 
     suspend fun getSavedTeacher(): String {

@@ -33,7 +33,7 @@ interface LessonDao {
     ): Flow<List<Lesson>>
 
     @Query(
-        "SELECT * FROM lessons WHERE `teacher` LIKE '%' || :name || '%' " +
+        "SELECT * FROM lessons WHERE REPLACE(REPLACE(`teacher`, '.', ''), ' ', '') LIKE '%' || REPLACE(REPLACE(:name, '.', ''), ' ', '') || '%' " +
             "AND (:day IS NULL OR `day` = :day)" +
             "AND ((:regularity IS NULL) OR `regularity` LIKE '' OR `regularity` = :regularity)" +
             "GROUP BY `time`, `audience`, `subject`, `type`, `regularity`",

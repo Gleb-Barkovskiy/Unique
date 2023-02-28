@@ -4,8 +4,6 @@ import com.kigya.unique.App
 import com.kigya.unique.R
 
 private const val TEACHER_REGEX = "\\b[А-Я][а-я]+\\s+[А-Я]\\.\\s*[А-Я]?\\.?"
-private const val TEACHER_ERROR_REGEX = "\\b[А-Я][а-я]+\\s+[А-Я]\\.\\s*[А-Я]?"
-private const val DIGITS_REGEX = "\\d"
 
 object FiltersMapper {
     fun getWeekOptionsStringValue(isAuto: Boolean): String =
@@ -62,9 +60,14 @@ object FiltersMapper {
         return match?.value
     }
 
-    fun getTeacherFindingError(teacher: String): String {
-        val pattern = Regex(TEACHER_ERROR_REGEX)
-        val match = pattern.find(teacher)
-        return match?.value ?: teacher
+    fun getDistinctTeachersWithFormatting(teachers: List<String>): List<String> {
+        val distinctMap = mutableMapOf<String, String>()
+        val teachersTrimmed = teachers.map {
+            it.replace(".", "").replace(" ", "").trim()
+        }
+        teachers.forEachIndexed { index, s ->
+            distinctMap[teachersTrimmed[index]] = if (s.endsWith(".")) s else s.plus(".")
+        }
+        return distinctMap.values.toList()
     }
 }
