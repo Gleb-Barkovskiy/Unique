@@ -11,4 +11,101 @@ It also allows you to share your classes with others, so you can coordinate your
 
 Don't waste any more time trying to manage your academic timetable manually. Get *Unique* and streamline your schedule today!
 
-<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white"> <img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white"> <img src="https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white">
+<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white"> <img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white">
+
+## Features
+
+- Student mode for searching by course, group and subgroup
+- Teacher mode for searching schedules by name
+- Modern and intuitive design
+- Automatic schedule update in the evenings
+- The ability to select automatic filtering, which involves the calculation of the current week
+
+## Stack
+##### [Navigation](https://developer.android.com/jetpack/androidx/releases/navigation) 
+##### [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) 
+##### [Lifecycle](https://developer.android.com/jetpack/androidx/releases/lifecycle) 
+##### [Hilt](https://dagger.dev/hilt/) 
+##### [Room](https://developer.android.com/jetpack/androidx/releases/room) 
+##### [DataStore](https://developer.android.com/jetpack/androidx/releases/datastore) 
+##### [Retrofit](https://github.com/square/retrofit) 
+##### [OkHttp](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor) 
+##### [Work Manager](https://developer.android.com/jetpack/androidx/releases/work) 
+##### [Startup](https://developer.android.com/jetpack/androidx/releases/startup) 
+##### [Splash Screen API](https://developer.android.com/develop/ui/views/launch/splash-screen) 
+##### [Gson](https://github.com/google/gson) 
+<br>
+##### [Jsoup](https://github.com/jhy/jsoup) 
+##### [ViewBindingPropertyDelegate](https://github.com/androidbroadcast/ViewBindingPropertyDelegate) 
+##### [Scalable sp](https://github.com/intuit/ssp) 
+##### [RecyclerView Animators](https://github.com/wasabeef/recyclerview-animators) 
+##### [Lottie](https://github.com/airbnb/lottie-android) 
+##### [CircularProgressBar](https://github.com/lopspower/CircularProgressBar) 
+##### [Calendar](https://github.com/kizitonwose/Calendar)
+##### [CardView](https://developer.android.com/jetpack/androidx/releases/cardview) 
+##### [TapTargetView](https://github.com/KeepSafe/TapTargetView) 
+<br>
+
+##### [JUnit](https://github.com/junit-team/junit4/blob/HEAD/doc/ReleaseNotes4.13.md) 
+##### [Espresso](https://developer.android.com/training/testing/espresso) 
+
+## Download
+
+Operating System | Link
+---|---
+Android | <a href='https://play.google.com/store/apps/details?id=net.cozic.joplin&utm_source=GitHub&utm_campaign=README&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' height="40px" src='https://raw.githubusercontent.com/laurent22/joplin/dev/Assets/WebsiteAssets/images/BadgeAndroid.png'/></a>
+
+## Contributions
+
+* Add features by making a **[pull request](https://help.github.com/articles/about-pull-requests/)**.
+* Help to integrate a smart schedule translation system into English
+* Share your ideas and comments :)
+
+<a href='https://t.me/kigya'>![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)</a>
+
+## Frequently Asked Questions
+
+##### Q: 
+What is the problem with the schedule for teachers? 
+##### A: 
+The data in the application comes from the official website of the BSU mehmat, the fields on which are inconsistent, sloppy and sometimes mistakenly filled in. I did everything in my power to process possible errors, but it is impossible to bring it to the ideal for reasons beyond my control
+<br>
+##### Q: 
+Will new features be delivered to the app? For example, attendance marks, notes on teachers and subjects, notifications, widgets?
+##### A: 
+No, until the issue with the schedule on the official website is resolved. Widgets will appear in the next updates
+<br>
+
+## The MIT License (MIT)
+
+Copyright © `2023` `Kirill Borichevskiy`
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the “Software”), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+
+
+
+
+
+
