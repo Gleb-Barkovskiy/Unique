@@ -24,7 +24,7 @@ class InitialSetupViewModel @Inject constructor(
 
     fun signIn(accountType: AccountType) {
         viewModelScope.launch {
-            setupUseCase.signIn(accountType)
+            setupUseCase.setAccountType(accountType)
         }
     }
 

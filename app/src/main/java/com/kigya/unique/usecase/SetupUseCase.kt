@@ -11,6 +11,10 @@ class SetupUseCase @Inject constructor(
 ) {
     fun isUserSignedIn() = appSettings.isSignedIn().take(1)
 
+    suspend fun signIn() {
+        appSettings.signIn()
+    }
+
     suspend fun getCurrentAccountType(): AccountType {
         val result = CompletableDeferred<AccountType>()
         appSettings.getCurrentAccountType().take(1).collect {
@@ -19,8 +23,7 @@ class SetupUseCase @Inject constructor(
         return result.await()
     }
 
-    suspend fun signIn(accountType: AccountType) {
-        appSettings.signIn()
+    suspend fun setAccountType(accountType: AccountType) {
         appSettings.setCurrentAccountType(accountType)
     }
 

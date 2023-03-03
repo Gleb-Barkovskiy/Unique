@@ -159,4 +159,9 @@ object AppDependencies {
     object StartUp {
         const val runtime = "androidx.startup:startup-runtime:${Versions.startUp}"
     }
+
+    object TapTargetView {
+        const val tapTargetView =
+            "com.getkeepsafe.taptargetview:taptargetview:${Versions.tapTarget}"
+    }
 }

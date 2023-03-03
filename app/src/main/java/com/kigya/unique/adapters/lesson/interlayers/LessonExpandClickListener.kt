@@ -5,7 +5,7 @@ import com.kigya.unique.databinding.TimetableItemBinding
 import com.kigya.unique.utils.extensions.ui.view.delayOnLifecycle
 import com.kigya.unique.utils.extensions.ui.view.setOnSafeClickListener
 
-class LessonExpandClickListener() {
+class LessonExpandClickListener {
     operator fun invoke(viewBinding: TimetableItemBinding) {
         viewBinding.mlContainer.apply {
             resetMotionAnimation(this)

@@ -15,7 +15,7 @@ import com.kigya.unique.databinding.BottomSheetTeacherBinding
 import com.kigya.unique.ui.main.MainActivity
 import com.kigya.unique.ui.timetable.main.TimetableFragment
 import com.kigya.unique.ui.timetable.main.TimetableViewModel
-import com.kigya.unique.ui.timetable.sheet.teacher.listeners.AutocompleteTextChangeListener
+import com.kigya.unique.ui.listeners.AutocompleteTextChangeListener
 import com.kigya.unique.utils.extensions.context.hideKeyboard
 import com.kigya.unique.utils.helpers.TeacherValidator
 import com.kigya.unique.utils.system.intent.IntentCreator

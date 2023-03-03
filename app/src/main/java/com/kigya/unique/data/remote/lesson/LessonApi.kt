@@ -35,13 +35,13 @@ class LessonApi @Inject constructor(
                     else -> 0
                 }
                 (1..maxGroup).map { group ->
-                    async() {
+                    async {
                         rowList += getNetworkDataByCourseAndGroup(course, group, false)
                     }
                 }
             }
             (1..4).map { course ->
-                async() {
+                async {
                     rowList += getNetworkDataByCourseAndGroup(course, 0, true)
                 }
             }

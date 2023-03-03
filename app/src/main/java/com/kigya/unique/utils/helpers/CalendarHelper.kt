@@ -1,18 +1,20 @@
 package com.kigya.unique.utils.helpers
 
+import android.graphics.Rect
 import android.view.ViewGroup
 import android.widget.TextView
 import com.kigya.unique.App
 import com.kigya.unique.R
+import com.kigya.unique.utils.constants.ModelConst.FIRST_WEEK_STRING_SHORT
+import com.kigya.unique.utils.constants.ModelConst.SECOND_WEEK_STRING_SHORT
 import com.kigya.unique.utils.helpers.CalendarHelper.Const.FEBRUARY_MONTH
 import com.kigya.unique.utils.helpers.CalendarHelper.Const.FEBRUARY_SECOND_WEEK_GUARANTEED
 import com.kigya.unique.utils.helpers.CalendarHelper.Const.SEPTEMBER_FIRST_WEEK_GUARANTEED
-import com.kigya.unique.utils.helpers.CalendarHelper.Const.SEPTERMBER_MONTH
+import com.kigya.unique.utils.helpers.CalendarHelper.Const.SEPTEMBER_MONTH
 import com.kigya.unique.utils.helpers.CalendarHelper.Const.WEEK_SERIAL_DELIMITER
-import com.kigya.unique.utils.constants.ModelConst.FIRST_WEEK_STRING_SHORT
-import com.kigya.unique.utils.constants.ModelConst.SECOND_WEEK_STRING_SHORT
 import com.kizitonwose.calendar.core.atStartOfMonth
 import com.kizitonwose.calendar.core.daysOfWeek
+import com.kizitonwose.calendar.view.WeekCalendarView
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
@@ -62,7 +64,7 @@ object CalendarHelper {
 
         val startWeekCount = if (isFirstSemester) {
             getWeekSerialNumber(
-                currentDate.withMonth(SEPTERMBER_MONTH).withDayOfMonth(
+                currentDate.withMonth(SEPTEMBER_MONTH).withDayOfMonth(
                     SEPTEMBER_FIRST_WEEK_GUARANTEED,
                 ),
             )
@@ -78,7 +80,7 @@ object CalendarHelper {
 
     object Const {
         const val WEEK_SERIAL_DELIMITER = 25
-        const val SEPTERMBER_MONTH = 9
+        const val SEPTEMBER_MONTH = 9
         const val FEBRUARY_MONTH = 2
         const val SEPTEMBER_FIRST_WEEK_GUARANTEED = 1
         const val FEBRUARY_SECOND_WEEK_GUARANTEED = 8

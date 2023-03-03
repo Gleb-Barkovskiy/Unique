@@ -9,16 +9,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-fun <T> Fragment.collectFlow(flow: Flow<T>, onCollect: (T) -> Unit) {
-    viewLifecycleOwner.lifecycleScope.launch {
-        repeatOnLifecycle(Lifecycle.State.STARTED) {
-            flow.collect {
-                onCollect(it)
-            }
-        }
-    }
-}
-
 fun <T> ViewModel.collectFlow(flow: Flow<T>, onCollect: (T) -> Unit) {
     viewModelScope.launch {
         flow.collect {

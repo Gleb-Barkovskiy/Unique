@@ -31,16 +31,6 @@ fun <T> BaseFragment.collectFlow(flow: Flow<T>, onCollect: (T) -> Unit) {
     }
 }
 
-fun <T> DialogFragment.collectFlow(flow: Flow<T>, onCollect: (T) -> Unit) {
-    viewLifecycleOwner.lifecycleScope.launch {
-        repeatOnLifecycle(Lifecycle.State.STARTED) {
-            flow.collect {
-                onCollect(it)
-            }
-        }
-    }
-}
-
 fun <T, R> BaseFragment.observeResource(
     flow: Flow<T>,
     resourceView: ResourceView,

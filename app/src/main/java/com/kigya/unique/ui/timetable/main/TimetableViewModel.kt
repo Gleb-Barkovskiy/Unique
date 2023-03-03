@@ -9,8 +9,8 @@ import com.kigya.unique.usecase.SetupUseCase
 import com.kigya.unique.usecase.StudentUseCase
 import com.kigya.unique.usecase.TeacherUseCase
 import com.kigya.unique.utils.LessonListResource
-import com.kigya.unique.utils.helpers.CalendarHelper
 import com.kigya.unique.utils.constants.ModelConst.DEFAULT_SUBGROUPS_VALUE
+import com.kigya.unique.utils.helpers.CalendarHelper
 import com.kigya.unique.utils.logger.Logger
 import com.kigya.unique.utils.mappers.AccountTypeMapper
 import com.kigya.unique.utils.mappers.FiltersMapper.getCourseHintByArrayIndex
@@ -19,6 +19,7 @@ import com.kigya.unique.utils.mappers.FiltersMapper.getWeekOptionsStringValue
 import com.kigya.unique.utils.wrappers.Resource
 import com.kizitonwose.calendar.view.WeekCalendarView
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -122,7 +123,7 @@ class TimetableViewModel @Inject constructor(
 
     fun setAccountType(index: Int) {
         runBlocking {
-            setupUseCase.signIn(AccountTypeMapper.mapSelectionToAccountType(index))
+            setupUseCase.setAccountType(AccountTypeMapper.mapSelectionToAccountType(index))
         }
     }
 
@@ -140,6 +141,21 @@ class TimetableViewModel @Inject constructor(
             } else {
                 studentUseCase.loadData(_course, _group, subgroupList, _lessons, selectedDate)
             }
+        }
+    }
+
+    fun isUserSignedIn(): Boolean =
+        runBlocking {
+            val result = CompletableDeferred<Boolean>()
+            setupUseCase.isUserSignedIn().collect {
+                result.complete(it)
+            }
+            return@runBlocking result.await()
+        }
+
+    fun signIn() {
+        viewModelScope.launch(dispatcher) {
+            setupUseCase.signIn()
         }
     }
 

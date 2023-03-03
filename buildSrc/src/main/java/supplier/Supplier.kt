@@ -42,6 +42,7 @@ object Supplier {
         AppDependencies.Activity.activity,
         AppDependencies.WorkManager.manager,
         AppDependencies.StartUp.runtime,
+        AppDependencies.TapTargetView.tapTargetView,
     )
 
     val testImplementationList = listOf(

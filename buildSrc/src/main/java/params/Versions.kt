@@ -15,8 +15,9 @@ object Versions {
     const val progressBar = "3.1.0"
     const val calendarView = "2.0.4"
     const val cardView = "1.0.0"
-    const val splashScreen = "1.0.0"
+    const val splashScreen = "1.0.0-beta02"
     const val recyclerView = "1.2.1"
+    const val tapTarget = "1.13.3"
 
     // external libraries
     const val jsoup = "1.13.1"

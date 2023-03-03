@@ -6,11 +6,14 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetView
 import com.kigya.unique.R
 import com.kigya.unique.adapters.calendar.CalendarWeekdayBinder
 import com.kigya.unique.adapters.calendar.interlayers.CalendarDateBinder
@@ -23,18 +26,18 @@ import com.kigya.unique.ui.timetable.sheet.student.DialogStudentFragment
 import com.kigya.unique.ui.timetable.sheet.teacher.DialogTeacherFragment
 import com.kigya.unique.utils.LessonList
 import com.kigya.unique.utils.LessonListResource
-import com.kigya.unique.utils.helpers.CalendarHelper
-import com.kigya.unique.utils.helpers.CalendarHelper.currentDate
-import com.kigya.unique.utils.helpers.CalendarHelper.daysOfWeek
-import com.kigya.unique.utils.helpers.CalendarHelper.endDate
-import com.kigya.unique.utils.helpers.CalendarHelper.getWeekStringValueAbbreviation
-import com.kigya.unique.utils.helpers.CalendarHelper.startDate
 import com.kigya.unique.utils.extensions.context.onTouchResponseVibrate
 import com.kigya.unique.utils.extensions.ui.collectFlow
 import com.kigya.unique.utils.extensions.ui.observeResource
 import com.kigya.unique.utils.extensions.ui.view.setOnSidesSwipeTouchListener
 import com.kigya.unique.utils.extensions.ui.view.startCenterCircularReveal
 import com.kigya.unique.utils.extensions.ui.view.startSidesCircularReveal
+import com.kigya.unique.utils.helpers.CalendarHelper
+import com.kigya.unique.utils.helpers.CalendarHelper.currentDate
+import com.kigya.unique.utils.helpers.CalendarHelper.daysOfWeek
+import com.kigya.unique.utils.helpers.CalendarHelper.endDate
+import com.kigya.unique.utils.helpers.CalendarHelper.getWeekStringValueAbbreviation
+import com.kigya.unique.utils.helpers.CalendarHelper.startDate
 import com.kigya.unique.utils.mappers.LocaleConverter.Russian.russianShortValue
 import com.kizitonwose.calendar.view.DaySize
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,7 +62,46 @@ class TimetableFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBind
         addShowOptionsClickListener()
         setCurrentWeekSerialNumberValue()
         setOnSidesSwipeTouchListener()
+        showTapTargetIfStarted()
     }
+
+    private fun showTapTargetIfStarted() {
+        if (!viewModel.isUserSignedIn()) {
+            val ttFilters = getFiltersTapTarget()
+            showTapTargetIfStarted(ttFilters)
+        }
+    }
+
+    private fun showTapTargetIfStarted(target: TapTarget?) {
+        TapTargetView.showFor(
+            requireActivity(),
+            target,
+            object : TapTargetView.Listener() {
+                override fun onTargetClick(view: TapTargetView?) {
+                    super.onTargetClick(view)
+                    viewModel.signIn()
+                }
+            },
+        )
+    }
+
+    private fun getFiltersTapTarget(): TapTarget? = TapTarget.forView(
+        viewBinding.btnOptions,
+        getString(R.string.tap_title_filters),
+        getString(R.string.tap_desc_filters),
+    ).outerCircleColor(R.color.white_base_front)
+        .targetCircleColor(R.color.green_base)
+        .textColor(R.color.green_base_dark)
+        .transparentTarget(true)
+        .dimColor(R.color.green_base)
+        .drawShadow(false)
+        .cancelable(false)
+        .tintTarget(true)
+        .transparentTarget(false)
+        .targetRadius(50)
+        .titleTypeface(ResourcesCompat.getFont(requireContext(), R.font.jost_bold))
+        .descriptionTypeface(ResourcesCompat.getFont(requireContext(), R.font.jost_regular))
+        .id(1)
 
     private fun setOnSidesSwipeTouchListener() {
         with(viewBinding) {

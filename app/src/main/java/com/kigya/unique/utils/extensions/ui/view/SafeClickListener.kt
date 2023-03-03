@@ -28,14 +28,3 @@ fun View.setOnSafeClickListener(
         },
     )
 }
-
-fun View.setOnSafeClickListener(
-    interval: Int,
-    onSafeClick: (View) -> Unit,
-) {
-    setOnClickListener(
-        SafeListener(interval) { v ->
-            onSafeClick(v)
-        },
-    )
-}

@@ -56,4 +56,6 @@
     <string name="group_template">Группа: %s</string>
     <string name="student">Студент</string>
     <string name="teacher">Преподаватель</string>
+    <string name="tap_title_filters">Ваши параметры для отображения занятий</string>
+    <string name="tap_desc_filters">Важно: на данный момент по независящим от нас причинам режим преподавателя не гарантирует точность данных, поэтому рекомендуем использовать его с осторожностью</string>
 </resources>

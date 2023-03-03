@@ -1,7 +1,6 @@
 package com.kigya.unique.utils.mappers
 
 import java.time.DayOfWeek
-import java.time.Month
 
 object LocaleConverter {
 
@@ -28,23 +27,6 @@ object LocaleConverter {
                 DayOfWeek.FRIDAY -> Const.FRIDAY_FULL
                 DayOfWeek.SATURDAY -> Const.SATURDAY_FULL
                 DayOfWeek.SUNDAY -> Const.SUNDAY_FULL
-            }
-        }
-
-        fun Month.russianValue(): String {
-            return when (this) {
-                Month.JANUARY -> Const.JANUARY
-                Month.FEBRUARY -> Const.FEBRUARY
-                Month.MARCH -> Const.MARCH
-                Month.APRIL -> Const.APRIL
-                Month.MAY -> Const.MAY
-                Month.JUNE -> Const.JUNE
-                Month.JULY -> Const.JULY
-                Month.AUGUST -> Const.AUGUST
-                Month.SEPTEMBER -> Const.SEPTEMBER
-                Month.OCTOBER -> Const.OCTOBER
-                Month.NOVEMBER -> Const.NOVEMBER
-                Month.DECEMBER -> Const.DECEMBER
             }
         }
 
