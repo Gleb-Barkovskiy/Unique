@@ -14,6 +14,9 @@ plugins {
     kotlin("kapt")
 }
 android {
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
     with(AppConfig) {
         this@android.compileSdk = this@with.compileSdk
 
