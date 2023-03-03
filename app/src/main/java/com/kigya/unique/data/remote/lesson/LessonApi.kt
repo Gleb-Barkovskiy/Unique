@@ -2,7 +2,6 @@ package com.kigya.unique.data.remote.lesson
 
 import android.content.Context
 import com.google.gson.Gson
-import com.kigya.unique.App
 import com.kigya.unique.data.dto.lesson.Lesson
 import com.kigya.unique.data.remote.fetch.JsoupDocumentApi
 import com.kigya.unique.di.NetworkModule.Const.BASE_URL
@@ -46,7 +45,7 @@ class LessonApi @Inject constructor(
                 }
             }
         }
-        rowList.saveToCache(App.appContext, "lessons.json")
+        // rowList.saveToCache(App.appContext, "lessons.json")
         return rowList
     }
 

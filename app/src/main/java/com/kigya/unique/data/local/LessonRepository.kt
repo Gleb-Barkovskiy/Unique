@@ -37,6 +37,10 @@ class LessonRepository @Inject constructor(
         },
     )
 
+    suspend fun getNetworkData() {
+        lessonsApi.getNetworkData()
+    }
+
     fun getDatabaseLessons(
         course: Int,
         group: Int,
