@@ -33,8 +33,7 @@ Don't waste any more time trying to manage your academic timetable manually. Get
 ##### [Work Manager](https://developer.android.com/jetpack/androidx/releases/work) 
 ##### [Startup](https://developer.android.com/jetpack/androidx/releases/startup) 
 ##### [Splash Screen API](https://developer.android.com/develop/ui/views/launch/splash-screen) 
-##### [Gson](https://github.com/google/gson) 
-<br>
+##### [Gson](https://github.com/google/gson)<br>
 ##### [Jsoup](https://github.com/jhy/jsoup) 
 ##### [ViewBindingPropertyDelegate](https://github.com/androidbroadcast/ViewBindingPropertyDelegate) 
 ##### [Scalable sp](https://github.com/intuit/ssp) 
