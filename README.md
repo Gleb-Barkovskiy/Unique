@@ -52,7 +52,7 @@ Don't waste any more time trying to manage your academic timetable manually. Get
 
 Operating System | Link
 ---|---
-Android | <a href='https://play.google.com/store/apps/details?id=net.cozic.joplin&utm_source=GitHub&utm_campaign=README&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' height="40px" src='https://raw.githubusercontent.com/laurent22/joplin/dev/Assets/WebsiteAssets/images/BadgeAndroid.png'/></a>
+Android | <a href='https://play.google.com/store/apps/details?id=com.kigya.unique'><img alt='Get it on Google Play' height="40px" src='https://raw.githubusercontent.com/laurent22/joplin/dev/Assets/WebsiteAssets/images/BadgeAndroid.png'/></a>
 
 ## Contributions
 
@@ -61,19 +61,6 @@ Android | <a href='https://play.google.com/store/apps/details?id=net.cozic.jopli
 * Share your ideas and comments :)
 
 <a href='https://t.me/kigya'>![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)</a>
-
-## Frequently Asked Questions
-
-##### Q: 
-What is the problem with the schedule for teachers? 
-##### A: 
-The data in the application comes from the official website of the BSU mehmat, the fields on which are inconsistent, sloppy and sometimes mistakenly filled in. I did everything in my power to process possible errors, but it is impossible to bring it to the ideal for reasons beyond my control
-<br>
-##### Q: 
-Will new features be delivered to the app? For example, attendance marks, notes on teachers and subjects, notifications, widgets?
-##### A: 
-No, until the issue with the schedule on the official website is resolved. Widgets will appear in the next updates
-<br>
 
 ## The MIT License (MIT)
 
