@@ -58,4 +58,22 @@
     <string name="teacher">Преподаватель</string>
     <string name="tap_title_filters">Ваши параметры для отображения занятий</string>
     <string name="tap_desc_filters">Важно: на данный момент по независящим от нас причинам режим преподавателя не гарантирует точность данных, поэтому рекомендуем использовать его с осторожностью</string>
+    <string name="settings">Настройки</string>
+    <string name="just_back_image">Just back image</string>
+    <string name="list_animation">Анимация списка</string>
+    <string name="helper_image">Helper image</string>
+    <string name="contact_us">Связаться\n с разработчиком</string>
+    <string name="telegram_icon">Telegram icon</string>
+    <string name="common_questions">Частые вопросы</string>
+    <string name="unavailable">Недоступно</string>
+    <string name="student_mode">Режим студента</string>
+    <string name="teacher_mode">Режим преподавателя</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Добавить виджет</string>
+    <string name="app_widget_description">Виджет для просмотра расписания с сайта</string>
+    <string name="mmf_widget">MMF Widget</string>
+    <string name="green_mode">Green mode</string>
+    <string name="white_mode">White mode</string>
+    <string name="choose_time">Выберите время</string>
+    <string name="ok">OK</string>
 </resources>

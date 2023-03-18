@@ -91,7 +91,7 @@ fun View.startSidesCircularReveal(fromLeft: Boolean) {
             val radius = hypot(right.toDouble(), bottom.toDouble()).toInt()
             ViewAnimationUtils.createCircularReveal(v, cx, cy, 0f, radius.toFloat()).apply {
                 interpolator = DecelerateInterpolator(2f)
-                duration = 1000
+                duration = 800
                 start()
             }
         }

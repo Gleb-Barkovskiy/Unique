@@ -11,7 +11,10 @@ fun View.setOnLeftSwipeTouchListener(action: (View) -> Unit) {
     })
 }
 
-fun View.setOnSidesSwipeTouchListener(leftAction: (View) -> Unit, rightAction: (View) -> Unit) {
+fun View.setOnSidesSwipeTouchListener(
+    leftAction: (View) -> Unit = {},
+    rightAction: (View) -> Unit = {},
+) {
     setOnTouchListener(object : OnSwipeTouchListener(context) {
         override fun onSwipeLeft() {
             leftAction(this@setOnSidesSwipeTouchListener)

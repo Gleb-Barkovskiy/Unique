@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_base_front">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        style="@style/GuidelineMaterial.Start" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        style="@style/GuidelineMaterial.End" />
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        style="@style/ImageButtonMaterial"
+        android:layout_marginTop="@dimen/margin_s"
+        android:background="@drawable/ripple_touch_effect"
+        android:contentDescription="@string/options_button"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginTop="@dimen/margin_s" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/ItemWrapContent"
+        android:layout_marginTop="@dimen/margin_s"
+        android:text="@string/settings"
+        android:textColor="@color/black_base"
+        android:textSize="20sp"
+        app:fontFamily="@font/jost_bold"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/ivTorch" />
+
+    <ImageView
+        android:id="@+id/ivTorch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/just_back_image"
+        android:src="@drawable/image_torch"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAnimation"
+        style="@style/ItemWrapContent"
+        android:layout_marginTop="@dimen/margin_s"
+        android:text="@string/list_animation"
+        android:textSize="16sp"
+        app:fontFamily="@font/jost_medium"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <io.ghyeok.stickyswitch.widget.StickySwitch
+        android:id="@+id/ssListAnimation"
+        style="@style/ItemWrapContent"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin_xs"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/tvAnimation"
+        app:ss_animationDuration="500"
+        app:ss_animationType="line"
+        app:ss_iconPadding="10dp"
+        app:ss_iconSize="18dp"
+        app:ss_leftIcon="@drawable/cross"
+        app:ss_rightIcon="@drawable/tick"
+        app:ss_selectedTextSize="14sp"
+        app:ss_sliderBackgroundColor="@color/white_base_back"
+        app:ss_switchColor="@color/green_base"
+        app:ss_textSize="12sp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvContactUs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_xs"
+        android:layout_marginEnd="@dimen/margin_xs"
+        android:layout_marginBottom="@dimen/margin_s"
+        app:cardBackgroundColor="#8AB2A9"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false"
+        app:layout_constraintBottom_toTopOf="@id/btnSave"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivBackImage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/helper_image"
+                android:src="@drawable/questions_helper_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvAnyQuestions"
+                style="@style/ItemWrapContent"
+                android:layout_marginTop="@dimen/margin_xs"
+                android:layout_marginBottom="@dimen/margin_xs"
+                android:fontFamily="@font/jost_bold"
+                android:gravity="center"
+                android:text="@string/contact_us"
+                android:textColor="@color/white_base_front"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/ibTelegram"
+                app:layout_constraintEnd_toStartOf="@id/ivBackImage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <ImageButton
+                android:id="@+id/ibTelegram"
+                style="@style/ImageButtonMaterial"
+                android:background="@drawable/ripple_touch_effect"
+                android:contentDescription="@string/telegram_icon"
+                android:src="@drawable/telegram"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ibMail"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@id/tvAnyQuestions"
+                app:layout_constraintTop_toBottomOf="@id/tvAnyQuestions" />
+
+            <ImageButton
+                android:id="@+id/ibMail"
+                style="@style/ImageButtonMaterial"
+                android:background="@drawable/ripple_touch_effect"
+                android:contentDescription="@string/telegram_icon"
+                android:src="@drawable/mail_icon"
+                app:layout_constraintBottom_toBottomOf="@id/ibTelegram"
+                app:layout_constraintEnd_toEndOf="@id/tvAnyQuestions"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@id/ibTelegram"
+                app:layout_constraintTop_toTopOf="@id/ibTelegram" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSave"
+        style="@style/MaterialButtonStyle"
+        android:layout_marginBottom="@dimen/margin_xs"
+        android:text="@string/save_changes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

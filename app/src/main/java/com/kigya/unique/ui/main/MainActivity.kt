@@ -1,5 +1,6 @@
 package com.kigya.unique.ui.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -13,7 +14,11 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.kigya.unique.R
+import com.kigya.unique.ui.timetable.sheet.student.DialogStudentFragment
+import com.kigya.unique.ui.timetable.sheet.teacher.DialogTeacherFragment
+import com.kigya.unique.utils.system.intent.IntentCreator
 import dagger.hilt.android.AndroidEntryPoint
+import shortbread.Shortcut
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -55,6 +60,40 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen().apply {
             setKeepOnScreenCondition { viewModel.isLoading.value }
         }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Shortcut(
+        id = TEACHER_SHORTCUT_ID,
+        icon = R.drawable.teacher_icon_shortcut,
+        shortLabelRes = R.string.teacher_mode,
+        rank = 1,
+        disabledMessageRes = R.string.unavailable,
+    )
+    fun openTeacherIntent() {
+        IntentCreator.createRestartIntentWithOpeningDialog(
+            this,
+            MainActivity::class.java,
+            DialogTeacherFragment.EXTRA,
+        )
+        viewModel.logInToTeacherMode()
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Shortcut(
+        id = STUDENT_SHORTCUT_ID,
+        icon = R.drawable.student_icon_shortcut,
+        shortLabelRes = R.string.student_mode,
+        rank = 2,
+        disabledMessageRes = R.string.unavailable,
+    )
+    fun openStudentIntent() {
+        IntentCreator.createRestartIntentWithOpeningDialog(
+            this,
+            MainActivity::class.java,
+            DialogStudentFragment.EXTRA,
+        )
+        viewModel.logInToStudentMode()
     }
 
     override fun onDestroy() {
@@ -119,4 +158,9 @@ class MainActivity : AppCompatActivity() {
 
     @Suppress("SameReturnValue")
     private fun getOnboardingDestination() = R.id.onboardingFragment
+
+    companion object {
+        const val TEACHER_SHORTCUT_ID = "open_teacher"
+        const val STUDENT_SHORTCUT_ID = "open_student"
+    }
 }

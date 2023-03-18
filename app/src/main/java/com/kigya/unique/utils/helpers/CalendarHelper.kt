@@ -1,6 +1,5 @@
 package com.kigya.unique.utils.helpers
 
-import android.graphics.Rect
 import android.view.ViewGroup
 import android.widget.TextView
 import com.kigya.unique.App
@@ -14,10 +13,11 @@ import com.kigya.unique.utils.helpers.CalendarHelper.Const.SEPTEMBER_MONTH
 import com.kigya.unique.utils.helpers.CalendarHelper.Const.WEEK_SERIAL_DELIMITER
 import com.kizitonwose.calendar.core.atStartOfMonth
 import com.kizitonwose.calendar.core.daysOfWeek
-import com.kizitonwose.calendar.view.WeekCalendarView
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import kotlin.math.abs
 
@@ -76,6 +76,22 @@ object CalendarHelper {
         }
 
         return abs(currentWeekNumber - startWeekCount) % 2 == 0
+    }
+
+    fun isCurrentClassTime(date: LocalDate, timeStart: String): Boolean {
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        val startTime = LocalTime.parse(timeStart, formatter)
+        val currentTime = LocalTime.now()
+        val tenMinutesBeforeStart = startTime.minusMinutes(10)
+        val oneHourTwentyMinutesAfterStart = startTime.plusHours(1).plusMinutes(20)
+
+        val startMillis = startTime.toNanoOfDay() / 1000000
+        val tenMinutesBeforeStartMillis = tenMinutesBeforeStart.toNanoOfDay() / 1000000
+        val oneHourTwentyMinutesAfterStartMillis =
+            oneHourTwentyMinutesAfterStart.toNanoOfDay() / 1000000
+        val currentMillis = currentTime.toNanoOfDay() / 1000000
+
+        return date == LocalDate.now() && currentMillis in tenMinutesBeforeStartMillis..oneHourTwentyMinutesAfterStartMillis
     }
 
     object Const {

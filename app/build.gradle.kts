@@ -10,6 +10,7 @@ plugins {
         id(hilt)
         id(ktLint) version params.Versions.ktLint
         id("kotlin-parcelize")
+        id("com.github.matthiasrobbers.shortbread")
     }
     kotlin("kapt")
 }
@@ -54,6 +55,9 @@ android {
     viewBinding.enable = true
 
     namespace = params.AppConfig.id
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -62,5 +66,8 @@ dependencies {
         kapt(kaptList)
         testImplementation(testImplementationList)
         androidTestImplementation(androidTestImplementationList)
+        implementation("com.github.GwonHyeok:StickySwitch:0.0.16")
+        implementation("com.github.matthiasrobbers:shortbread:1.4.0")
+        kapt("com.github.matthiasrobbers:shortbread-compiler:1.4.0")
     }
 }

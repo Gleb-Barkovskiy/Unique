@@ -144,6 +144,8 @@ class TimetableViewModel @Inject constructor(
         }
     }
 
+    fun isAnimationEnabled() = runBlocking { setupUseCase.isListAnimationEnabled() }
+
     fun isUserSignedIn(): Boolean =
         runBlocking {
             val result = CompletableDeferred<Boolean>()

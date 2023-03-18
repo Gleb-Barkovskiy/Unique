@@ -92,6 +92,17 @@ class AppSettings @Inject constructor(
             )
         }
 
+    override fun isListAnimationEnabled(): Flow<Boolean> =
+        dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.IS_LIST_ANIMATION_ENABLED] ?: true
+        }
+
+    override suspend fun setListAnimationEnabled(isEnabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.IS_LIST_ANIMATION_ENABLED] = isEnabled
+        }
+    }
+
     companion object {
         const val STUDENT_STRING_NAME = "STUDENT"
 
@@ -103,6 +114,7 @@ class AppSettings @Inject constructor(
             val ACCOUNT_TYPE = stringPreferencesKey("account_type")
             val IS_SIGNED_IN = booleanPreferencesKey("is_signed_in")
             val TEACHER = stringPreferencesKey("teacher")
+            val IS_LIST_ANIMATION_ENABLED = booleanPreferencesKey("is_list_animation_enabled")
         }
     }
 }

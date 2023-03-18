@@ -37,6 +37,16 @@
         android:background="@drawable/ripple_touch_effect"
         android:contentDescription="@string/options_button"
         android:src="@drawable/options_button"
+        app:layout_constraintEnd_toStartOf="@id/btnSettings"
+        app:layout_constraintTop_toBottomOf="@id/calendarView" />
+
+    <ImageButton
+        android:id="@+id/btnSettings"
+        style="@style/ImageButtonMaterial"
+        android:layout_marginTop="@dimen/margin_s"
+        android:background="@drawable/ripple_touch_effect"
+        android:contentDescription="@string/options_button"
+        android:src="@drawable/settings"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintTop_toBottomOf="@id/calendarView" />
 
@@ -44,6 +54,7 @@
         android:id="@+id/tvTimeHint"
         style="@style/TextViewTimeTimetableBottom"
         android:text="@string/time"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/btnOptions"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toTopOf="@id/btnOptions"
@@ -52,8 +63,9 @@
     <TextView
         android:id="@+id/tvTimetableHint"
         style="@style/TextViewTimeTimetableBottom"
-        android:layout_marginStart="@dimen/margin_m"
+        android:layout_marginStart="40dp"
         android:text="@string/timetable"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/btnOptions"
         app:layout_constraintStart_toEndOf="@id/tvTimeHint"
         app:layout_constraintTop_toTopOf="@id/btnOptions"
@@ -62,23 +74,36 @@
     <TextView
         android:id="@+id/tvCurrentWeek"
         style="@style/TextViewTimeTimetableBottom"
+        android:minHeight="48dp"
+        android:minWidth="48dp"
+        android:gravity="center"
         android:layout_marginStart="@dimen/margin_m"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/btnOptions"
         app:layout_constraintEnd_toStartOf="@id/btnOptions"
         app:layout_constraintTop_toTopOf="@id/btnOptions"
         tools:text="1н"
         tools:viewBindingIgnore="true" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvLessons"
+    <com.kigya.unique.ui.views.HorizontalScrollViewDetector
+        android:id="@+id/scrollViewLessons"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fillViewport="true"
         android:layout_marginTop="@dimen/margin_s"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@id/tvTimetableHint"
-        tools:listitem="@layout/timetable_item" />
+        app:layout_constraintTop_toBottomOf="@id/tvTimetableHint">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvLessons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbarStyle="outsideInset"
+            tools:listitem="@layout/timetable_item" />
+
+    </com.kigya.unique.ui.views.HorizontalScrollViewDetector>
 
     <com.kigya.unique.ui.views.ResourceView
         android:id="@+id/resourceView"

@@ -7,6 +7,8 @@ import com.kigya.unique.utils.helpers.CalendarHelper
 import com.kigya.unique.utils.mappers.LocaleConverter.Russian.russianValue
 import com.kigya.unique.utils.wrappers.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import java.time.LocalDate
 import javax.inject.Inject
 

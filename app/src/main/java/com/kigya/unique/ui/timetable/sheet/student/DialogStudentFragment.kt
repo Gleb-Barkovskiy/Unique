@@ -12,6 +12,7 @@ import com.kigya.unique.databinding.BottomSheetStudentBinding
 import com.kigya.unique.ui.main.MainActivity
 import com.kigya.unique.ui.timetable.main.TimetableFragment
 import com.kigya.unique.ui.timetable.main.TimetableViewModel
+import com.kigya.unique.ui.timetable.sheet.teacher.DialogTeacherFragment
 import com.kigya.unique.utils.constants.ModelConst.SUBGROUP_A
 import com.kigya.unique.utils.constants.ModelConst.SUBGROUP_B
 import com.kigya.unique.utils.constants.ModelConst.SUBGROUP_C
@@ -40,6 +41,14 @@ class DialogStudentFragment : BottomSheetDialogFragment() {
         setCloseClickListener()
         setOnCourseClickListener()
         hideElementsWhenRootClicked()
+        setTeacherClickListener()
+    }
+
+    private fun setTeacherClickListener() {
+        viewBinding.ltTeacher.setOnClickListener {
+            commonViewModel.setAccountType(1)
+            restartWithDialog()
+        }
     }
 
     private fun setOnCourseClickListener() {
@@ -81,7 +90,6 @@ class DialogStudentFragment : BottomSheetDialogFragment() {
                     ),
                     if (psvSortByWeek.selectedIndex == -1) null else psvSortByWeek.selectedIndex == 0,
                 )
-                commonViewModel.setAccountType(if (viewBinding.ltStudent.isChecked) 0 else 1)
                 restartApp()
             }
         }
@@ -95,6 +103,14 @@ class DialogStudentFragment : BottomSheetDialogFragment() {
 
     private fun restartApp() {
         IntentCreator.createRestartIntent(requireActivity(), MainActivity::class.java)
+    }
+
+    private fun restartWithDialog() {
+        IntentCreator.createRestartIntentWithOpeningDialog(
+            requireActivity(),
+            MainActivity::class.java,
+            DialogTeacherFragment.EXTRA,
+        )
     }
 
     private fun setInitialArgs() {
@@ -138,6 +154,7 @@ class DialogStudentFragment : BottomSheetDialogFragment() {
     override fun getTheme() = R.style.AppBottomSheetDialogTheme
 
     companion object {
+        const val EXTRA = "student_dialog"
         fun newInstance() = DialogStudentFragment()
     }
 }

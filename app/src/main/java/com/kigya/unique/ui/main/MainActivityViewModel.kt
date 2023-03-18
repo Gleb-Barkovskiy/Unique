@@ -1,6 +1,7 @@
 package com.kigya.unique.ui.main
 
 import androidx.lifecycle.viewModelScope
+import com.kigya.unique.data.dto.account.AccountType
 import com.kigya.unique.di.IoDispatcher
 import com.kigya.unique.ui.base.BaseViewModel
 import com.kigya.unique.usecase.ScheduleWorkUseCase
@@ -45,7 +46,19 @@ class MainActivityViewModel @Inject constructor(
             _isUserSignedIn
         }
 
+    fun logInToTeacherMode() {
+        viewModelScope.launch {
+            setupUseCase.setAccountType(AccountType.TEACHER)
+        }
+    }
+
+    fun logInToStudentMode() {
+        viewModelScope.launch {
+            setupUseCase.setAccountType(AccountType.STUDENT)
+        }
+    }
+
     companion object {
-        private const val SPLASH_DELAY = 2000L
+        private const val SPLASH_DELAY = 1000L
     }
 }

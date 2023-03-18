@@ -12,10 +12,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.kigya.unique.R
 import com.kigya.unique.databinding.BottomSheetTeacherBinding
+import com.kigya.unique.ui.listeners.AutocompleteTextChangeListener
 import com.kigya.unique.ui.main.MainActivity
 import com.kigya.unique.ui.timetable.main.TimetableFragment
 import com.kigya.unique.ui.timetable.main.TimetableViewModel
-import com.kigya.unique.ui.listeners.AutocompleteTextChangeListener
+import com.kigya.unique.ui.timetable.sheet.student.DialogStudentFragment
 import com.kigya.unique.utils.extensions.context.hideKeyboard
 import com.kigya.unique.utils.helpers.TeacherValidator
 import com.kigya.unique.utils.system.intent.IntentCreator
@@ -44,6 +45,7 @@ class DialogTeacherFragment : BottomSheetDialogFragment() {
         closeFocusWhenDone()
         hidePopupWhenSideActionPerformed()
         configureAutocompleteTextView()
+        setStudentClickListener()
     }
 
     private fun hidePopupWhenSideActionPerformed() {
@@ -53,6 +55,21 @@ class DialogTeacherFragment : BottomSheetDialogFragment() {
             }
             mactvTeacherName.setOnFocusChangeListener { _, _ -> psvSortByWeek.dismiss() }
         }
+    }
+
+    private fun setStudentClickListener() {
+        viewBinding.ltStudent.setOnClickListener {
+            commonViewModel.setAccountType(0)
+            restartWithDialog()
+        }
+    }
+
+    private fun restartWithDialog() {
+        IntentCreator.createRestartIntentWithOpeningDialog(
+            requireActivity(),
+            MainActivity::class.java,
+            DialogStudentFragment.EXTRA,
+        )
     }
 
     private fun closeFocusWhenDone() {
@@ -121,7 +138,6 @@ class DialogTeacherFragment : BottomSheetDialogFragment() {
                     viewBinding.mactvTeacherName.text.toString(),
                     commonViewModel.teacherList,
                     successBlock = {
-                        commonViewModel.setAccountType(if (viewBinding.ltStudent.isChecked) 0 else 1)
                         restartApp()
                     },
                     errorBlock = {
@@ -154,6 +170,7 @@ class DialogTeacherFragment : BottomSheetDialogFragment() {
     override fun getTheme() = R.style.AppBottomSheetDialogTheme
 
     companion object {
+        const val EXTRA = "teacher_dialog"
         fun newInstance() = DialogTeacherFragment()
     }
 }

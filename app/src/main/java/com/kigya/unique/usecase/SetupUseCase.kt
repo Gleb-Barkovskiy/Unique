@@ -34,4 +34,16 @@ class SetupUseCase @Inject constructor(
         }
         return result.await()
     }
+
+    suspend fun isListAnimationEnabled(): Boolean {
+        val result = CompletableDeferred<Boolean>()
+        appSettings.isListAnimationEnabled().take(1).collect {
+            result.complete(it)
+        }
+        return result.await()
+    }
+
+    suspend fun setListAnimationEnabled(isEnabled: Boolean) {
+        appSettings.setListAnimationEnabled(isEnabled)
+    }
 }

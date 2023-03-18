@@ -3,9 +3,9 @@ package com.kigya.unique.di
 import androidx.work.WorkManager
 import com.kigya.unique.data.local.LessonRepository
 import com.kigya.unique.data.local.settings.AppSettings
-import com.kigya.unique.usecase.StudentUseCase
 import com.kigya.unique.usecase.ScheduleWorkUseCase
 import com.kigya.unique.usecase.SetupUseCase
+import com.kigya.unique.usecase.StudentUseCase
 import com.kigya.unique.usecase.TeacherUseCase
 import dagger.Module
 import dagger.Provides

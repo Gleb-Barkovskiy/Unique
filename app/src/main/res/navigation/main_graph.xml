@@ -9,7 +9,11 @@
         android:id="@+id/tabsFragment"
         android:name="com.kigya.unique.ui.timetable.main.TimetableFragment"
         android:label="fragment_tabs"
-        tools:layout="@layout/fragment_tabs" />
+        tools:layout="@layout/fragment_tabs">
+        <action
+            android:id="@+id/action_tabsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/onboardingFragment"
         android:name="com.kigya.unique.ui.survey.onboarding.OnboardingFragment"
@@ -29,6 +33,15 @@
         <action
             android:id="@+id/action_initialSetupFragment_to_tabsFragment"
             app:destination="@id/tabsFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.kigya.unique.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_tabsFragment"
+            app:destination="@id/tabsFragment" />
     </fragment>
 </navigation>

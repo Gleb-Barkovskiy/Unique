@@ -27,4 +27,6 @@ interface AppSettingsSource {
     suspend fun setTeacherToDataStore(teacher: String)
 
     fun getParamsFromDataStore(): Flow<Quartet<Int, Int, List<String>, Boolean>>
+    fun isListAnimationEnabled(): Flow<Boolean>
+    suspend fun setListAnimationEnabled(isEnabled: Boolean)
 }

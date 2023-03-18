@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.Unique.AppWidget.Container"
+    android:id="@+id/widget_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
+    android:theme="@style/Theme.App.Starting.AppWidgetContainer">
+
+    <ImageButton
+        android:id="@+id/btnWebsite"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@null"
+        android:contentDescription="@string/mmf_widget"
+        android:scaleType="fitCenter"
+        android:src="@drawable/mmf_widget_white" />
+
+</RelativeLayout>

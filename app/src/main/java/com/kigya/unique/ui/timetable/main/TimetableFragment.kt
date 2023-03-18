@@ -1,5 +1,6 @@
 package com.kigya.unique.ui.timetable.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -24,6 +26,7 @@ import com.kigya.unique.databinding.FragmentTabsBinding
 import com.kigya.unique.ui.base.BaseFragment
 import com.kigya.unique.ui.timetable.sheet.student.DialogStudentFragment
 import com.kigya.unique.ui.timetable.sheet.teacher.DialogTeacherFragment
+import com.kigya.unique.ui.views.HorizontalScrollViewDetector
 import com.kigya.unique.utils.LessonList
 import com.kigya.unique.utils.LessonListResource
 import com.kigya.unique.utils.extensions.context.onTouchResponseVibrate
@@ -39,11 +42,13 @@ import com.kigya.unique.utils.helpers.CalendarHelper.endDate
 import com.kigya.unique.utils.helpers.CalendarHelper.getWeekStringValueAbbreviation
 import com.kigya.unique.utils.helpers.CalendarHelper.startDate
 import com.kigya.unique.utils.mappers.LocaleConverter.Russian.russianShortValue
+import com.kigya.unique.utils.system.intent.IntentCreator
 import com.kizitonwose.calendar.view.DaySize
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import java.time.LocalDate
 
+@SuppressLint("NonConstantResourceId")
 @AndroidEntryPoint
 class TimetableFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBinder {
 
@@ -63,6 +68,28 @@ class TimetableFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBind
         setCurrentWeekSerialNumberValue()
         setOnSidesSwipeTouchListener()
         showTapTargetIfStarted()
+        openDialogWhenModePressedBefore()
+        setOnSettingsClickListener()
+    }
+
+    private fun setOnSettingsClickListener() {
+        viewBinding.btnSettings.setOnClickListener {
+            findNavController().navigate(TimetableFragmentDirections.actionTabsFragmentToSettingsFragment())
+        }
+    }
+
+    private fun openDialogWhenModePressedBefore() {
+        val dialogExtra =
+            requireActivity().intent.getStringExtra(IntentCreator.IntentExtra.DIALOG_EXTRA)
+        if (dialogExtra != null) {
+            if (dialogExtra == DialogStudentFragment.EXTRA) {
+                openStudentBottomSheet()
+                requireActivity().intent.removeExtra(IntentCreator.IntentExtra.DIALOG_EXTRA)
+            } else if (dialogExtra == DialogTeacherFragment.EXTRA) {
+                openTeacherBottomSheet()
+                requireActivity().intent.removeExtra(IntentCreator.IntentExtra.DIALOG_EXTRA)
+            }
+        }
     }
 
     private fun showTapTargetIfStarted() {
@@ -174,7 +201,9 @@ class TimetableFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBind
     private fun observeLessons() {
         with(viewBinding) {
             observeResource<LessonListResource, LessonList>(viewModel.lessons, resourceView) {
-                rvLessons.startSidesCircularReveal(true)
+                if (viewModel.isAnimationEnabled()) {
+                    rvLessons.startSidesCircularReveal(true)
+                }
                 setCurrentWeekSerialNumberValue()
                 if (it.isEmpty()) {
                     setNoLessonsText()
@@ -204,6 +233,12 @@ class TimetableFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBind
                 adapter = alphaAdapter
                 addOnRecyclerScrollListener(this)
                 optimizeRecycler(this)
+            }
+            scrollViewLessons.leftAction = {
+                viewModel.toPreviousDay(calendarView)
+            }
+            scrollViewLessons.rightAction = {
+                viewModel.toNextDay(calendarView)
             }
         }
     }

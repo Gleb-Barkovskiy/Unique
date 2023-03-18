@@ -3,6 +3,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.1.0-alpha06")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath("com.github.matthiasrobbers:shortbread-gradle-plugin:1.4.0")
     }
     repositories {
         mavenCentral()
