@@ -1,6 +1,7 @@
 package com.kigya.unique.data.remote
 
 import android.content.Context
+import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -21,7 +22,7 @@ class NetworkOperationWorker @AssistedInject constructor(
 
     override suspend fun doWork() = withContext(ioDispatcher) {
         return@withContext try {
-            lessonRepository.getLessons()
+            lessonRepository.getNetworkData()
             Result.success()
         } catch (e: Exception) {
             Result.retry()

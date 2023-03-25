@@ -95,6 +95,7 @@ class TimetableFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBind
     private fun showTapTargetIfStarted() {
         if (!viewModel.isUserSignedIn()) {
             val ttFilters = getFiltersTapTarget()
+            viewModel.signIn()
             showTapTargetIfStarted(ttFilters)
         }
     }
@@ -106,7 +107,6 @@ class TimetableFragment : BaseFragment(R.layout.fragment_tabs), CalendarDateBind
             object : TapTargetView.Listener() {
                 override fun onTargetClick(view: TapTargetView?) {
                     super.onTargetClick(view)
-                    viewModel.signIn()
                 }
             },
         )

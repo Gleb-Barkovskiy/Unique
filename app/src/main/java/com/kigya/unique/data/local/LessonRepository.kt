@@ -38,7 +38,11 @@ class LessonRepository @Inject constructor(
     )
 
     suspend fun getNetworkData() {
-        lessonsApi.getNetworkData()
+        val lessons = lessonsApi.getNetworkData()
+        if (lessons.isNotEmpty()) {
+            lessonDao.deleteAllLessons()
+            lessonDao.upsertLessons(lessons)
+        }
     }
 
     fun getDatabaseLessons(

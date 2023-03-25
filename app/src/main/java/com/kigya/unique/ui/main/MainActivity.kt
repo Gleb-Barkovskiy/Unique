@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -71,12 +72,16 @@ class MainActivity : AppCompatActivity() {
         disabledMessageRes = R.string.unavailable,
     )
     fun openTeacherIntent() {
-        IntentCreator.createRestartIntentWithOpeningDialog(
-            this,
-            MainActivity::class.java,
-            DialogTeacherFragment.EXTRA,
-        )
-        viewModel.logInToTeacherMode()
+        if (viewModel.isUserSignedIn) {
+            IntentCreator.createRestartIntentWithOpeningDialog(
+                this,
+                MainActivity::class.java,
+                DialogTeacherFragment.EXTRA,
+            )
+            viewModel.logInToTeacherMode()
+        } else {
+            Toast.makeText(this, "Необходимо сперва войти", Toast.LENGTH_SHORT).show()
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -88,12 +93,17 @@ class MainActivity : AppCompatActivity() {
         disabledMessageRes = R.string.unavailable,
     )
     fun openStudentIntent() {
-        IntentCreator.createRestartIntentWithOpeningDialog(
-            this,
-            MainActivity::class.java,
-            DialogStudentFragment.EXTRA,
-        )
-        viewModel.logInToStudentMode()
+        if (viewModel.isUserSignedIn) {
+            IntentCreator.createRestartIntentWithOpeningDialog(
+                this,
+                MainActivity::class.java,
+                DialogStudentFragment.EXTRA,
+            )
+            viewModel.logInToStudentMode()
+        } else {
+            Toast.makeText(this, "Необходимо сперва войти", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun onDestroy() {
