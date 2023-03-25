@@ -52,10 +52,16 @@ class LessonAdapter(
                             R.string.course_template,
                             course.toString(),
                         )
-                        tvGroup.text = activity.applicationContext.getString(
-                            R.string.group_template,
-                            group.toString(),
-                        )
+                        if (group == 0) {
+                            tvGroup.text = activity.applicationContext.getString(
+                                R.string.group_vf,
+                            )
+                        } else {
+                            tvGroup.text = activity.applicationContext.getString(
+                                R.string.group_template,
+                                group.toString(),
+                            )
+                        }
                     }
                     tvLessonStart.text = getStartTime(time)
                     tvLessonEnd.text = getEndTime(time)
