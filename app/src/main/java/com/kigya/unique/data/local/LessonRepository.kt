@@ -17,7 +17,6 @@ class LessonRepository @Inject constructor(
     private val lessonsApi: LessonApi,
     private val database: LessonDatabase,
 ) {
-
     private val lessonDao = database.getLessonDao()
 
     fun getDatabaseSize() = lessonDao.getDatabaseSize()
@@ -75,7 +74,9 @@ class LessonRepository @Inject constructor(
         query = {
             lessonDao.getAllLessons()
         },
-        fetch = {},
+        fetch = {
+            lessonsApi.getNetworkData()
+        },
         saveFetchResult = {},
     )
 

@@ -66,6 +66,7 @@ dependencies {
         kapt(kaptList)
         testImplementation(testImplementationList)
         androidTestImplementation(androidTestImplementationList)
+        implementation("com.squareup.retrofit2:converter-gson:2.9.0")
         implementation("com.github.GwonHyeok:StickySwitch:0.0.16")
         implementation("com.github.matthiasrobbers:shortbread:1.4.0")
         kapt("com.github.matthiasrobbers:shortbread-compiler:1.4.0")
